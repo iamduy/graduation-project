@@ -1,0 +1,422 @@
+<form [formGroup]="updateStudentForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-title class="bg-white border-b mb-2">
+    <p class="pl-2 pt-2 font-medium text-lg">CẬP NHẬT THÔNG TIN SINH VIÊN</p>
+  </div>
+  <mat-dialog-content class="mat-typography">
+    <div class="w-full text-center">
+      <div class="mb-4">
+        <p class=" text-lg font-medium">
+          Thông tin sinh viên
+          <span class="text-main">{{
+            [data?.last_name, data?.first_name].join(" ")
+            }}</span>
+        </p>
+      </div>
+      <table class="table-auto sm:w-3/4 w-full mx-auto">
+        <thead>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Họ</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              <input type="text" class="input w-full h-auto rounded-md input px-3" formControlName="last_name"
+                placeholder="Họ" />
+              <span class="validate">{{ errorMess?.last_name?.[0] }}</span>
+            </td>
+          </tr>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Tên</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              <input type="text" class="input w-full h-auto rounded-md input px-3" formControlName="first_name"
+                placeholder="Tên" />
+              <span class="validate">{{ errorMess?.first_name?.[0] }}</span>
+            </td>
+          </tr>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Giới tính</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              <select class="input w-full h-auto rounded-md input px-3" formControlName="gender">
+                <option [value]="1">Nam</option>
+                <option [value]="0">Nữ</option>
+              </select>
+            </td>
+          </tr>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Trạng thái</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              <select class="input w-full h-auto rounded-md input px-3" formControlName="status">
+                <option [value]="0">Chưa kích hoạt</option>
+                <option [value]="1">Đã kích hoạt</option>
+              </select>
+            </td>
+          </tr>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Mã sinh viên</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              <input type="text" placeholder="Ph09982" class="input w-full h-auto rounded-md input px-3"
+                formControlName="student_code" />
+              <span class="validate">{{ errorMess?.student_code?.[0] }}</span>
+            </td>
+          </tr>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Ngày sinh</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              <input type="date" class="input w-full h-auto rounded-md input px-3" placeholder="Ngày sinh"
+                formControlName="birth" />
+              <span class="validate">{{ errorMess?.birth?.[0] }}</span>
+            </td>
+          </tr>
+
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Nơi sinh</td>
+            <td class="bg-white text-left px-2 py-1 text-gray-700 font-semibold">
+              <input type="text" placeholder="Nơi sinh" class="input w-full h-auto rounded-md input px-3"
+                formControlName="birth_place" />
+              <span class="validate">{{ errorMess?.birth_place?.[0] }}</span>
+            </td>
+          </tr>
+
+          <tr class="border border-gray-200">
+            <td class="text-right py-1 px-2 bg-gray-100">Điện thoại</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              <input type="text" placeholder="0911865212" class="input w-full h-auto rounded-md input px-3"
+                formControlName="phone" />
+              <span class="validate">{{ errorMess?.phone?.[0] }}</span>
+            </td>
+          </tr>
+
+          <tr class="border border-gray-200">
+            <td class="text-right py-1 px-2 bg-gray-100">Số CCCD</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              <input type="text" placeholder="02120090" class="input w-full h-auto rounded-md input px-3"
+                formControlName="CCCD" />
+              <span class="validate">{{ errorMess?.CCCD?.[0] }}</span>
+            </td>
+          </tr>
+          <tr class="border border-gray-200">
+            <td class="text-right py-1 px-2 bg-gray-100">Ngày cấp</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              <input type="date" placeholder="20/04" class="input w-full h-auto rounded-md input px-3"
+                formControlName="date_range" />
+              <span class="validate">{{ errorMess?.date_range?.[0] }}</span>
+            </td>
+          </tr>
+          <tr class="border border-gray-200">
+            <td class="text-right py-1 px-2 bg-gray-100">Nơi cấp</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              <input type="text" placeholder="20/04" class="input w-full h-auto rounded-md input px-3"
+                formControlName="issued_by" />
+              <span class="validate">{{ errorMess?.issued_by?.[0] }}</span>
+            </td>
+          </tr>
+
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Ngành học</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              <input type="text" class="input w-full h-auto rounded-md input px-3" formControlName="department" />
+              <span class="validate">{{ errorMess?.department?.[0] }}</span>
+            </td>
+          </tr>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Năm học</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              <input type="text" class="input w-full h-auto rounded-md input px-3" formControlName="student_year" />
+              <span class="validate">{{ errorMess?.student_year?.[0] }}</span>
+            </td>
+          </tr>
+
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Địa chỉ</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              <textarea rows="5" type="text" class="w-full rounded-md px-3 border border-gray-300"
+                formControlName="address">
+              </textarea>
+              <span class="validate"> {{ errorMess?.address?.[0] }} </span>
+            </td>
+          </tr>
+        </thead>
+      </table>
+      <div class="md:flex w-full">
+        <table class="table-auto w-full mt-3">
+          <thead>
+              <tr class="border border-gray-200">
+                <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Đơn vị đào tạo</td>
+                <td class="
+                  bg-white
+                  w-2/3
+                  text-left
+                  px-2
+                  py-1
+                  text-gray-700
+                  font-semibold
+                ">
+                  <input type="text" placeholder="Truong hoc" class="input w-full h-auto rounded-md input px-3"
+                    formControlName="school" />
+                  <span class="validate">
+                    {{ errorMess?.school?.[0] }}
+                  </span>
+                </td>
+              </tr>
+              <tr class="border border-gray-200">
+                <td class="text-right py-1 px-2 bg-gray-100">Dân tộc</td>
+                <td class="
+                  bg-white
+                  w-2/3
+                  text-left
+                  px-2
+                  py-1
+                  text-gray-700
+                  font-semibold
+                ">
+                  <input type="text" placeholder="Kinh" class="input w-full h-auto rounded-md input px-3"
+                    formControlName="nation" />
+                  <span class="validate">
+                    {{ errorMess?.nation?.[0] }}
+                  </span>
+                </td>
+              </tr>
+              <tr class="border border-gray-200">
+                <td class="text-right py-1 px-2 bg-gray-100">Tôn giáo</td>
+                <td class="
+                  bg-white
+                  w-2/3
+                  text-left
+                  px-2
+                  py-1
+                  text-gray-700
+                  font-semibold
+                ">
+                  <input type="text" placeholder="Không" class="input w-full h-auto rounded-md input px-3"
+                    formControlName="religion" />
+                  <span class="validate">
+                    {{ errorMess?.religion?.[0] }}
+                  </span>
+                </td>
+              </tr>
+              <tr class="border border-gray-200">
+                <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Đối tượng</td>
+                <td class="
+                  bg-white
+                  w-2/3
+                  text-left
+                  px-2
+                  py-1
+                  text-gray-700
+                  font-semibold
+                ">
+                  <select class="input w-full h-auto rounded-md input px-3" formControlName="student_object">
+                    <option [value]="1">Học sinh</option>
+                    <option [value]="2">Sinh viên</option>
+                    <option [value]="3">Thạc sĩ</option>
+                    <option [value]="4">Nghiên cứu sinh</option>
+                    <option [value]="5">Khác</option>
+                  </select>
+                  <span class="validate">
+                    {{ errorMess?.student_object?.[0] }}
+                  </span>
+                </td>
+              </tr>
+          </thead>
+        </table>
+        <table class="table-auto w-full mt-3">
+          <thead>
+              <tr class="border border-gray-200">
+                <td class="text-right py-1 px-2 bg-gray-100">Bố</td>
+                <td class="
+                  bg-white
+                  w-2/3
+                  text-left
+                  px-2
+                  py-1
+                  text-gray-700
+                  font-semibold
+                ">
+                  <input type="text" placeholder="Tên bố" class="input w-full h-auto rounded-md input px-3"
+                    formControlName="farther_name" />
+                  <span class="validate">
+                    {{ errorMess?.farther_name?.[0] }}
+                  </span>
+                </td>
+              </tr>
+
+              <tr class="border border-gray-200">
+                <td class="text-right py-1 px-2 bg-gray-100">Mẹ</td>
+                <td class="
+                  bg-white
+                  w-2/3
+                  text-left
+                  px-2
+                  py-1
+                  text-gray-700
+                  font-semibold
+                ">
+                  <input type="text" placeholder="Tên mẹ" class="input w-full h-auto rounded-md input px-3"
+                    formControlName="mother_name" />
+                  <span class="validate">
+                    {{ errorMess?.mother_name?.[0] }}
+                  </span>
+                </td>
+              </tr>
+              <tr class="border border-gray-200">
+                <td class="text-right py-1 px-2 bg-gray-100">SĐT Người thân</td>
+                <td class="
+                  bg-white
+                  w-2/3
+                  text-left
+                  px-2
+                  py-1
+                  text-gray-700
+                  font-semibold
+                ">
+                  <input type="text" placeholder="SĐT người thân" class="input w-full h-auto rounded-md input px-3"
+                    formControlName="phone_relative" />
+                  <span class="validate">
+                    {{ errorMess?.phone_relative?.[0] }}
+                  </span>
+                </td>
+              </tr>
+              <tr class="border border-gray-200">
+                <td class="text-right py-1 px-2 bg-gray-100">
+                  Địa chỉ người thân
+                </td>
+                <td class="
+                  bg-white
+                  w-2/3
+                  text-left
+                  px-2
+                  py-1
+                  text-gray-700
+                  font-semibold
+                ">
+                  <input type="text" placeholder="Địa chỉ người thân"
+                    class="input w-full h-auto rounded-md input px-3" formControlName="address_relative" />
+                  <span class="validate">
+                    {{ errorMess?.address_relative?.[0] }}
+                  </span>
+                </td>
+              </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="border-t border-gray-600 mt-10">
+    <button type="submit" class="
+        px-4
+        mr-4
+        bg-main
+        hover:bg-gray-200
+        text-white
+        font-medium
+        rounded
+        inline-flex
+        items-center
+        hover:text-green-600
+      ">
+      Lưu
+    </button>
+  </mat-dialog-actions>
+</form>
+<app-loading-page *ngIf="isLoading"></app-loading-page>

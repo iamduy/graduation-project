@@ -1,0 +1,101 @@
+<div class="bg-white border-b">
+    <p class="pl-2 pt-2 font-medium text-lg">
+        CẬP NHẬT TÀI SẢN
+    </p>
+</div>
+
+<form [formGroup]="assetUpdateForm" (ngSubmit)="onSubmit()">
+    <!-- left -->
+    <mat-dialog-content class="mat-typography">
+        <div class="sm:flex sm:items-center px-2 py-4 text-[#5e5d5d]">
+            <label class="w-1/4">Tên</label>
+            <div class="w-full ">
+                <input formControlName="name" type="text"
+                    class="input w-full h-8 rounded-md border border-gray-400 bg-gray-100 px-3">
+                <span class="validate block" *ngIf="(f.name.dirty || submitted===true) && errors?.name">
+                    (*{{errors?.name[0]}})
+                </span>
+            </div>
+        </div>
+
+        <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+            <label class="w-1/4 pl-3">Giá</label>
+            <div class="w-full">
+                <input formControlName="price" type="number"
+                    class="input w-full h-8 rounded-md border border-gray-400 bg-gray-100 px-3">
+                <span class="validate block" *ngIf="(f.price.dirty || submitted===true) && errors?.price">
+                    (*{{errors?.price[0]}})
+                </span>
+            </div>
+        </div>
+        <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+            <label class="w-1/4 pl-3">Số lượng kho</label>
+            <div class="w-full">
+                <input formControlName="min_inventory" type="number"
+                    class="input w-full h-8 rounded-md border border-gray-400 bg-gray-100 px-3">
+                <span class="validate block"
+                    *ngIf="(f.min_inventory.dirty || submitted===true) && errors?.min_inventory">
+                    (*{{errors?.min_inventory[0]}})
+                </span>
+            </div>
+        </div>
+
+        <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+            <label class="w-1/4 pl-3">Nhà sản xuất</label>
+            <div class="w-full">
+                <select formControlName="producer_id" class="input w-full">
+                    <option *ngFor="let producer of data.prefixData.producer" [value]="producer.id">
+                        {{producer.name}}
+                    </option>
+                </select>
+                <span class="validate block" *ngIf="(f.producer_id.dirty || submitted===true) && errors?.producer_id">
+                    (*{{errors?.producer_id[0]}})
+                </span>
+            </div>
+        </div>
+
+        <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+            <label class="w-1/4 pl-3">Đơn vị</label>
+            <div class="w-full">
+                <select formControlName="unit_asset_id" class="input w-full">
+                    <option *ngFor="let unit_asset of data.prefixData.unit_asset" [value]="unit_asset.id">
+                        {{unit_asset.name}}
+                    </option>
+                </select>
+                <span class="validate block"
+                    *ngIf="(f.unit_asset_id.dirty || submitted===true) && errors?.unit_asset_id">
+                    (*{{errors?.unit_asset_id[0]}})
+                </span>
+            </div>
+        </div>
+        <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+            <label class="w-1/4 pl-3">Loại</label>
+            <div class="w-full">
+                <select formControlName="asset_type_id" class="input w-full">
+                    <option *ngFor="let asset_type of data.prefixData.asset_type" [value]="asset_type.id">
+                        {{asset_type.name}}
+                    </option>
+                </select>
+                <span class="validate block"
+                    *ngIf="(f.asset_type_id.dirty || submitted===true) && errors?.asset_type_id">
+                    (*{{errors?.asset_type_id[0]}})
+                </span>
+            </div>
+        </div>
+        <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+            <label class="w-1/4 pl-3">Miêu tả</label>
+            <div class="w-full">
+                <textarea formControlName="description" cols="30" rows="3"
+                    class="w-full input rounded-md border border-gray-400 bg-gray-100 px-3 py-2"></textarea>
+                <span class="validate block" *ngIf="(f.description.dirty || submitted===true) && errors?.description">
+                    (*{{errors?.description[0]}})
+                </span>
+            </div>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end" class="border-t border-gray-600 mt-2">
+        <button type="submit"
+            class="mt-2 px-4 mr-4 bg-main hover:bg-gray-200 text-white font-medium  rounded inline-flex items-center hover:text-green-600">Lưu</button>
+    </mat-dialog-actions>
+</form>

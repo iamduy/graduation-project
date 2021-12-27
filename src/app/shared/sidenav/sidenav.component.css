@@ -1,0 +1,95 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.example-is-mobile .example-toolbar {
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+}
+
+h1.example-app-name {
+  margin-left: 8px;
+}
+
+.example-sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+         causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+}
+
+.example-is-mobile .example-sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+         `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
+}
+
+/* Custom */
+.hidden {
+  display: none;
+}
+
+.mobile {
+  margin-top: 64px;
+}
+
+/* Header */
+.mat-toolbar-multiple-rows {
+  min-height: 50px;
+  background-color: #edf4f0;
+  box-shadow: 0 2px 2px -2px rgb(185, 185, 185);
+}
+
+.mat-toolbar-row,
+.mat-toolbar-single-row {
+  height: 50px;
+}
+
+/* Custom nav-list */
+.nav-list-custom {
+  background-color: #4caf93;
+  margin-top: 50px;
+}
+
+@media only screen and (min-width: 1024px) {
+  .nav-list-custom {
+    background-color: #4caf93;
+    margin-top: 0;
+  }
+}
+
+/* Custom matexpan */
+.mat-expansion-panel-content .mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
+.mat-nav-list {
+  padding-top: 0;
+}
+
+.mat-expansion-panel {
+  margin: 0;
+}
+
+.mat-list-item-content {
+  padding: 0;
+}
+
+.actived-item-sideBar {
+  background-color: #fff;
+  color: #4caf93;
+}
+
+/* ACTIVE */
+.show {
+  display: block;
+}
+.un-show {
+  display: none;
+}

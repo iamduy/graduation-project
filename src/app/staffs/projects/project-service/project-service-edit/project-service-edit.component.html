@@ -1,0 +1,150 @@
+<form [formGroup]="formEdit" (ngSubmit)="onSubmit()">
+  <div class="bg-white mt-4">
+    <p class="pl-2 font-medium text-sm sm:text-lg">CẬP NHẬT DỊCH VỤ DỰ ÁN</p>
+    <div class="px-8 py-4">
+      <div class="sm:flex sm:items-center border-b px-2 py-4 text-[#5e5d5d]">
+        <label class="w-1/4">Lựa chọn</label>
+        <div class="example-full-width w-full" appearance="fill">
+          <select
+            class="
+              input
+              w-full
+              h-auto
+              rounded-md
+              border border-gray-400
+              bg-gray-100
+              px-3
+            "
+            formControlName="permanent"
+          >
+             
+            <option [value]="0">Thu theo tháng</option>
+            <option [value]="1">Thu theo hợp đồng</option>
+          </select>
+        </div>
+      </div>
+      <div class="sm:flex sm:items-center border-b px-2 py-4 text-[#5e5d5d]">
+        <label class="w-1/4">Dịch vụ</label>
+        <div class="example-full-width w-full" appearance="fill">
+          <input
+            formControlName="name"
+            type="text"
+            class="
+              input
+              w-full
+              h-8
+              rounded-md
+              border border-gray-400
+              bg-gray-100
+              px-3
+            "
+          />
+          <span
+            class="validate block"
+            *ngIf="(f.name.touched || submitted) && f.name.errors?.required"
+          >
+            * Tên dịch vụ không được để trống
+          </span>
+        </div>
+      </div>
+      <div class="sm:flex sm:items-center border-b px-2 py-4 text-[#5e5d5d]">
+        <label class="w-1/4">Đơn giá</label>
+        <div class="example-full-width w-full" appearance="fill">
+          <input
+            formControlName="unit_price"
+            type="text"
+            class="
+              input
+              w-full
+              h-8
+              rounded-md
+              border border-gray-400
+              bg-gray-100
+              px-3
+            "
+          />
+          <span
+            class="validate block"
+            *ngIf="
+              (f.unit_price.touched || submitted) &&
+              f.unit_price.errors?.required
+            "
+          >
+            * Đơn giá không được để trống
+          </span>
+        </div>
+      </div>
+
+      <div class="sm:flex sm:items-center border-b px-2 py-4 text-[#5e5d5d]">
+        <label class="w-1/4">Đơn vị</label>
+        <div class="example-full-width w-full" appearance="fill">
+          <select
+            class="
+              input
+              w-full
+              h-auto
+              rounded-md
+              border border-gray-400
+              bg-gray-100
+              px-3
+            "
+            formControlName="unit"
+          >
+             
+            <option [value]="units?.electric?.unit">
+              {{ units?.electric?.unit }}
+            </option>
+            <option [value]="units?.water?.unit">
+              {{ units?.water?.unit }}
+            </option>
+            <option [value]="units?.other?.unit">
+              {{ units?.other?.unit }}
+            </option>
+          </select>
+          <span
+            class="validate block"
+            *ngIf="(f.unit.dirty || submitted) && errors?.unit"
+          >
+            * ({{ errors.unit[0] }})
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="pr-10 pt-4 float-right">
+      <div class="demo-button-container flex items-center justify-end">
+        <button
+          mat-dialog-close
+          class="
+            px-2
+            mr-2
+            bg-header
+            text-main
+            font-medium
+            rounded
+            inline-flex
+            items-center
+          "
+        >
+          <span>Huỷ</span>
+        </button>
+        <button
+          class="
+            px-2
+            mr-2
+            bg-green-300
+            hover:bg-gray-200
+            text-white
+            font-medium
+            rounded
+            inline-flex
+            items-center
+            hover:text-green-600
+          "
+        >
+          <span>Cập nhật</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+<app-loading-page *ngIf="isLoading === true"></app-loading-page>

@@ -1,0 +1,104 @@
+<div class="mx-auto">
+  <div class="p-4">
+    <div class="flex flex-col">
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="sm:flex py-2">
+        <div class="px-2 mb-1">
+          <input
+            class="sm:w-[200px] w-full input"
+            placeholder="Tiêu đề"
+            formControlName="title"
+          />
+        </div>
+
+        <div class="px-2 mb-1">
+          <select class="sm:w-[200px] w-full input" formControlName="level">
+            <option value="">Mức độ</option>
+            <option *ngFor="let level of levelNotice" [value]="level.value">
+              {{ level.label }}
+            </option>
+          </select>
+        </div>
+
+        <div class="px-2">
+          <button
+            class="
+              px-2
+              bg-main
+              rounded-md
+              text-white
+              hover:border-main hover:border hover:bg-white hover:text-main
+            "
+          >
+            Tìm kiếm
+          </button>
+        </div>
+      </form>
+
+      <div class="flex flex-row-reverse ">
+        <app-paginate
+          [current_button]="paging.page.value"
+          [last_button]="lastPage"
+          [total_item]="totalItems"
+          [total_button]="5"
+          (eventChangePage)="changePage($event)"
+        >
+        </app-paginate>
+      </div>
+    </div>
+
+    <table
+      *ngIf="data?.length > 0"
+      class="w-full border border-[#bdbdbd] rounded-lg my-3 bg-white overflow-auto"
+    >
+      <thead class="w-full px-3 border-b-2 border-[#bdbdbd] text-center">
+        <tr>
+          <th class="w-16 p-2 text-center">ID</th>
+          <th class="w-40 min-w-[75px] p-2 text-left">Tiêu đề</th>
+          <th class="max-w-[250px] min-w-[250px] p-2 text-left">Nội dung</th>
+          <th class="w-56 p-2 min-w-[120px] text-left">Sinh viên</th>
+          <th class="w-56 p-2 min-w-[120px] text-left">Loại thông báo</th>
+          <th class="w-56 p-2 min-w-[120px] text-left">Mức độ</th>
+          <th class="w-40 p-2 min-w-[75px] text-center">Chi tiết</th>
+        </tr>
+      </thead>
+      <tbody class="w-full px-3 border-[#bdbdbd] text-center">
+        <tr *ngFor="let d of data" class="border-b border-[#bdbdbd]">
+          <td class="w-16 p-2 text-center">{{ d?.id }}</td>
+          <td class="w-40 p-2 text-left">{{ d?.title }}</td>
+          <td
+            (click)="expandText(d?.id)"
+            class="p-2 max-w-[250px] min-w-[250px] text-left cursor-pointer {{
+              expand.id === d?.id && expand.status ? null : 'expand-text'
+            }}"
+          >
+            {{ d?.content }}
+          </td>
+          <td class="w-56 p-2 text-left">
+            {{ [d?.user?.last_name, d?.user?.first_name].join(" ") }}
+          </td>
+
+          <td class="w-56 p-2 text-left">{{ d?.typeAnnounce?.name }}</td>
+          <td class="w-56 p-2 text-left">{{ d?.level }}</td>
+          <td class="w-40 p-2 text-center">
+            <button class="text-main underline" (click)="detailNotice(d?.id)">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clipboard-list" width="32"
+                    height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                    <rect x="9" y="3" width="6" height="4" rx="2" />
+                    <line x1="9" y1="12" x2="9.01" y2="12" />
+                    <line x1="13" y1="12" x2="15" y2="12" />
+                    <line x1="9" y1="16" x2="9.01" y2="16" />
+                    <line x1="13" y1="16" x2="15" y2="16" />
+                  </svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <app-no-data *ngIf="data?.length === 0"></app-no-data>
+</div>
+
+<app-loading-page *ngIf="isLoading"></app-loading-page>

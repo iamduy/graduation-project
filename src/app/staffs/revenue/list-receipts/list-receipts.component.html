@@ -1,0 +1,191 @@
+<div class="px-2">
+  <div
+    class="border rounded-lg border-green-400 px-3 bg-white"
+    x-data="{ Open : false  }"
+  >
+    <button
+      x-on:click="Open = !Open"
+      class="
+        text-gray-600
+        inline-flex
+        items-center
+        justify-between
+        w-full
+        text-lg
+        font-medium
+        transition-colors
+        duration-150
+        px-2
+      "
+    >
+      <span class="inline-flex items-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          x-show="!Open"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-chevron-up"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"
+          />
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          x-show="Open"
+          class="w-4 h-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          style="display: none"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+        <span class="ml-2">Tìm kiếm</span>
+      </span>
+    </button>
+    <div x-show.transition="Open" style="display: none">
+      <div
+        class="overflow-hidden text-sm font-medium text-gray-700 pb-3 px-2"
+        aria-label="submenu"
+      >
+        <form
+          [formGroup]="searchForm"
+          (ngSubmit)="onSearch()"
+          class="sm:flex sm:items-center"
+        >
+          <div class="col-span-2 px-2 mb-1">
+            <input
+              placeholder="Tên sinh viên"
+              type="text"
+              class="
+                border
+                rounded-lg
+                px-3
+                py-2
+                text-sm
+                w-full
+                focus:outline-none
+                input
+              "
+              formControlName="name"
+            />
+          </div>
+
+          <div class="col-span-2 px-2 mb-1">
+            <input
+              type="date"
+              class="
+                border
+                rounded-lg
+                px-3
+                py-2
+                text-sm
+                w-full
+                focus:outline-none
+                input
+              "
+              formControlName="collection_date"
+            />
+          </div>
+          <div class="col-span-2 px-2">
+            <button
+              class="
+                px-2
+                bg-main
+                rounded-md
+                text-white
+                hover:border-main hover:border hover:bg-white hover:text-main
+              "
+            >
+              Tìm kiếm
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-end pr-3 items-center mt-3">
+    <!-- firstpage -->
+    <app-paginate
+      [current_button]="paging.page.value"
+      [last_button]="lastPage"
+      [total_item]="totalItems"
+      [total_button]="3"
+      (eventChangePage)="changePage($event)"
+    >
+    </app-paginate>
+  </div>
+  <div class="pr-4">
+    <main *ngIf="totalItems > 0">
+      <div class="overflow-auto mt-3">
+        <table
+          class="
+            text-left
+            w-full
+            wrapper-table
+            table-auto
+            border border-[#bdbdbd]
+            rounded-lg
+          "
+        >
+          <thead
+            class="
+              w-full
+              border-b-2
+              uppercase
+              text-[#00836b] text-sm
+              border-[#bdbdbd]
+            "
+          >
+            <tr class="w-full">
+              <th class="py-3 px-2">ID</th>
+              <th class="py-3 px-2">Sinh viên</th>
+              <th class="py-3 px-2">Ngày thu</th>
+              <th class="py-3 px-2">Phương thức thanh toán</th>
+              <th class="py-3 px-2">Lý do thu</th>
+              <th class="py-3 px-2 text-center">Chi tiết phiếu</th>
+            </tr>
+          </thead>
+
+          <tbody
+            class="w-full text-gray-600 text-sm font-light bg-white divide-y"
+          >
+            <tr *ngFor="let c of data" class="w-full">
+              <td class="py-3 px-1">{{ c?.id }}</td>
+              <td class="py-3 px-1">
+                {{ c?.nameStudent }}
+              </td>
+              <td class="py-3 px-1">
+                {{ c?.date_time }}
+              </td>
+              <td class="py-3 px-1">
+                {{ c?.payment_type }}
+              </td>
+              <td class="py-3 px-1">
+                {{ c?.receipts_reason?.title }}
+              </td>
+              <td class="py-3 px-1 text-center">
+                <button
+                  (click)="DetailInfoReceipt(c?.id)"
+                  class="text-secondary underline"
+                >
+                  xem
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+<app-loading-page *ngIf="isLoading"></app-loading-page>

@@ -1,0 +1,89 @@
+<div mat-dialog-title class="bg-white">
+    <p class="pl-2 pt-2 font-medium text-lg">
+        TẠO MỚI CÔNG VIỆC
+    </p>
+</div>
+<mat-dialog-content class="mat-typography">
+
+    <form [formGroup]="taskCreateForm" (ngSubmit)="onSubmit()">
+        <div class="">
+            <!-- left -->
+            <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                <label class="w-1/4">Tiêu đề (*)</label>
+                <div class="w-full">
+                    <input formControlName="title" type="text"
+                        class="input w-full h-8 rounded-md border border-gray-400 bg-gray-100 px-3">
+                    <span class="validate block" *ngIf="(f.title.dirty || submitted===true) && errors?.title">
+                        (*{{errors?.title[0]}})
+                    </span>
+                </div>
+            </div>
+
+            <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                <label class="w-1/4">Mức độ ưu tiên</label>
+                <div class="w-full">
+                    <select formControlName="priority" class="input w-full">
+                        <option *ngFor="let priority of prefixData.priority_list" [value]="priority.priority_id">
+                            {{priority.priority_name}}
+                        </option>
+                    </select>
+                    <span class="validate block" *ngIf="(f.priority.dirty || submitted===true) && errors?.priority">
+                        (*{{errors?.priority[0]}})
+                    </span>
+                </div>
+            </div>
+
+            <!-- Date -->
+            <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                <label class="w-1/4">Bắt đầu - kết thúc</label>
+                <div class="w-full mb-1 md:w-full  input h-8 rounded-md border border-gray-400 bg-gray-100 flex items-center relative">
+                    <mat-date-range-input [rangePicker]="picker"
+                        class="w-full">
+                        <input matStartDate formControlName="date_start" placeholder="Bắt đầu -">
+                        <input matEndDate formControlName="date_end" placeholder="kết thúc">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+
+                    <span class="validate block" *ngIf="(f.date_start.dirty || submitted===true) && errors?.date_start">
+                        (*{{errors?.date_start[0]}})
+                    </span>
+                    <span class="validate block" *ngIf="(f.date_end.dirty || submitted===true) && errors?.date_end">
+                        (*{{errors?.date_end[0]}})
+                    </span>
+                </div>
+            </div>
+
+            <!-- Người thực hiện -->
+            <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                <label class="w-1/4">Người thực hiện</label>
+                <div class="w-full">
+                    <select formControlName="user_undertake_id" class="input w-full">
+                        <option *ngFor="let user_undertake_id of prefixData.staffs" [value]="user_undertake_id.id">
+                            {{user_undertake_id.last_name}} {{user_undertake_id.first_name}}</option>
+                    </select>
+                    <span class="validate block"
+                        *ngIf="(f.user_undertake_id.dirty || submitted===true) && errors?.user_undertake_id">
+                        (*{{errors?.user_undertake_id[0]}})
+                    </span>
+                </div>
+            </div>
+
+            <!-- Desc -->
+            <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                <label class="w-1/4">Ghi chú</label>
+                <div class="w-full">
+                    <textarea formControlName="desc" cols="30" rows="3"
+                        class="w-full input rounded-md border border-gray-400 bg-gray-100 px-3 py-2"></textarea>
+                    <span class="validate block" *ngIf="(f.desc.dirty || submitted===true) && errors?.desc">
+                        (*{{errors?.desc[0]}})
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div align="end" class="border-t border-gray-600 mt-2">
+            <button type="submit"
+                class="mt-2 px-4 mr-4 bg-main hover:bg-gray-200 text-white font-medium  rounded inline-flex items-center hover:text-green-600">Lưu</button>
+        </div>
+    </form>
+</mat-dialog-content>

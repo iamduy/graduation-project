@@ -1,0 +1,163 @@
+<div class="flex items-center bg-white rounded-lg px-2">
+  <div class="text-secondary">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="icon icon-tabler icon-tabler-building-community"
+      width="35"
+      height="35"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path
+        d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8"
+      />
+      <line x1="13" y1="7" x2="13" y2="7.01" />
+      <line x1="17" y1="7" x2="17" y2="7.01" />
+      <line x1="17" y1="11" x2="17" y2="11.01" />
+      <line x1="17" y1="15" x2="17" y2="15.01" />
+    </svg>
+  </div>
+  <p class="pl-2 pt-4 font-medium text-lg">CẬP NHẬT TÒA NHÀ</p>
+</div>
+<!-- form -->
+<form [formGroup]="buildingUpdateForm" (ngSubmit)="onSubmit()">
+  <div class="bg-white mt-4">
+    <!-- left -->
+    <div class="px-8 py-4">
+      <div class="flex items-center border-b px-2 py-4 text-[#5e5d5d]">
+        <label class="w-1/4">Tên (*)</label>
+        <div class="example-full-width w-2/3" appearance="fill">
+          <input
+            formControlName="name"
+            type="text"
+            class="
+              input
+              w-2/3
+              h-8
+              rounded-md
+              border border-gray-400
+              bg-gray-100
+              px-3
+            "
+            placeholder="......"
+          />
+          <span
+            class="validate block"
+            *ngIf="(F.name.dirty || submitted === true) && errors?.name"
+          >
+            ({{ errors?.name[0] }})
+          </span>
+        </div>
+      </div>
+      <div class="flex items-center border-b px-2 py-4 text-[#5e5d5d]">
+        <label class="w-1/4">Diện tích (*)</label>
+        <div class="example-full-width w-2/3" appearance="fill">
+          <input
+            formControlName="total_area"
+            type="text"
+            class="
+              input
+              w-2/3
+              h-8
+              rounded-md
+              border border-gray-400
+              bg-gray-100
+              px-3
+            "
+            placeholder="......"
+          />
+          <span
+            class="validate block"
+            *ngIf="
+              (F.total_area.dirty || submitted === true) && errors?.total_area
+            "
+          >
+            ({{ errors?.total_area[0] }})
+          </span>
+        </div>
+      </div>
+      <!-- right -->
+      <div class="flex items-center border-b px-2 py-4 text-[#5e5d5d]">
+        <label class="w-1/4">Chọn dự án</label>
+        <div class="example-full-width w-2/3" appearance="fill">
+          <select
+            formControlName="project_id"
+            class="
+              input
+              w-2/3
+              h-8
+              rounded-md
+              border border-gray-400
+              bg-gray-100
+              px-3
+            "
+          >
+            <option *ngFor="let pro of projects" [value]="pro.id">
+              {{ pro.name }}
+            </option>
+          </select>
+          <span
+            class="validate block"
+            *ngIf="
+              (F.project_id.dirty || submitted === true) && errors?.project_id
+            "
+          >
+            ({{ errors?.project_id[0] }})
+          </span>
+        </div>
+      </div>
+      <div class="flex items-center border-b border-t px-2 py-4 text-[#5e5d5d]">
+        <label class="w-1/4">Ghi chú</label>
+        <div class="example-full-width w-2/3" appearance="fill">
+          <textarea
+            rows="5"
+            formControlName="note"
+            class="
+              w-2/3
+              input
+              rounded-md
+              border border-gray-400
+              bg-gray-100
+              px-3
+            "
+            placeholder="......"
+          ></textarea>
+          <span
+            class="validate block"
+            *ngIf="(F.note.dirty || submitted === true) && errors?.note"
+          >
+            ({{ errors?.note[0] }})
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pr-10 pt-4 float-right">
+      <div class="demo-button-container flex items-center float-right">
+        <button
+          type="submit"
+          class="
+            px-2
+            mr-2
+            bg-green-300
+            hover:bg-gray-200
+            text-white
+            font-medium
+            rounded
+            inline-flex
+            items-center
+            hover:text-green-600
+          "
+        >
+          <span>Lưu</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+<app-loading-page *ngIf="isLoading"></app-loading-page>

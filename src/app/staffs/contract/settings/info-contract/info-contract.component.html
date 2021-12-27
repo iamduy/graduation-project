@@ -1,0 +1,704 @@
+<div class="bg-white border-b mb-2 pb-1 flex justify-between">
+  <span class="text-secondary text-lg font-semibold uppercase"
+    >Thông tin hợp đồng</span
+  >
+
+  <span class="text-secondary" mat-dialog-close>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="feather feather-x"
+    >
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </span>
+</div>
+<mat-tab-group mat-align-tabs="start">
+  <mat-tab label="Thông tin hợp đồng" class="overflow-hidden">
+    <div
+      class="
+        xl:grid xl:grid-cols-2 xl:gap-4
+        lg:grid lg:grid-cols-2 lg:gap-4
+        p-6
+        overflow-x-auto
+      "
+    >
+      <div class="border border-gray-300 p-4">
+        <div class="grid gap-2 grid-cols-2 py-3">
+          <span class="text-base font-normal">Mã hợp đồng :</span>
+          {{ contractInfo?.id }}
+        </div>
+        <div class="grid gap-2 grid-cols-2 py-3">
+          <span class="text-base font-normal">Trạng thái cọc:</span>
+          <span
+            [ngClass]="
+              contractInfo?.deposit_state === 0 ? 'text-error' : 'text-success'
+            "
+          >
+            {{ contractInfo?.deposit_state === 0 ? "Chưa thu" : "Đã thu" }}
+          </span>
+        </div>
+        <div class="grid gap-2 grid-cols-2 py-3">
+          <span class="text-base font-normal">Ngày vào :</span>
+          {{ stat_day }}
+        </div>
+        <div class="grid gap-2 grid-cols-2 py-3">
+          <span class="text-base font-normal">Ngày dự kiến thanh lý :</span>
+          {{ end_day }}
+        </div>
+        <div class="grid gap-2 grid-cols-2 py-3">
+          <span class="text-base font-normal">Sinh viên :</span>
+          {{
+            [
+              contractInfo?.user?.last_name,
+              contractInfo?.user?.first_name
+            ].join(" ")
+          }}
+        </div>
+        <div class="grid gap-2 grid-cols-2 py-3">
+          <span class="text-base font-normal">Mã sinh viên :</span>
+          {{ contractInfo?.user?.student_info?.student_code }}
+        </div>
+        <div class="grid gap-2 grid-cols-2 py-3">
+          <span class="text-base font-normal">Điện thoại :</span>
+          {{ contractInfo?.user?.phone }}
+        </div>
+        <div class="flex justify-end items-center">
+          <p class="pt-3 pr-3 text-gray-400">Ấn vào đây để sửa</p>
+          <button
+            (click)="Enabled()"
+            class="
+              text-pink
+              cursor-pointer
+              bg-white
+              border border-pink
+              focus:outline-none focus:ring focus:ring-violet-300
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-pencil"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+              <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+            </svg>
+          </button>
+        </div>
+        <form [formGroup]="FormUpdate">
+          <div class="grid gap-2 grid-cols-2 py-3">
+            <span class="text-base font-normal">Giá thuê :</span>
+            <input
+              type="text"
+              placeholder="Đơn giá"
+              class="
+                px-2
+                py-1
+                placeholder-gray-400
+                text-gray-600
+                rounded-md
+                text-sm
+                border border-gray-400
+                focus:outline-none
+                w-full
+              "
+              formControlName="price"
+            />
+            <span
+              class="validate"
+              *ngIf="
+                (isBoolean.submitted || FormControls.price.touched) &&
+                FormControls.price.errors?.required
+              "
+              >* Trường không được bỏ trống !</span
+            >
+            <span
+              class="validate"
+              *ngIf="FormControls.price.errors?.invalidNumber"
+              >* Trường chỉ nhập số</span
+            >
+          </div>
+
+          <div class="grid gap-2 grid-cols-2 py-3 relative">
+            <span class="text-base font-normal">Tiền cọc :</span>
+            <input
+              type="text"
+              placeholder="Đơn giá"
+              class="
+                px-2
+                py-1
+                placeholder-gray-400
+                text-gray-600
+                relative
+                rounded-md
+                text-sm
+                border border-gray-400
+                focus:outline-none
+                w-full
+              "
+              formControlName="deposit"
+            />
+            <span
+              class="validate"
+              *ngIf="
+                (isBoolean.submitted || FormControls.deposit.touched) &&
+                FormControls.deposit.errors?.required
+              "
+              >* Trường không được bỏ trống !</span
+            >
+            <span
+              class="validate"
+              *ngIf="FormControls.deposit.errors?.invalidNumber"
+              >* Trường chỉ nhập số</span
+            >
+          </div>
+
+          <button
+            (click)="onSubmit()"
+            class="bg-main text-white px-2 rounded-md"
+          >
+            Cập nhật
+          </button>
+        </form>
+      </div>
+
+      <div *ngIf="tableServices?.length > 0">
+        <p class="text-lg font-semibold">Danh sách dịch vụ đã đăng kí</p>
+
+        <table
+          mat-table
+          [dataSource]="tableServices"
+          class="mat-elevation-z8 w-full mt-2 shadow"
+        >
+          <ng-container matColumnDef="id" class="h-20">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              class="text-gray-500 font-medium text-sm bg-[#fffaf0]"
+            >
+              ID
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element?.id }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              class="text-gray-500 font-medium text-sm bg-[#fffaf0]"
+            >
+              Dịch vụ
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element?.name }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="unit_price">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              class="text-gray-500 font-medium text-sm bg-[#fffaf0]"
+            >
+              Đơn giá
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element?.unit_price }}
+            </td>
+          </ng-container>
+          <!-- Symbol Column -->
+
+          <ng-container matColumnDef="unit">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              class="text-gray-500 font-medium text-sm bg-[#fffaf0]"
+            >
+              Đơn vị
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element?.unit }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="permanent">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              class="text-gray-500 font-medium text-sm bg-[#fffaf0]"
+            >
+              Loại
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element?.permanent === 0 ? "Theo tháng" : "Theo chu kì" }}
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Khách thuê" class="wrapper">
+    <div class="flex m-3 w-full xl:p-4 lg:p-4 border-gray-300 sm:p-0 sm:m-0">
+      <table class="xl:w-1/2 lg:w-1/2 md:w-full sm:w-full my-4">
+        <thead>
+          <tr>
+            <td class="font-medium p-2 border border-gray-300">Mã sinh viên</td>
+            <td class="font-normal p-2 border border-gray-300">
+              {{ contractInfo?.user?.student_info?.student_code }}
+            </td>
+          </tr>
+          <tr>
+            <td class="font-medium p-2 border border-gray-300">
+              Tên sinh viên
+            </td>
+            <td class="font-normal p-2 border border-gray-300">
+              {{
+                [
+                  contractInfo?.user?.last_name,
+                  contractInfo?.user?.first_name
+                ].join(" ")
+              }}
+            </td>
+          </tr>
+          <tr>
+            <td class="font-medium p-2 border border-gray-300">Điện thoại</td>
+            <td class="font-normal p-2 border border-gray-300">
+              {{ contractInfo?.user?.phone }}
+            </td>
+          </tr>
+          <tr>
+            <td class="font-medium p-2 border border-gray-300">Email</td>
+            <td class="font-normal p-2 border border-gray-300">
+              {{ contractInfo?.user?.email }}
+            </td>
+          </tr>
+          <tr>
+            <td class="font-medium p-2 border border-gray-300">Địa chỉ</td>
+            <td class="font-normal p-2 border border-gray-300">
+              {{ contractInfo?.user?.address }}
+            </td>
+          </tr>
+          <tr>
+            <td class="font-medium p-2 border border-gray-300">Giới tính</td>
+            <td
+              class="font-normal p-2 border border-gray-300"
+              class="{{
+                contractInfo?.user?.gender === 1 ? 'text-main' : 'text-pink'
+              }}"
+            >
+              {{ contractInfo?.user?.gender === 0 ? "Nữ" : "Nam" }}
+            </td>
+          </tr>
+          <tr>
+            <td class="font-medium p-2 border border-gray-300">Trạng thái</td>
+            <td
+              class="font-medium p-2 border border-gray-300"
+              class="{{
+                contractInfo?.user?.status === 1 ? 'text-main' : 'text-error'
+              }}"
+            >
+              {{
+                contractInfo?.user?.status === 0
+                  ? "Chưa kích hoạt"
+                  : "Đã kích hoạt"
+              }}
+            </td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </mat-tab>
+  <mat-tab label="Lịch sử thu phí" class="wrapper">
+    <mat-expansion-panel
+      *ngFor="let invoice of TableInvoice"
+      class="shadow-md rounded-md"
+      [disabled]="invoice?.status === 0 ? true : false"
+    >
+      <mat-expansion-panel-header class="">
+        <mat-panel-title>
+          {{ invoice?.date_time }}
+          <span
+            class="rounded-md ml-4 p-2 text-white {{
+              invoice?.status === 1 ? 'bg-success' : 'bg-error'
+            }}"
+          >
+            {{ invoice?.status === 1 ? "Đã tạo hoá đơn" : "Chưa tạo hoá đơn" }}
+          </span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <p class="text-md font-bold">
+        Sinh viên : <span class="text-main">{{ invoice?.nameStudent }}</span>
+      </p>
+
+      <span
+        class="font-semibold text-md leading-10"
+        *ngIf="TableService != null"
+        >Bảng thu phí dịch vụ</span
+      >
+      <table class="items-center bg-white w-full shadow-md rounded-md">
+        <thead class="bg-[#fffaf0]">
+          <tr>
+            <th
+              class="
+                px-6
+                align-middle
+                py-3
+                text-md
+                uppercase
+                border-l-0 border-r-0
+                whitespace-nowrap
+                font-semibold
+                text-left
+              "
+            >
+              Dịch vụ
+            </th>
+            <th
+              class="
+                px-6
+                align-middle
+                py-3
+                text-md
+                uppercase
+                border-l-0 border-r-0
+                whitespace-nowrap
+                font-semibold
+                text-left
+              "
+            >
+              Ngày thu
+            </th>
+            <th
+              class="
+                px-6
+                align-middle
+                py-3
+                text-md
+                uppercase
+                border-l-0 border-r-0
+                whitespace-nowrap
+                font-semibold
+                text-left
+              "
+            >
+              Loại phí
+            </th>
+            <th
+              class="
+                px-6
+                align-middle
+                py-3
+                text-md
+                uppercase
+                border-l-0 border-r-0
+                whitespace-nowrap
+                font-semibold
+                text-left
+              "
+            >
+              Đơn vị
+            </th>
+            <th
+              class="
+                px-6
+                align-middle
+                py-3
+                text-md
+                uppercase
+                border-l-0 border-r-0
+                whitespace-nowrap
+                font-semibold
+                text-left
+              "
+            >
+              Đơn giá
+            </th>
+            <th
+              class="
+                px-6
+                align-middle
+                py-3
+                text-md
+                uppercase
+                border-l-0 border-r-0
+                whitespace-nowrap
+                font-semibold
+                text-left
+              "
+            >
+              Thành tiền
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let service of TableService">
+            <th
+              class="
+                border-t-0
+                px-6
+                align-middle
+                border-l-0 border-r-0
+                text-md
+                whitespace-nowrap
+                p-4
+                text-left text-blueGray-700
+              "
+            >
+              {{ service?.name }}
+            </th>
+            <td
+              class="
+                border-t-0
+                px-6
+                align-middle
+                border-l-0 border-r-0
+                text-md
+                whitespace-nowrap
+                p-4
+              "
+            >
+              {{ service?.date_collect }}
+            </td>
+            <td
+              class="
+                border-t-0
+                px-6
+                align-middle
+                border-l-0 border-r-0
+                text-md
+                whitespace-nowrap
+                p-4
+              "
+            >
+              {{ service?.permanent }}
+            </td>
+            <td
+              class="
+                border-t-0
+                px-6
+                align-middle
+                border-l-0 border-r-0
+                text-md
+                whitespace-nowrap
+                p-4
+              "
+            >
+              {{ service?.unit }}
+            </td>
+            <td
+              class="
+                border-t-0
+                px-6
+                align-middle
+                border-l-0 border-r-0
+                text-md
+                whitespace-nowrap
+                p-4
+              "
+            >
+              {{ service?.unit_price }} VND
+            </td>
+            <td
+              class="
+                border-t-0
+                px-6
+                align-middle
+                border-l-0 border-r-0
+                text-md
+                whitespace-nowrap
+                p-4
+              "
+            >
+              {{ service?.total_money }} VND
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <span class="font-semibold text-md leading-10">Bảng thu phí phòng</span>
+      <table class="items-center bg-white w-full shadow-md rounded-md">
+        <thead class="bg-[#fffaf0]">
+          <tr>
+            <th
+              class="
+                px-6
+                align-middle
+                py-3
+                text-md
+                uppercase
+                border-l-0 border-r-0
+                whitespace-nowrap
+                font-semibold
+                text-left
+              "
+            >
+              Ngày thu
+            </th>
+            <th
+              class="
+                px-6
+                align-middle
+                py-3
+                text-md
+                uppercase
+                border-l-0 border-r-0
+                whitespace-nowrap
+                font-semibold
+                text-left
+              "
+            >
+              Nội dung
+            </th>
+            <th
+              class="
+                px-6
+                align-middle
+                py-3
+                text-md
+                uppercase
+                border-l-0 border-r-0
+                whitespace-nowrap
+                font-semibold
+                text-left
+              "
+            >
+              Đơn vị
+            </th>
+            <th
+              class="
+                px-6
+                align-middle
+                py-3
+                text-md
+                uppercase
+                border-l-0 border-r-0
+                whitespace-nowrap
+                font-semibold
+                text-left
+              "
+            >
+              Đơn giá
+            </th>
+            <th
+              class="
+                px-6
+                align-middle
+                py-3
+                text-md
+                uppercase
+                border-l-0 border-r-0
+                whitespace-nowrap
+                font-semibold
+                text-left
+              "
+            >
+              Thành tiền
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <th
+              class="
+                border-t-0
+                px-6
+                align-middle
+                border-l-0 border-r-0
+                text-md
+                whitespace-nowrap
+                p-4
+                text-left text-blueGray-700
+              "
+            >
+              {{ invoice?.date_collect }}
+            </th>
+            <th
+              class="
+                border-t-0
+                px-6
+                align-middle
+                border-l-0 border-r-0
+                text-md
+                whitespace-nowrap
+                p-4
+                text-left text-blueGray-700
+              "
+            >
+              {{ invoice?.invoice_detail?.room_fee_info?.name }}
+            </th>
+            <td
+              class="
+                border-t-0
+                px-6
+                align-middle
+                border-l-0 border-r-0
+                text-md
+                whitespace-nowrap
+                p-4
+              "
+            >
+              {{ invoice?.invoice_detail?.room_fee_info?.unit }}
+            </td>
+            <td
+              class="
+                border-t-0
+                px-6
+                align-middle
+                border-l-0 border-r-0
+                text-md
+                whitespace-nowrap
+                p-4
+              "
+            >
+              {{ invoice?.invoice_detail?.room_fee_info?.unit_price }} VND
+            </td>
+            <td
+              class="
+                border-t-0
+                px-6
+                align-middle
+                border-l-0 border-r-0
+                text-md
+                whitespace-nowrap
+                p-4
+              "
+            >
+              {{ invoice?.invoice_detail?.room_fee_info?.total_money }} VND
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <mat-list>
+        <mat-divider></mat-divider>
+        <div class="flex justify-between leading-10 font-bold text-md">
+          <span> Tổng tiền </span>
+          <div>
+            <span class="text-error">{{ invoice?.total_money }}</span> VND
+          </div>
+        </div>
+      </mat-list>
+    </mat-expansion-panel>
+  </mat-tab>
+</mat-tab-group>
+
+<app-loading-page *ngIf="isBoolean.loading"></app-loading-page>

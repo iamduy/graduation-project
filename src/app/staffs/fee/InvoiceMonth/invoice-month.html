@@ -1,0 +1,318 @@
+<div class="bg-white border-b mb-2 pb-1 flex justify-between">
+  <span class="py-3 font-medium">LƯU THÔNG TIN HÓA ĐƠN</span>
+
+  <span class="text-secondary" mat-dialog-close>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="feather feather-x"
+    >
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </span>
+</div>
+
+<div class="py-2">
+  Lưu ý :
+  <span class="text-error"
+    >Sau khi tạo hoá đơn thì dự án của hoá đơn đó không thể xoá</span
+  >
+</div>
+
+<form [formGroup]="formPayment" (ngSubmit)="onUpdateInvoice()">
+  <mat-dialog-content>
+    <div class="wrapper-table sm:grid sm:grid-cols-2">
+      <table class="table-auto w-full">
+        <thead>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Dự án</td>
+            <td
+              class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-medium
+              "
+            >
+              <input
+                type="text"
+                class="w-full input"
+                disabled
+                [value]="roomInfo?.project?.name"
+              />
+            </td>
+          </tr>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Toà</td>
+            <td
+              class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-medium
+              "
+            >
+              <input
+                type="text"
+                class="w-full input"
+                disabled
+                [value]="roomInfo?.building?.name"
+              />
+            </td>
+          </tr>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Tầng</td>
+            <td
+              class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-medium
+              "
+            >
+              <input
+                type="text"
+                class="w-full input"
+                disabled
+                [value]="roomInfo?.floor?.name"
+              />
+            </td>
+          </tr>
+        </thead>
+      </table>
+      <table class="table-auto w-full">
+        <thead>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">
+              Trạng thái dịch vụ
+            </td>
+            <td
+              class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-medium
+              "
+            >
+              <input
+                type="text"
+                class="w-full input"
+                disabled
+                [value]="notice"
+              />
+            </td>
+          </tr>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Phòng</td>
+            <td
+              class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-medium
+              "
+            >
+              <input
+                type="text"
+                class="w-full input"
+                disabled
+                [value]="roomInfo?.room?.name"
+              />
+            </td>
+          </tr>
+
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">
+              Phương thức thanh toán
+            </td>
+            <td
+              class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-normal
+              "
+            >
+              <select class="input w-full" formControlName="payment_type">
+                <option value="Tiền mặt">Tiền mặt</option>
+                <option value="Chuyển khoản">Chuyển khoản</option>
+              </select>
+            </td>
+          </tr>
+          <tr></tr>
+        </thead>
+      </table>
+    </div>
+
+    <div class="overflow-auto">
+      <table class="table-auto w-full my-3 col-span-2">
+        <thead>
+          <tr class="bg-gray-200">
+            <th
+              class="
+                border border-gray-400
+                p-2
+                font-semibold
+                text-xs text-gray-600 text-center
+              "
+            >
+              STT
+            </th>
+            <th
+              class="
+                border border-gray-400
+                p-2
+                font-semibold
+                text-xs text-gray-600 text-center
+              "
+            >
+              DỊCH VỤ
+            </th>
+
+            <th
+              class="
+                border border-gray-400
+                p-2
+                font-semibold
+                text-xs text-gray-600 text-center
+              "
+            >
+              ĐƠN VỊ
+            </th>
+            <th
+              class="
+                border border-gray-400
+                p-2
+                font-semibold
+                text-xs text-gray-600 text-center
+              "
+            >
+              ĐƠN GIÁ
+            </th>
+            <th
+              class="
+                border border-gray-400
+                p-2
+                font-semibold
+                text-xs text-gray-600 text-center
+              "
+            >
+              CHỈ SỐ
+            </th>
+            <th
+              class="
+                border border-gray-400
+                p-2
+                font-semibold
+                text-xs text-gray-600 text-center
+              "
+            >
+              THÀNH TIỀN
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let service of tableService ; let i = index">
+            <td class="border border-gray-400 p-2 bg-white text-center">
+              {{i + 1}}
+            </td>
+            <td class="border border-gray-400 p-2 bg-white text-center">
+              {{service?.name}}
+            </td>
+            <td class="border border-gray-400 p-2 bg-white text-center">
+              {{service?.unit}}
+            </td>
+            <td class="border border-gray-400 p-2 bg-white text-center">
+              {{service?.unit_price}} VND
+            </td>
+            <td class="border border-gray-400 p-2 bg-white text-center">
+              {{service?.index}}
+            </td>
+            <td class="border border-gray-400 p-2 bg-white text-center">
+              {{service?.total_money}} VND
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div
+      class="
+        w-full
+        bg-[#fff2c0]
+        rounded-sm
+        shadow
+        p-3
+        text-secondary
+        font-medium
+        flex
+        justify-between
+      "
+    >
+      <span class="font-bold"> Tổng tiền : </span>
+      <span> {{totalMoney}} VND </span>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <div class="flex justify-end">
+      <button
+        mat-dialog-close
+        class="
+          px-4
+          mt-4
+          mr-3
+          text-main
+          font-medium
+          rounded
+          inline-flex
+          items-center
+          bg-header
+        "
+      >
+        Huỷ
+      </button>
+      <button
+        type="submit"
+        class="
+          px-4
+          mt-4
+          text-white
+          font-medium
+          rounded
+          inline-flex
+          items-center
+          bg-main
+        "
+      >
+        Lưu
+      </button>
+    </div>
+  </mat-dialog-actions>
+</form>
+
+<app-loading-page *ngIf="isLoading"></app-loading-page>

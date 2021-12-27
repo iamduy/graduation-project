@@ -1,0 +1,116 @@
+<div class="mx-auto ml-3 relative">
+  <div class="px-4">
+    <div class="flex items-center py-2">
+      <app-paginate
+        [current_button]="paging.page.value"
+        [last_button]="lastPage"
+        [total_item]="totalItems"
+        [total_button]="5"
+        (eventChangePage)="changePage($event)"
+      >
+      </app-paginate>
+    </div>
+
+    <div class="overflow-auto shadow">
+      <table
+        class="
+          text-left
+          w-full
+          wrapper-table
+          table-auto
+          border border-[#bdbdbd]
+          rounded-lg
+        "
+      >
+        <thead
+          class="
+            flex
+            w-full
+            border-b-2
+            uppercase
+            font-medium
+            text-[#00836b]
+            border-[#bdbdbd]
+          "
+        >
+          <tr class="flex w-full">
+            <th class="p-2 w-16 text-center text-xs">ID</th>
+            <th class="p-2 w-56 text-xs">Dịch vụ</th>
+            <th class="p-2 w-40 text-xs">Dự án</th>
+            <th class="p-2 w-40 text-xs">Toà nhà</th>
+            <th class="p-2 w-40 text-xs">Tầng</th>
+            <th class="p-2 w-40 text-xs">Phòng</th>
+            <th class="p-2 w-40 text-xs">Trạng thái</th>
+            <th class="p-2 w-56 text-xs">Phương thức thanh toán</th>
+            <th class="p-2 w-40 text-xs">Tổng tiền</th>
+            <th class="p-2 w-40 text-xs">Ngày thanh toán</th>
+            <th class="p-2 text-xs max-w-[250px] min-w-[250px]">Nội dung</th>
+          </tr>
+        </thead>
+        <tbody
+          class="
+            flex flex-col
+            overflow-auto
+            w-full
+            text-gray-600 text-sm
+            font-light
+            bg-white
+            divide-y
+          "
+        >
+          <tr *ngFor="let d of data">
+            <td class="p-2 w-16 text-center">{{ d?.invoice_detail?.id }}</td>
+
+            <td (click)="expandText(d?.id)" class="p-2 w-56">
+              <span *ngFor="let p of d?.invoice_detail?.project_service_info">
+                <p>{{ p?.name }}</p>
+              </span>
+            </td>
+
+            <td class="p-2 w-40">
+              {{ d?.invoice_detail?.room_info?.project?.name }}
+            </td>
+            <td class="p-2 w-40">
+              {{ d?.invoice_detail?.room_info?.building?.name }}
+            </td>
+            <td class="p-2 w-40">
+              {{ d?.invoice_detail?.room_info?.floor?.name }}
+            </td>
+            <td class="p-2 w-40">
+              {{ d?.invoice_detail?.room_info?.room?.name }}
+            </td>
+            <td
+              class="font-medium p-2 w-40 {{
+                d?.invoice_detail?.status === 'Đã thu'
+                  ? 'text-success'
+                  : 'text-error'
+              }}"
+            >
+              {{ d?.invoice_detail?.status }}
+            </td>
+            <td class="p-2 w-56">
+              {{ d?.invoice_detail?.invoice?.payment_type }}
+            </td>
+            <td class="p-2 w-40">
+              {{ d?.invoice_detail?.invoice?.total_money }}
+            </td>
+            <td class="p-2 w-40">
+              {{ d?.invoice_detail?.invoice?.date_payment }}
+            </td>
+            <td
+              (click)="expandText(d?.id)"
+              class="p-2 max-w-[250px] min-w-[250px] text-left cursor-pointer {{
+                expand.id === d?.id && expand.status ? null : 'expand-text'
+              }}"
+            >
+              {{ d?.invoice_detail?.invoice_content }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-no-data *ngIf="data?.length === 0"></app-no-data>
+  </div>
+</div>
+
+<app-loading-page *ngIf="isLoading"></app-loading-page>

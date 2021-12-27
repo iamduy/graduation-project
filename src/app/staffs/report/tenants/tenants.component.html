@@ -1,0 +1,163 @@
+<div class="mx-auto ml-3 relative">
+  <div class="px-4">
+    <div class="flex flex-col md:flex-row">
+      <form class="flex md:flex-row flex-col my-3" [formGroup]="searchForm" (ngSubmit)="onSearch()">
+        <div class="px-2 py-1">
+          <input
+            type="text"
+            class="sm:w-[250px] w-full input"
+            placeholder="Tên sinh viên"
+            formControlName="name"
+          />
+        </div>
+        <div class="px-2 py-1">
+          <input
+            type="text"
+            class="sm:w-[250px] w-full input"
+            placeholder="E-mail"
+            formControlName="email"
+          />
+        </div>
+        <div class="px-2 py-1">
+        <button
+          class="
+            :w-auto
+            
+            px-2
+            bg-main
+            rounded-md
+            text-white
+            hover:border-main hover:border hover:bg-white hover:text-main
+          "
+        >
+          Tìm kiếm
+        </button></div>
+      </form>
+
+      <div class="flex items-center py-2 ">
+        <app-paginate
+          [current_button]="paging.page.value"
+          [last_button]="lastPage"
+          [total_item]="totalItems"
+          [total_button]="5"
+          (eventChangePage)="changePage($event)"
+        >
+        </app-paginate>
+      </div>
+    </div>
+
+    <div class="overflow-auto shadow">
+      <table
+        class="
+          text-left
+          w-full
+          wrapper-table
+          table-auto
+          border border-[#bdbdbd]
+          rounded-lg
+        "
+      >
+        <thead
+          class="
+            flex
+            w-full
+            border-b-2
+            uppercase
+            font-medium
+            text-[#00836b]
+            border-[#bdbdbd]
+          "
+        >
+          <tr class="flex w-full">
+            <th class="p-2 w-12 text-center">ID</th>
+            <th class="p-2 w-32 text-center">MSV</th>
+            <th class="p-2 w-56">SINH VIÊN</th>
+            <th class="p-2 w-44">ĐIỆN THOẠI</th>
+            <th class="p-2 w-64">E-MAIL</th>
+            <th class="p-2 w-40">CMND</th>
+            <th class="p-2 max-w-[250px] min-w-[250px]">ĐỊA CHỈ</th>
+            <th class="p-2 w-32">NGÀY SINH</th>
+            <th class="p-2 w-32 text-center">GIỚI TÍNH</th>
+            <th class="p-2 max-w-[250px] min-w-[250px]">HỘ KHẨU</th>
+            <th class="p-2 max-w-[250px] min-w-[250px]">TRƯỜNG</th>
+            <th class="p-2 w-56">NGÀNH</th>
+            <th class="p-2 w-40 text-center">HỢP ĐỒNG SỐ</th>
+          </tr>
+        </thead>
+        <tbody
+          class="
+            flex flex-col
+            overflow-auto
+            w-full
+            text-gray-600 text-sm
+            font-light
+            bg-white
+            divide-y
+          "
+        >
+          <tr *ngFor="let d of data">
+            <td class="p-2 w-12 text-center">{{ d?.id }}</td>
+            <td class="p-2 w-32 text-center">
+              {{ d?.student_info?.student_code }}
+            </td>
+            <td class="p-2 w-56">
+              {{ [d?.last_name, d?.first_name].join(" ") }}
+            </td>
+            <td class="p-2 w-44 text-left">{{ d?.phone }}</td>
+            <td class="p-2 w-64 text-left">{{ d?.email }}</td>
+            <td class="p-2 w-40 text-left">
+              {{ d?.student_info?.CCCD }}
+            </td>
+            <td
+              (click)="expandText(d?.id)"
+              class="p-2 max-w-[250px] min-w-[250px] text-left cursor-pointer {{
+                expand.id === d?.id && expand.status ? null : 'expand-text'
+              }}"
+            >
+              {{ d?.address }}
+            </td>
+            <td class="p-2 w-32 text-left">{{ d?.birth }}</td>
+            <td class="p-2 w-32 text-left">
+              <span
+            class="px-3 py-1 rounded-full font-semibold text-xs {{
+              d?.gender == 0
+                ? 'text-red-900 bg-red-200'
+                : 'text-green-900 bg-green-200'
+            }}"
+          >{{ d?.gender === 0 ? "Nữ" : "Nam" }}</span>
+              
+            </td>
+            <td
+              (click)="expandText(d?.id)"
+              class="p-2 max-w-[250px] min-w-[250px] text-left cursor-pointer {{
+                expand.id === d?.id && expand.status ? null : 'expand-text'
+              }}"
+            >
+              {{ d?.birth_place }}
+            </td>
+            <td
+              (click)="expandText(d?.id)"
+              class="p-2 max-w-[250px] min-w-[250px] text-left cursor-pointer {{
+                expand.id === d?.id && expand.status ? null : 'expand-text'
+              }}"
+            >
+              {{ d?.student_info?.school }}
+            </td>
+            <td class="p-2 w-56 text-left">
+              {{ d?.student_info?.department }}
+            </td>
+            <td
+              *ngFor="let contract of d?.contract"
+              class="p-2 w-40 text-center"
+            >
+              {{ contract?.id }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-no-data *ngIf="data?.length === 0"></app-no-data>
+  </div>
+</div>
+
+<app-loading-page *ngIf="isLoading"></app-loading-page>

@@ -1,0 +1,52 @@
+<div class="flex flex-col md:flex-row ml-2 mr-2 md:mr-0 pb-4">
+  <div class="w-full xl:w-2/12 md:w-3/12 bg-white border-gray-300 border">
+    <div class="py-3 px-3 border-b-2 border-gray-400">
+      <label class="flex py-2 justify-center"><span>Chọn dự án</span></label>
+      <select [formControl]="projectSelect" (change)="changeProject()"
+        class="input input-default ng-pristine ng-valid ng-touched w-full cursor-pointer">
+        <option value="">Chọn dự án</option>
+        <option *ngFor="let project of projects" [value]="project.id">
+          {{ project.name }}
+        </option>
+      </select>
+    </div>
+    <div>
+      <ul>
+        <li class="border-b hover:bg-gray-100">
+          <a class="flex py-3 items-center justify-center text-secondary cursor-pointer"><span>Chọn tòa
+              nhà</span></a>
+        </li>
+        <li *ngFor="let building of buildings" (click)="changeBuilding(building)" class="border-b hover:bg-gray-100">
+          <a class="flex py-3 pl-3 items-center text-secondary cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-community" width="25"
+              height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8" />
+              <line x1="13" y1="7" x2="13" y2="7.01" />
+              <line x1="17" y1="7" x2="17" y2="7.01" />
+              <line x1="17" y1="11" x2="17" y2="11.01" />
+              <line x1="17" y1="15" x2="17" y2="15.01" />
+            </svg>
+            <div class="pl-2 text-secondary font-semibold">
+              {{ building.name }}
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="
+      w-full
+      xl:w-10/12
+      md:w-9/12
+      mt-3
+      md:mt-0 md:ml-2
+      border-gray-300 border
+    ">
+    <div class="">
+      <app-menu-building [buildingInput]="building"></app-menu-building>
+    </div>
+  </div>
+</div>

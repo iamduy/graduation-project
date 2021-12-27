@@ -1,0 +1,956 @@
+<div class="grid mx-auto">
+  <!-- component -->
+  <div
+    class="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12 {{
+      isLoading ? 'fixed -inset-0' : null
+    }}"
+  >
+    <div class="xs:p-0 mx-auto mb-auto md:w-full md:max-w-4xl">
+      <div
+        class="flex w-full flex-wrap items-stretch justify-center text-gray-800"
+      >
+        <div class="flex py-3 px-2 items-center">
+          <p class="text-4xl text-green-500 font-semibold">QUẢN LÝ</p>
+          <p class="font-semibold tracking-widest text-lg">KÝ TÚC XÁ</p>
+        </div>
+      </div>
+
+      <div class="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
+        <div class="py-4">
+          <div class="flex justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-user"
+              width="25"
+              height="25"
+              viewBox="0 0 24 24"
+              stroke-width="3"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <circle cx="12" cy="7" r="4" />
+              <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+            </svg>
+          </div>
+
+          <p class="text-xl text-center font-bold py-2">
+            ĐĂNG KÍ TÀI KHOẢN MỚI
+          </p>
+        </div>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="px-5 py-7">
+            <div class="grid sm:grid-cols-2 gap-4 mb-4 sm:mb-0">
+              <div class="mt-1 sm:sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Email <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="email"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="email"
+                  placeholder="E-mail"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.email.touched || submitted) &&
+                    RFC.email.errors?.required
+                  "
+                  >* Email không được để trống
+                </span>
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.email.touched || submitted) && RFC.email.errors?.email
+                  "
+                >
+                  * Nhập 1 E-mail hợp lệ (VD : user@gmail.com)
+                </span>
+              </div>
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Điện thoại <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="text"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="phone"
+                  placeholder="Điện thoại"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.phone.touched || submitted) &&
+                    RFC.phone.errors?.required
+                  "
+                  >* Số điện thoại không được để trống
+                </span>
+
+                <span class="validate" *ngIf="RFC.phone.errors?.invalidPhone"
+                  >* Số điện thoại không hợp lệ</span
+                >
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-4 mb-4 sm:mb-0">
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Mật Khẩu <span class="text-red-400">(*)</span></label
+                >
+                <div class="relative">
+                  <input
+                    [type]="passw ? 'password' : 'text'"
+                    class="
+                      relative
+                      border
+                      rounded-lg
+                      p-3
+                      text-sm
+                      w-full
+                      focus:outline-none
+                      input
+                    "
+                    formControlName="password"
+                    placeholder="Mật khẩu"
+                  />
+
+                  <span
+                    (click)="handleShowPassword()"
+                    class="absolute text-gray-400 right-0 pr-2 py-2"
+                  >
+                    <svg
+                      *ngIf="!passw"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="icon icon-tabler icon-tabler-eye"
+                      width="25"
+                      height="25"
+                      viewBox="0 0 24 24"
+                      stroke-width="2"
+                      stroke="currentColor"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <circle cx="12" cy="12" r="2" />
+                      <path
+                        d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7"
+                      />
+                    </svg>
+
+                    <svg
+                      *ngIf="passw"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="icon icon-tabler icon-tabler-eye-off"
+                      width="25"
+                      height="25"
+                      viewBox="0 0 24 24"
+                      stroke-width="2"
+                      stroke="currentColor"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <line x1="3" y1="3" x2="21" y2="21" />
+                      <path d="M10.584 10.587a2 2 0 0 0 2.828 2.83" />
+                      <path
+                        d="M9.363 5.365a9.466 9.466 0 0 1 2.637 -.365c4 0 7.333 2.333 10 7c-.778 1.361 -1.612 2.524 -2.503 3.488m-2.14 1.861c-1.631 1.1 -3.415 1.651 -5.357 1.651c-4 0 -7.333 -2.333 -10 -7c1.369 -2.395 2.913 -4.175 4.632 -5.341"
+                      />
+                    </svg>
+                  </span>
+                </div>
+
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.password.touched || submitted) &&
+                    RFC.password.errors?.required
+                  "
+                  >* Mật khẩu không được để trống
+                </span>
+
+                <span
+                  class="validate"
+                  *ngIf="
+                    RFC.password.touched && RFC.password.errors?.invalidPassword
+                  "
+                  >* Nhập tối thiểu 8 ký tự, bao gồm chữ viết thường và số
+                  nguyên.
+                </span>
+              </div>
+
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Xác nhận mật khẩu
+                  <span class="text-red-400">(*)</span></label
+                >
+                <div class="relative">
+                  <input
+                    [type]="confirmPw ? 'password' : 'text'"
+                    class="
+                      relative
+                      border
+                      rounded-lg
+                      p-3
+                      text-sm
+                      w-full
+                      focus:outline-none
+                      input
+                    "
+                    formControlName="password_confirmation"
+                    placeholder="Xác nhận mật khẩu"
+                  />
+                  <span
+                    (click)="handleShowConfirmPassword()"
+                    class="absolute text-gray-400 right-0 pr-2 py-2"
+                  >
+                    <svg
+                      *ngIf="!confirmPw"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="icon icon-tabler icon-tabler-eye"
+                      width="25"
+                      height="25"
+                      viewBox="0 0 24 24"
+                      stroke-width="2"
+                      stroke="currentColor"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <circle cx="12" cy="12" r="2" />
+                      <path
+                        d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7"
+                      />
+                    </svg>
+
+                    <svg
+                      *ngIf="confirmPw"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="icon icon-tabler icon-tabler-eye-off"
+                      width="25"
+                      height="25"
+                      viewBox="0 0 24 24"
+                      stroke-width="2"
+                      stroke="currentColor"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <line x1="3" y1="3" x2="21" y2="21" />
+                      <path d="M10.584 10.587a2 2 0 0 0 2.828 2.83" />
+                      <path
+                        d="M9.363 5.365a9.466 9.466 0 0 1 2.637 -.365c4 0 7.333 2.333 10 7c-.778 1.361 -1.612 2.524 -2.503 3.488m-2.14 1.861c-1.631 1.1 -3.415 1.651 -5.357 1.651c-4 0 -7.333 -2.333 -10 -7c1.369 -2.395 2.913 -4.175 4.632 -5.341"
+                      />
+                    </svg>
+                  </span>
+                </div>
+
+                <span
+                  class="validate"
+                  *ngIf="
+                    RFC.password_confirmation.touched &&
+                    RFC.password_confirmation.errors?.passwordMismatch
+                  "
+                >
+                  * Xác nhận mật khẩu không khớp
+                </span>
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-4 mb-4 sm:mb-0">
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Họ <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="text"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="last_name"
+                  placeholder="Họ"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.last_name.touched || submitted) &&
+                    RFC.last_name.errors?.required
+                  "
+                  >* Họ không được để trống</span
+                >
+                <span class="validate" *ngIf="RFC.last_name.errors?.invalidName"
+                  >* Trường nhập phải nhỏ hơn 24 kí tự , và không có kí tự
+                  số</span
+                >
+              </div>
+
+              <div class="mt-1 mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Tên <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="text"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="first_name"
+                  placeholder="Tên"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.first_name.touched || submitted) &&
+                    RFC.first_name.errors?.required
+                  "
+                  >* Tên không đươc để trống</span
+                >
+                <span
+                  class="validate"
+                  *ngIf="RFC.first_name.errors?.invalidName"
+                  >* Trường nhập phải nhỏ hơn 24 kí tự , và không có kí tự
+                  số</span
+                >
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-4 mb-4 sm:mb-0">
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Năm sinh <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="date"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="birth"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.birth.touched || submitted) &&
+                    RFC.birth.errors?.required
+                  "
+                  >* Năm sinh không được để trống</span
+                >
+              </div>
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Nơi sinh <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="text"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="birth_place"
+                  placeholder="Nơi sinh"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.birth_place.touched || submitted) &&
+                    RFC.birth_place.errors?.required
+                  "
+                  >* Nơi sinh không được để trống</span
+                >
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-4 mb-4 sm:mb-0">
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Giới tính <span class="text-red-400">(*)</span></label
+                >
+                <div class="flex">
+                  <div class="py-2 mr-4">
+                    <input
+                      type="radio"
+                      class="mr-2 w-4 h-4"
+                      value="1"
+                      formControlName="gender"
+                    />
+                    <label for="1" class="text-base font-light">Nam</label>
+                  </div>
+
+                  <div class="py-2">
+                    <input
+                      type="radio"
+                      class="mr-2 w-4 h-4"
+                      value="0"
+                      formControlName="gender"
+                    />
+                    <label for="0" class="text-base font-light">Nữ</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Địa chỉ <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="text"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="address"
+                  placeholder="Địa chỉ thường trú"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.address.touched || submitted) &&
+                    RFC.address.errors?.required
+                  "
+                  >* Địa chỉ không được để trống</span
+                >
+                <span class="validate" *ngIf="RFC.address.errors?.invalidText"
+                  >* Trường nhập phải từ 10-100 kí tự</span
+                >
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-4 mb-4 sm:mb-0">
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Tên bố <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="text"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="fathername"
+                  placeholder="Tên bố"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.fathername.touched || submitted) &&
+                    RFC.fathername.errors?.required
+                  "
+                  >* Tên bố không được để trống</span
+                >
+                <span
+                  class="validate"
+                  *ngIf="RFC.fathername.errors?.invalidName"
+                  >* Trường nhập phải nhỏ hơn 24 kí tự , và không có kí tự
+                  số</span
+                >
+              </div>
+              <div class="mt-1 mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Tên mẹ <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="text"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="mothername"
+                  placeholder="Tên mẹ"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.mothername.touched || submitted) &&
+                    RFC.mothername.errors?.required
+                  "
+                  >* Tên mẹ không được để trống</span
+                >
+                <span
+                  class="validate"
+                  *ngIf="RFC.mothername.errors?.invalidName"
+                  >* Trường nhập phải nhỏ hơn 24 kí tự , và không có kí tự
+                  số</span
+                >
+              </div>
+
+              <div class="mt-1 mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Số điện thoại (Bố/Mẹ)
+                  <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="text"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="phone_relative"
+                  placeholder="Số điện thoại"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.phone_relative.touched || submitted) &&
+                    RFC.phone_relative.errors?.required
+                  "
+                  >* Số điện thoại người thân không được để trống</span
+                >
+                <span
+                  class="validate"
+                  *ngIf="RFC.phone_relative.errors?.invalidPhone"
+                  >* Số điện thoại không hợp lệ</span
+                >
+              </div>
+
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Địa chỉ người thân
+                  <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="text"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="address_relative"
+                  placeholder="Địa chỉ người thân"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.address_relative.touched || submitted) &&
+                    RFC.address_relative.errors?.required
+                  "
+                  >* Địa chỉ người thân không được để trống</span
+                >
+                <span
+                  class="validate"
+                  *ngIf="RFC.address_relative.errors?.invalidText"
+                  >* Trường nhập phải từ 10-100 kí tự</span
+                >
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 mb-4 sm:mb-0">
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block">
+                  Dân tộc<span class="text-red-400">(*)</span>
+                </label>
+                <input
+                  type="text"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="nation"
+                  placeholder="Dân tộc"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.nation.touched || submitted) &&
+                    RFC.nation.errors?.required
+                  "
+                  >* Dân tộc không được để trống</span
+                >
+              </div>
+
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Tôn giáo
+                  <span class="text-red-400">(*)</span>
+                </label>
+                <input
+                  type="text"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="religion"
+                  placeholder="Tôn giáo"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.religion.touched || submitted) &&
+                    RFC.religion.errors?.required
+                  "
+                  >* Tôn giáo không được để trống</span
+                >
+              </div>
+
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Đối tượng
+                  <span class="text-red-400">(*)</span>
+                </label>
+                <select
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  placeholder="Đối tượng"
+                  formControlName="student_object"
+                >
+                  <option [value]="1">Học sinh</option>
+                  <option [value]="2">Sinh viên</option>
+                  <option [value]="3">Thạc sĩ</option>
+                  <option [value]="4">Nghiên cứu sinh</option>
+                  <option [value]="5">Khác</option>
+                </select>
+
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.student_object.touched || submitted) &&
+                    RFC.student_object.errors?.required
+                  "
+                  >* Đối tượng không được để trống</span
+                >
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-4 mb-4 sm:mb-0">
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Mã sinh viên <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="text"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="student_code"
+                  placeholder="Mã sinh viên"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.student_code.touched || submitted) &&
+                    RFC.student_code.errors?.required
+                  "
+                  >* Mã sinh viên không được để trống</span
+                >
+              </div>
+
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Trường học <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="text"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="school"
+                  placeholder="Trường học"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.school.touched || submitted) &&
+                    RFC.school.errors?.required
+                  "
+                  >* Trường học không được để trống</span
+                >
+                <span class="validate" *ngIf="RFC.school.errors?.invalidText"
+                  >* Trường nhập phải từ 5-100 kí tự, và không có kí tự số</span
+                >
+              </div>
+
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Thời hạn (Số năm học tại trường)
+                  <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="text"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="student_year"
+                  placeholder="Thời hạn"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.student_year.touched || submitted) &&
+                    RFC.student_year.errors?.required
+                  "
+                  >* Thời hạn không được để trống</span
+                >
+                <span
+                  class="validate"
+                  *ngIf="RFC.student_year.errors?.invalidNumber"
+                  >* Tối đa 6 năm</span
+                >
+              </div>
+
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Chuyên ngành <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="text"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="department"
+                  placeholder="Chuyên ngành"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.department.touched || submitted) &&
+                    RFC.department.errors?.required
+                  "
+                  >* Chuyên ngành không được để trống</span
+                >
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-3 gap-4 mb-4 sm:mb-0">
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Căn cước công dân
+                  <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="text"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="CCCD"
+                  placeholder="CCCD"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.CCCD.touched || submitted) && RFC.CCCD.errors?.required
+                  "
+                  >* CCCD không được để trống</span
+                >
+                <span class="validate" *ngIf="RFC.CCCD.errors?.invalidCCCD"
+                  >* CCCD phải là 9 hoặc 12 số</span
+                >
+              </div>
+
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Ngày cấp <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="date"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="date_range"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.date_range.touched || submitted) &&
+                    RFC.date_range.errors?.required
+                  "
+                  >* Ngày cấp không được để trống</span
+                >
+              </div>
+
+              <div class="mt-1 sm:mb-5">
+                <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                  >Nơi cấp <span class="text-red-400">(*)</span></label
+                >
+                <input
+                  type="text"
+                  class="
+                    border
+                    rounded-lg
+                    p-3
+                    text-sm
+                    w-full
+                    focus:outline-none
+                    input
+                  "
+                  formControlName="issued_by"
+                  placeholder="Nơi cấp"
+                />
+                <span
+                  class="validate"
+                  *ngIf="
+                    (RFC.issued_by.touched || submitted) &&
+                    RFC.issued_by.errors?.required
+                  "
+                  >* Nơi cấp không được để trống</span
+                >
+              </div>
+            </div>
+
+            <div class="flex justify-evenly pt-5">
+              <a
+                routerLink="/dang-nhap"
+                class="
+                  leading-10
+                  transition
+                  duration-200
+                  bg-header
+                  text-main
+                  w-1/3
+                  rounded-lg
+                  text-sm
+                  shadow-sm
+                  hover:shadow-md
+                  font-semibold
+                  text-center
+                  inline-block
+                "
+              >
+                Huỷ
+              </a>
+
+              <button
+                type="submit"
+                class="
+                  transition
+                  duration-200
+                  bg-main
+                  hover:bg-green-500
+                  focus:bg-green-500 focus:shadow-sm focus:outline-none
+                  text-white
+                  w-1/3
+                  rounded-lg
+                  text-sm
+                  shadow-sm
+                  hover:shadow-md
+                  font-semibold
+                  text-center
+                  inline-block
+                "
+              >
+                Đăng kí
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<app-loading-page *ngIf="isLoading"></app-loading-page>

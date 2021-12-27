@@ -1,0 +1,102 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "~ngx-toastr/toastr";
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Montserrat", Arial, Helvetica, sans-serif !important;
+  background: rgb(240, 240, 240);
+}
+
+input[type="radio"] {
+  cursor: pointer;
+}
+
+button {
+  line-height: 35px !important;
+}
+._button {
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgba(224, 123, 154, var(--tw-border-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(224, 123, 154, var(--tw-text-opacity));
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  border-radius: 0.125rem;
+  --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.custom-bread-crumb {
+  padding: 10px 0 10px 25px !important;
+  background: none !important;
+  font-style: normal;
+  font-weight: 600;
+  /* line-height: 28px; */
+  font-size: smaller;
+}
+
+.expand-text {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.validate {
+  font-size: smaller;
+  color: #dd0000;
+  font-weight: 300;
+}
+
+.input:focus {
+  background-color: #fcfade;
+  border-color: #00836b;
+  -webkit-box-shadow: 0 0 3px #00836b;
+  box-shadow: 0 0 3px #00836b;
+  outline: 0;
+}
+/* border rounded-lg   px-3 py-2  text-sm w-full focus:outline-none */
+.input {
+  border: 1px solid;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.75rem 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  height: 40px;
+  --tw-border-opacity: 1;
+  border-color: rgba(209, 213, 219, var(--tw-border-opacity));
+}
+.btn-save {
+  padding: 0 8px 0 8px;
+  height: 32px;
+  background-color: rgba(16, 185, 129, var(--tw-bg-opacity));
+  color: white;
+  font-weight: 500;
+  border-radius: 0.25rem;
+  /* px-2  h-8 bg-green-500 hover:bg-gray-200 hover:border hover:border-green-500 text-white font-medium  rounded inline-flex items-center hover:text-green-600 */
+}
+
+.btn-save:hover {
+  background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+  border: 1px solid rgba(16, 185, 129, var(--tw-bg-opacity));
+  color: rgba(5, 150, 105, var(--tw-bg-opacity));
+}
+
+/* hidden line step   */
+.mat-horizontal-stepper-header-container {
+  display: none !important;
+}
+
+.note {
+  line-height: 40px;
+  font-size: larger;
+  font-weight: 600;
+  font-family: serif;
+}

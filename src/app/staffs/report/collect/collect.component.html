@@ -1,0 +1,114 @@
+<div class="mx-auto ml-3 relative">
+  <div class="px-4">
+    <div class="flex flex-col md:flex-row justify-between">
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="flex flex-col sm:flex-row my-3">
+        <div class="px-2 mb-1">
+          <select class="input w-full" formControlName="payment_type">
+            <option value="">Cách thanh toán</option>
+            <option value="Tiền mặt">Tiền mặt</option>
+            <option value="Chuyển khoản">Chuyển khoản</option>
+          </select>
+        </div>
+
+        <div class="px-2 mb-1">
+          <input
+            type="date"
+            class="input w-full"
+            formControlName="collection_date"
+          />
+        </div>
+        <div class="px-2">
+          <button class="md:w-auto w-full bg-main text-white px-2 rounded-md shadow">
+            Tìm kiếm
+          </button>
+        </div>
+      </form>
+
+      <div class="flex items-center py-2">
+        <app-paginate
+          [current_button]="paging.page.value"
+          [last_button]="lastPage"
+          [total_item]="totalItems"
+          [total_button]="3"
+          (eventChangePage)="changePage($event)"
+        >
+        </app-paginate>
+      </div>
+    </div>
+
+    <div class="overflow-auto shadow">
+      <table
+        class="
+          text-left
+          w-full
+          wrapper-table
+          table-auto
+          border border-[#bdbdbd]
+          rounded-lg
+        "
+      >
+        <thead
+          class="
+            flex
+            w-full
+            border-b-2
+            uppercase
+            font-medium
+            text-[#00836b]
+            border-[#bdbdbd]
+          "
+        >
+          <tr class="flex w-full">
+            <th class="p-2 w-16 text-center text-xs">ID</th>
+            <th class="p-2 w-40 text-xs">Ngày thanh toán</th>
+            <th class="p-2 w-40 text-xs">Tổng tiền</th>
+            <th class="p-2 w-56 text-xs">Phương thức thanh toán</th>
+            <th class="p-2 text-xs max-w-[250px] min-w-[250px]">Ghi chú</th>
+            <th class="p-2 w-56 text-xs">Lý do thu</th>
+          </tr>
+        </thead>
+        <tbody
+          class="
+            flex flex-col
+            overflow-auto
+            w-full
+            text-gray-600 text-sm
+            font-light
+            bg-white
+            divide-y
+          "
+        >
+          <tr *ngFor="let d of data">
+            <td class="p-2 w-16 text-center">{{ d?.id }}</td>
+            <td class="p-2 w-40">
+              {{ d?.collection_date }}
+            </td>
+            <td class="p-2 w-40">
+              <span class="text-error">
+                {{ d?.amount_of_money }}
+              </span>
+              VND
+            </td>
+            <td class="p-2 w-56">
+              {{ d?.payment_type }}
+            </td>
+            <td
+              (click)="expandText(d?.id)"
+              class="p-2 max-w-[250px] min-w-[250px] text-left cursor-pointer {{
+                expand.id === d?.id && expand.status ? null : 'expand-text'
+              }}"
+            >
+              {{ d?.note }}
+            </td>
+            <td class="p-2 w-56">
+              {{ d?.receipts_reason?.title }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-no-data *ngIf="data?.length === 0"></app-no-data>
+  </div>
+</div>
+
+<app-loading-page *ngIf="isLoading"></app-loading-page>

@@ -1,0 +1,145 @@
+<div mat-dialog-title class="bg-white border-b ">
+    <p class="pl-2 pt-2 font-medium text-lg">
+        CẬP NHẬT THÔNG TIN TÀI KHOẢN NHÂN VIÊN
+</div>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="staffEditForm" (submit)="onSubmit()" class="overflow-auto max-h-full h-4/5 pl-5">
+        <div class="">
+            <div class="font-medium text-base mb-2">THÔNG TIN NGƯỜI DÙNG</div>
+            <table class="table-auto w-full ">
+                <thead>
+                    <tr class="border border-gray-200">
+                        <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Họ và tên đệm </td>
+                        <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-semibold">
+                            <input formControlName="last_name" type="text" placeholder=""
+                                class="input w-full h-8 rounded-md  input px-3">
+                            <span class="validate block"
+                                *ngIf="(f.last_name.dirty || submitted===true) && errors?.last_name">
+                                (*{{errors?.last_name[0]}})
+                            </span>
+
+                        </td>
+                    </tr>
+                    <tr class="border border-gray-200">
+                        <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Tên </td>
+                        <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-semibold">
+                            <input formControlName="first_name" type="text" placeholder=""
+                                class="input w-full h-8 rounded-md  input px-3">
+                            <span class="validate block"
+                                *ngIf="(f.first_name.dirty || submitted===true) && errors?.first_name">
+                                (*{{errors?.first_name[0]}})
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="border border-gray-200">
+                        <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Ngày sinh</td>
+
+                        <!-- <td class=" mx-2 py-1  input  rounded-md border border-gray-400  flex items-center relative ">
+                            <mat-date-range-input [rangePicker]="picker2"class="">
+                                <input formControlName="birth" matInput [matDatepicker]="picker2"
+                                    placeholder="acb">
+                                
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2 color="primary"></mat-datepicker>
+                            </mat-date-range-input>
+                            <span class="validate block" *ngIf="(f.birth.dirty || submitted===true) && errors?.birth">
+                                (*{{errors?.birth[0]}})
+                            </span>
+                        </td> -->
+                        <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-semibold">
+                            <!-- <mat-form-field color="accent" appearance="fill">
+                                <input formControlName="birth" matInput [matDatepicker]="picker2"
+                                    placeholder="mm/dd/YYY">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2 color="primary"></mat-datepicker>
+                            </mat-form-field> -->
+                            <input class="input"  type="date" formControlName="birth">
+                            <span class="validate block" *ngIf="(f.birth.dirty || submitted===true) && errors?.birth">
+                                (*{{errors?.birth[0]}})
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="border border-gray-200">
+                        <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Quê quán</td>
+                        <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-semibold">
+                            <input formControlName="birth_place" type="text" placeholder=""
+                                class="input w-full h-8 rounded-md  input px-3">
+                            <span class="validate block"
+                                *ngIf="(f.birth_place.dirty || submitted===true) && errors?.birth_place">
+                                (*{{errors?.birth_place[0]}})
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="border border-gray-200">
+                        <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Giới tính</td>
+                        <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-semibold">
+                            <select formControlName="gender" class="input">
+                                <option value=0>Nữ</option>
+                                <option value=1>Nam</option>
+                            </select>
+                            <span class="validate block" *ngIf="(f.gender.dirty || submitted===true) && errors?.gender">
+                                (*{{errors?.gender[0]}})
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="border border-gray-200">
+                        <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Số điện thoại</td>
+                        <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-semibold">
+                            <input formControlName="phone" type="text" placeholder=""
+                                class="input w-full h-8 rounded-md  input px-3">
+                            <span class="validate block" *ngIf="(f.phone.dirty || submitted===true) && errors?.phone">
+                                (*{{errors?.phone[0]}})
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="border border-gray-200">
+                        <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Địa chỉ</td>
+                        <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-semibold">
+                            <input formControlName="address" type="text" placeholder=""
+                                class="input w-full h-8 rounded-md  input px-3">
+                            <span class="validate block"
+                                *ngIf="(f.address.dirty || submitted===true) && errors?.address">
+                                (*{{errors?.address[0]}})
+                            </span>
+                        </td>
+                    </tr>
+                </thead>
+            </table>
+            <div class="font-medium text-base my-3">THÔNG TIN TÀI KHOẢN</div>
+
+            <table class="table-auto w-full ">
+                <thead>
+                    <tr class="border border-gray-200">
+                        <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Trạng thái hoạt động</td>
+                        <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-semibold">
+                            <select formControlName="status" class="input">
+                                <option value="0">Vô hiệu hóa</option>
+                                <option value="1">Kích hoạt</option>
+                            </select>
+                            <span class="validate block" *ngIf="(f.status.dirty || submitted===true) && errors?.status">
+                                (*{{errors?.status[0]}})
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="border border-gray-200">
+                        <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Loại người dùng </td>
+                        <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-semibold">
+                            <select formControlName="role_id" class="input">
+                                <option *ngFor="let role of data.roles" [value]="role?.id">{{role?.name}}</option>
+                            </select>
+                            <span class="validate block"
+                                *ngIf="(f.role_id.dirty || submitted===true) && errors?.role_id">
+                                (*{{errors?.role_id[0]}})
+                            </span>
+                        </td>
+                    </tr>
+
+                </thead>
+            </table>
+        </div>
+        <div align="end" class="mt-4">
+            <button type="submit"
+                class="px-4 mr-4 bg-main hover:bg-gray-200 text-white font-medium  rounded inline-flex items-center hover:text-green-600">Lưu</button>
+        </div>
+    </form>
+</mat-dialog-content>

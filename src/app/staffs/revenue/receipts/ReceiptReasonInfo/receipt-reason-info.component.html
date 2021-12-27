@@ -1,0 +1,120 @@
+<div class="bg-white border-b mb-2 pb-1 flex justify-between">
+  <span class="text-secondary text-lg font-semibold">Danh sách lý do thu</span>
+
+  <span class="text-secondary" mat-dialog-close>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="feather feather-x"
+    >
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </span>
+</div>
+
+<div class="flex justify-start py-3">
+  <app-paginate
+    [current_button]="paging.page.value"
+    [last_button]="lastPage"
+    [total_item]="totalItems"
+    [total_button]="5"
+    (eventChangePage)="changePage($event)"
+  >
+  </app-paginate>
+</div>
+
+<p *ngIf="isLoading" class="text-center">Đang tải......</p>
+
+<mat-dialog-content>
+  <table
+    class="text-left w-full border border-[#bdbdbd] rounded-lg"
+    *ngIf="totalItems > 0"
+  >
+    <thead class="flex border-b-2 text-[#00836b] border-[#bdbdbd]">
+      <th class="p-2 w-16 text-center">ID</th>
+      <th class="p-2 w-64">Tiêu đề</th>
+      <th class="p-2 w-[600px]">Mô tả</th>
+      <th class="p-2 w-16"></th>
+    </thead>
+    <tbody
+      class="
+        flex flex-col
+        overflow-auto
+        w-full
+        text-gray-600 text-sm
+        font-normal
+        bg-white
+        divide-y
+      "
+    >
+      <tr *ngFor="let receiptReason of data" class="py-2">
+        <td class="p-2 w-16 text-center">
+          {{ receiptReason?.id }}
+        </td>
+        <td class="p-2 w-64">
+          {{ receiptReason?.title }}
+        </td>
+        <td
+          (click)="expandText(receiptReason?.id)"
+          class="p-2 cursor-default min-w-[600px] max-w-[600px] {{
+            expand.id === receiptReason?.id && expand.status
+              ? null
+              : 'expand-text'
+          }}"
+        >
+          {{ receiptReason?.description }}
+        </td>
+
+        <td class="p-2 w-16">
+          <span
+            class="flex justify-center cursor-pointer"
+            (click)="exportInfo(receiptReason)"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-check rounded-full {{
+                receiptReason?.id == receiptReasonInfo?.id
+                  ? 'bg-main text-white'
+                  : 'bg-gray-200 text-secondary'
+              }}"
+              width="25"
+              height="25"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M5 12l5 5l10 -10" />
+            </svg>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <app-no-data *ngIf="totalItems == 0"></app-no-data>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button
+    mat-dialog-close
+    [disabled]="receiptReasonInfo?.id == undefined"
+    class="rounded-md  px-4 mx-2 {{
+      receiptReasonInfo?.id == undefined
+        ? 'bg-gray-100 cursor-not-allowed text-secondary'
+        : 'text-white bg-main'
+    }}"
+  >
+    Chọn
+  </button>
+</mat-dialog-actions>
+<app-loading-page *ngIf="isLoading"></app-loading-page>

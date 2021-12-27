@@ -1,0 +1,148 @@
+<div class="bg-white border-b mb-2 pb-1 flex justify-between">
+  <span class="text-secondary text-lg font-semibold"
+    >CHI TIẾT THÔNG BÁO & TIN TỨC
+  </span>
+
+  <span class="text-secondary" mat-dialog-close>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="feather feather-x"
+    >
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </span>
+</div>
+
+<div class="font-medium text-lg">
+  Sinh viên : <span class="text-main">{{data?.student}}</span>
+</div>
+<div class="grid grid-cols-1 gap-4">
+  <div class="border border-gray-300">
+    <div class="px-4 pt-2 border-b border-gray-300 bg-gray-200">
+      <p class="font-medium">NỘI DUNG THÔNG BÁO</p>
+    </div>
+    <table class="w-full">
+      <thead>
+        <tr class="border border-gray-200">
+          <td class="text-right py-1 px-2 bg-gray-100 w-1/2 leading-9">
+            Mức độ
+          </td>
+          <td
+            class="
+              bg-white
+              text-left
+              px-2
+              py-1
+              text-gray-700
+              font-medium
+              w-1/2
+              leading-9
+            "
+          >
+            {{data?.level}}
+          </td>
+        </tr>
+        <tr class="border border-gray-200">
+          <td class="text-right py-1 px-2 bg-gray-100 w-1/2 leading-9">
+            Loại thông báo
+          </td>
+          <td
+            class="
+              bg-white
+              text-left
+              px-2
+              py-1
+              text-gray-700
+              font-medium
+              w-1/2
+              leading-9
+            "
+          >
+            {{data?.type_announce}}
+          </td>
+        </tr>
+        <tr class="border border-gray-200">
+          <td class="text-right py-1 px-2 bg-gray-100 w-1/2 leading-9">
+            Tiêu đề
+          </td>
+          <td
+            class="
+              bg-white
+              text-left
+              px-2
+              py-1
+              text-gray-700
+              font-medium
+              w-1/2
+              leading-9
+            "
+          >
+            {{data?.title}}
+          </td>
+        </tr>
+        <tr class="border border-gray-200">
+          <td class="text-right py-1 px-2 bg-gray-100 w-1/2 leading-9">
+            Nội dung
+          </td>
+          <td
+            (click)="expandText()"
+            class="px-2 py-1 bg-white text-gray-700 font-medium leading-9 max-w-[250px] min-w-[250px] text-left cursor-pointer {{
+               expand.status ? null : 'expand-text'
+            }}"
+          >
+            {{data?.content}}
+          </td>
+        </tr>
+        <tr class="border border-gray-200">
+          <td class="text-right py-1 px-2 bg-gray-100 w-1/2 leading-9">
+            Ngày bắt đầu
+          </td>
+          <td
+            class="
+              bg-white
+              text-left
+              px-2
+              py-1
+              text-gray-700
+              font-medium
+              w-1/2
+              leading-9
+            "
+          >
+            {{data?.start_day}}
+          </td>
+        </tr>
+        <tr class="border border-gray-200">
+          <td class="text-right py-1 px-2 bg-gray-100 w-1/2 leading-9">
+            Ngày kết thúc
+          </td>
+          <td
+            class="
+              bg-white
+              text-left
+              px-2
+              py-1
+              text-gray-700
+              font-medium
+              w-1/2
+              leading-9
+            "
+          >
+            {{data?.end_day}}
+          </td>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+
+<app-loading-page *ngIf="isLoading"></app-loading-page>

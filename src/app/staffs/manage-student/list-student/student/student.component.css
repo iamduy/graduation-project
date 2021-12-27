@@ -1,0 +1,7 @@
+.input:focus{
+    background-color: #fcfade;
+    border-color: #00836b;
+    -webkit-box-shadow: 0 0 3px #00836b;
+    box-shadow: 0 0 3px #00836b;
+    outline: 0;
+}

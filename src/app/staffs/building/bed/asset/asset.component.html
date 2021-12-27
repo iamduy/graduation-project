@@ -1,0 +1,35 @@
+<div class="h-screen">
+    <h2 class="text-gray-600 pt-2">Thống kê tài sản cố định</h2>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full ">
+    
+    <!-- Position Column -->
+    <ng-container matColumnDef="stt" class="h-20">
+        <th mat-header-cell *matHeaderCellDef class="  text-gray-500 font-medium text-sm bg-gray-100"> Stt
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.stt}} </td>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class=" text-gray-500 font-medium text-sm bg-gray-100"> Tên tài sản
+        </th>
+        <td mat-cell *matCellDef="let element">
+                {{element.name}}
+         </td>
+    </ng-container>
+    <!-- Weight Column -->
+    <ng-container matColumnDef="volume">
+        <th mat-header-cell *matHeaderCellDef class=" text-gray-500 font-medium text-sm bg-gray-100"> Số lượng
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.volume}} </td>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="type_asset">
+        <th mat-header-cell *matHeaderCellDef class="text-gray-500 font-medium text-sm bg-gray-100"> Kiểu tài sản </th>
+        <td mat-cell *matCellDef="let element">{{element.type_asset}}
+        </td>
+    </ng-container>
+    
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+</div>

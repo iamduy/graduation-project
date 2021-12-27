@@ -1,0 +1,61 @@
+.margin-0 {
+  margin: 0;
+}
+
+/* css selector */
+/* Thiết kẻ thẻ select */
+/* select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: #4caf93;
+  background-image: none;
+}
+.select {
+  position: relative;
+  display: flex;
+  min-width: 15em;
+  height: 3em;
+  line-height: 3;
+  background: #fff;
+  overflow: hidden;
+  border-radius: 0.25em;
+}
+select {
+  flex: 1;
+  padding: 0 0.5em;
+  color: #fff;
+  cursor: pointer;
+  font-size: 15px;
+}
+/* thiết kế dấu mũi tên */
+/* .select::after {
+  content: "Chọn";
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: DodgerBlue;
+  cursor: pointer;
+  pointer-events: none;
+  -webkit-transition: 0.25s all ease;
+  -o-transition: 0.25s all ease;
+  transition: 0.25s all ease;
+  color: white;
+} */
+/* Hiệu ứng hover */
+.select:hover::after {
+  color: Gainsboro;
+}
+
+/* Trạng thái bed có contract_id */
+.bg-72d4b8 {
+  background-color: #4caf93;
+}
+.text-color-white {
+  color: white !important;
+}

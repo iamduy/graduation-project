@@ -1,0 +1,8 @@
+.example-form-field {
+  width: 250px;
+}
+
+.error-message {
+  display: block;
+  margin-top: 6px;
+}

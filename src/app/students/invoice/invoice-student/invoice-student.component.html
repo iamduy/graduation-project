@@ -1,0 +1,49 @@
+<div class="mx-auto">
+  <div class="p-4">
+    <div *ngIf="data" class="overflow">
+      <table class="w-full border border-[#bdbdbd] rounded-lg my-8 bg-white">
+        <thead class="w-full px-3 border-b-2 border-[#bdbdbd] text-center">
+          <tr>
+            <th class="w-16 p-2 text-center">ID</th>
+            <th class="w-40 p-2 text-center">Chi tiết</th>
+            <th class="w-56 p-2 text-left">Ngày lưu hoá đơn</th>
+            <th class="max-w-[250px] min-w-[250px] p-2 text-left">Ghi chú</th>
+            <th class="w-56 p-2 text-left">Tổng tiền</th>
+            <th class="w-56 p-2 text-left">Phương thức thanh toán</th>
+            <th class="w-56 p-2 text-left">Lý do thu</th>
+          </tr>
+        </thead>
+        <tbody class="w-full px-3 border-[#bdbdbd] text-center">
+          <tr *ngFor="let d of data" class="border-b border-[#bdbdbd]">
+            <td class="w-16 p-2 text-center">{{ d?.id }}</td>
+            <td class="w-40 p-2 text-center">
+              <span
+                (click)="detailInvoice(d?.id)"
+                class="cursor-pointer text-main underline"
+                >xem</span
+              >
+            </td>
+            <td class="w-56 p-2 text-left">
+              {{ d?.collection_date }}
+            </td>
+            <td
+              (click)="expandText(d?.id)"
+              class="p-2 max-w-[250px] min-w-[250px] text-left cursor-pointer {{
+                expand.id === d?.id && expand.status ? null : 'expand-text'
+              }}"
+            >
+              {{ d?.note }}
+            </td>
+            <td class="w-56 p-2 text-left">{{ d?.amount_of_money }} VND</td>
+            <td class="w-56 p-2 text-left">{{ d?.payment_type }}</td>
+            <td class="w-56 p-2 text-left">{{ d?.receipts_reason?.title }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <app-no-data *ngIf="data?.length === 0"></app-no-data>
+  </div>
+</div>
+
+<app-loading-page *ngIf="isLoading"></app-loading-page>

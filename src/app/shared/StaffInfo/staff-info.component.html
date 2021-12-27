@@ -1,0 +1,267 @@
+<div class="bg-white border-b mb-2 pb-1 flex justify-between">
+  <span class="text-secondary text-lg font-semibold">Danh sách nhân viên</span>
+
+  <span class="text-secondary" mat-dialog-close>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="feather feather-x"
+    >
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </span>
+</div>
+
+<div class="sm:flex sm:justify-between py-3">
+  <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <input
+      type="text"
+      class="border rounded-lg p-2 text-sm w-full sm:w-56 sm:mr-2 focus:outline-none input mb-2"
+      placeholder="Tên nhân viên"
+      formControlName="name"
+    />
+    <button
+      type="submit"
+      class="bg-main leading-9 rounded-md text-white px-4 mb-2 w-full sm:w-auto"
+    >
+      Search
+    </button>
+  </form>
+  <div class="flex flex-row-reverse">
+  <app-paginate
+    [current_button]="paging.page.value"
+    [last_button]="lastPage"
+    [total_item]="totalItems"
+    [total_button]="3"
+    (eventChangePage)="changePage($event)"
+  >
+  </app-paginate>
+  </div>
+</div>
+
+<mat-dialog-content>
+  <table class="w-max" *ngIf="totalItems > 0">
+    <thead>
+      <tr>
+        <th
+          class="
+            px-6
+            py-3
+            border-b-2 border-gray-300
+            text-left
+            leading-4
+            text-secondarytracking-wider
+          "
+        >
+          ID
+        </th>
+        <th class="px-6 py-3 border-b-2 border-gray-300">Chọn</th>
+        <th
+          class="
+            px-6
+            py-3
+            border-b-2 border-gray-300
+            text-left text-sm
+            leading-4
+            text-secondary
+            tracking-wider
+          "
+        >
+          Họ và tên
+        </th>
+        <th
+          class="
+            px-6
+            py-3
+            border-b-2 border-gray-300
+            text-left text-sm
+            leading-4
+            text-secondary
+            tracking-wider
+          "
+        >
+          Số điện thoại
+        </th>
+        <th
+          class="
+            px-6
+            py-3
+            border-b-2 border-gray-300
+            text-left text-sm
+            leading-4
+            text-secondary
+            tracking-wider
+          "
+        >
+          Email
+        </th>
+        <th
+          class="
+            px-6
+            py-3
+            border-b-2 border-gray-300
+            text-left text-sm
+            leading-4
+            text-secondary
+            tracking-wider
+          "
+        >
+          Giới tính
+        </th>
+        <th
+          class="
+            px-6
+            py-3
+            border-b-2 border-gray-300
+            text-left text-sm
+            leading-4
+            text-secondary
+            tracking-wider
+          "
+        >
+          Địa chỉ
+        </th>
+      </tr>
+    </thead>
+    <tbody class="bg-white">
+      <tr *ngFor="let u of data">
+        <td class="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+          <div class="flex items-center">
+            <div>
+              <div class="text-sm leading-5 text-secondary">{{ u?.id }}</div>
+            </div>
+          </div>
+        </td>
+        <td
+          class="
+            px-6
+            py-2
+            whitespace-no-wrap
+            text-right
+            border-b border-gray-500
+            text-sm
+            leading-5
+          "
+        >
+          <span
+            class="flex justify-center cursor-pointer"
+            (click)="exportUser(u)"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-check rounded-full {{
+                u?.id == userInfo?.id
+                  ? 'bg-main text-white'
+                  : 'bg-gray-200 text-secondary'
+              }}"
+              width="25"
+              height="25"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M5 12l5 5l10 -10" />
+            </svg>
+          </span>
+        </td>
+        <td class="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+          <div class="text-sm leading-5 text-lam">
+            {{ u?.last_name + " " + u?.first_name }}
+          </div>
+        </td>
+        <td
+          class="
+            px-6
+            py-2
+            whitespace-no-wrap
+            border-b
+            text-lam
+            border-gray-500
+            text-sm
+            leading-5
+          "
+        >
+          {{ u?.phone }}
+        </td>
+        <td
+          class="
+            px-6
+            py-2
+            whitespace-no-wrap
+            border-b
+            text-lam
+            border-gray-500
+            text-sm
+            leading-5
+          "
+        >
+          {{ u?.email }}
+        </td>
+
+        <td
+          class="
+            px-6
+            py-2
+            whitespace-no-wrap
+            border-b
+            text-lam
+            border-gray-500
+            text-sm
+            leading-5
+          "
+        >
+          <span
+            class="px-3 py-1 rounded-full font-semibold text-xs {{
+              u?.gender == 'Nam'
+                ? 'text-green-900 bg-green-200'
+                : 'text-red-900 bg-red-200'
+            }}"
+          >
+            {{ u?.gender }}
+          </span>
+        </td>
+        <td
+          class="
+            px-6
+            py-2
+            whitespace-no-wrap
+            max-w-lg
+            border-b border-gray-500
+            text-lam text-sm
+            leading-5
+            expand-text
+          "
+        >
+          {{ u?.address }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <app-no-data *ngIf="totalItems == 0"></app-no-data>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button
+    mat-dialog-close
+    [disabled]="userInfo?.id == undefined"
+    class="rounded-md  px-4 mx-2 {{
+      userInfo?.id == undefined
+        ? 'bg-gray-100 cursor-not-allowed text-secondary'
+        : 'text-white bg-main'
+    }}"
+  >
+    Chọn
+  </button>
+</mat-dialog-actions>
+<app-loading-page *ngIf="isLoading"></app-loading-page>

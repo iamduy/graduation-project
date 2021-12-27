@@ -1,0 +1,175 @@
+<h2 mat-dialog-title>Lịch sử thanh lý</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="border border-gray-300 md:w-full sm:w-2/3">
+    <section class="m-4">
+      <div
+        class="xl:grid xl:grid-cols-2 xl:gap-4 lg:grid lg:grid-cols-2 lg:gap-4"
+      >
+        <div class="py-2 grid grid-cols-2 border-b border-gray-200">
+          <span class="font-semibold">ID Hợp đồng</span>
+          <span>{{ data?.id }}</span>
+        </div>
+        <div class="py-2 grid grid-cols-2 border-b border-gray-200">
+          <span class="font-semibold">Sinh viên</span>
+          <span>
+            {{ [data?.user?.last_name, data?.user?.first_name].join(" ") }}
+          </span>
+        </div>
+        <div class="py-2 grid grid-cols-2 border-b border-gray-200">
+          <span class="font-semibold">Đơn giá</span>
+          <span>{{ data?.price }}</span>
+        </div>
+        <div class="py-2 grid grid-cols-2 border-b border-gray-200">
+          <span class="font-semibold">E-mail</span>
+          <span>{{ data?.user?.email }}</span>
+        </div>
+      </div>
+    </section>
+    <section class="m-4">
+      <div
+        class="xl:grid xl:grid-cols-2 xl:gap-4 lg:grid lg:grid-cols-2 lg:gap-4"
+      >
+        <div class="py-2 grid grid-cols-2 border-b border-gray-200">
+          <span class="font-semibold">Tiền cọc</span>
+          <span>{{ data?.deposit }}</span>
+        </div>
+        <div class="py-2 grid grid-cols-2 border-b border-gray-200">
+          <span class="font-semibold">Số điện thoại</span>
+          <span>{{ data?.user?.phone }}</span>
+        </div>
+        <div class="py-2 grid grid-cols-2 border-b border-gray-200">
+          <span class="font-semibold">Ngày vào</span>
+          <span>{{ stat_day }}</span>
+        </div>
+        <div class="py-2 grid grid-cols-2 border-b border-gray-200">
+          <span class="font-semibold">Địa chỉ</span>
+          <span>{{ data?.user?.address }}</span>
+        </div>
+        <div class="py-2 grid grid-cols-2 border-b border-gray-200">
+          <span class="font-semibold">Ngày thanh lý</span>
+          <span>{{ end_day }}</span>
+        </div>
+        <div class="py-2 grid grid-cols-2 border-b border-gray-200">
+          <span class="font-semibold">Trạng thái</span>
+          <span
+            [ngClass]="
+              data?.user?.status === 1
+                ? 'bg-main text-white px-2 py-1 status rounded-md'
+                : 'bg-pink text-white px-2 py-1 status rounded-md'
+            "
+            >{{
+              data?.user?.status === 0 ? "Chưa kích hoạt" : "Đã kích hoạt"
+            }}</span
+          >
+        </div>
+        <div class="py-2 grid grid-cols-2 border-b border-gray-200">
+          <span class="font-semibold">Giường</span>
+          <span>{{
+            data?.bed === null ? data?.bed_has_deleted?.name : data?.bed?.name
+          }}</span>
+        </div>
+        <div class="py-2 grid grid-cols-2 border-b border-gray-200">
+          <span class="font-semibold">Giới tính</span>
+          <span>{{ data?.user?.gender === 0 ? "Nữ" : "Nam" }}</span>
+        </div>
+        <div class="py-2 grid grid-cols-2 border-b border-gray-200">
+          <span class="font-semibold">Phòng</span>
+          <span>{{
+            data?.room === null
+              ? data?.room_has_deleted?.name
+              : data?.room?.name
+          }}</span>
+        </div>
+      </div>
+    </section>
+  </div>
+  <table
+    *ngIf="TABLE_SERVICE?.length > 0"
+    class="
+      min-w-full
+      divide-y divide-gray-200
+      my-2
+      overflow-auto
+      border-b border-gray-200
+      sm:rounded-lg
+      shadow
+    "
+  >
+    <thead class="bg-gray-50">
+      <tr>
+        <th
+          scope="col"
+          class="
+            px-6
+            py-3
+            text-left text-xs
+            font-medium
+            text-gray-500
+            uppercase
+            tracking-wider
+          "
+        >
+          Loại phí
+        </th>
+        <th
+          scope="col"
+          class="
+            px-6
+            py-3
+            text-left text-xs
+            font-medium
+            text-gray-500
+            uppercase
+            tracking-wider
+          "
+        >
+          Đơn giá
+        </th>
+        <th
+          scope="col"
+          class="
+            px-6
+            py-3
+            text-left text-xs
+            font-medium
+            text-gray-500
+            uppercase
+            tracking-wider
+          "
+        >
+          Đơn vị
+        </th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200 text-secondary">
+      <tr *ngFor="let v of TABLE_SERVICE">
+        <td class="px-6 py-4 whitespace-nowrap">
+          <div class="text-sm">{{ v.name }}</div>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap">
+          <div class="text-sm">
+            <input
+              type="text"
+              disabled
+              [value]="v.unit_price"
+              class="rounded-sm input border"
+            />
+          </div>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap">
+          <div class="text-sm">{{ v.unit }}</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button
+    class="px-4 rounded-md bg-pink text-white shadow focus:outline-none"
+    mat-dialog-close
+  >
+    Đóng
+  </button>
+</mat-dialog-actions>
+
+<app-loading-page *ngIf="isLoading"></app-loading-page>

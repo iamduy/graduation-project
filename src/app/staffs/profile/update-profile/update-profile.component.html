@@ -1,0 +1,91 @@
+<div class="ml-6">
+  <section class="bg-white max-w-sm px-8 py-10 shadow-md">
+    <span class="text-lg">Cập nhật hồ sơ</span>
+    <hr class="border-secondary py-4" />
+
+    <form [formGroup]="formUpdateUser" (submit)="onSubmit()">
+      <div class="mt-1 mb-5">
+        <label class="font-semibold text-sm text-gray-600 pb-1 block">Họ và tên đệm<span
+            class="text-red-400">(*)</span></label>
+        <input formControlName="last_name" type="text" class="
+              border
+              rounded-lg
+              px-3
+              py-2
+              text-sm
+              w-full
+              focus:outline-none
+            " />
+        <span class="validate block" *ngIf="( f.last_name.dirty ||submitted) && errors?.last_name">
+          * ({{errors.last_name[0]}})
+        </span>
+      </div>
+
+      <div class="mt-1 mb-5">
+        <label class="font-semibold text-sm text-gray-600 pb-1 block">Tên<span class="text-red-400">(*)</span></label>
+        <input formControlName="first_name" type="text" class="
+              border
+              rounded-lg
+              px-3
+              py-2
+              text-sm
+              w-full
+              focus:outline-none
+            " />
+        <span class="validate block" *ngIf="( f.first_name.dirty ||submitted) && errors?.first_name">
+          * ({{errors.first_name[0]}})
+        </span>
+      </div>
+      <div class="mt-1 mb-5">
+        <label class="font-semibold text-sm text-gray-600 pb-1 block">Địa chỉ<span
+            class="text-red-400">(*)</span></label>
+        <input formControlName="address" type="text" class="
+              border
+              rounded-lg
+              px-3
+              py-2
+              text-sm
+              w-full
+              focus:outline-none
+            " />
+        <span class="validate block" *ngIf="( f.address.dirty ||submitted) && errors?.address">
+          * ({{errors.address[0]}})
+        </span>
+      </div>
+      <div class="mt-1 mb-5">
+        <label class="font-semibold text-sm text-gray-600 pb-1 block">Số điện thoại<span
+            class="text-red-400">(*)</span></label>
+        <input formControlName="phone" type="text" class="
+              border
+              rounded-lg
+              px-3
+              py-2
+              text-sm
+              w-full
+              focus:outline-none
+            " />
+        <span class="validate block" *ngIf="( f.phone.dirty ||submitted) && errors?.phone">
+          * ({{errors.phone[0]}})
+        </span>
+      </div>
+
+
+
+      <div class="col-span-2 grid grid-cols-2 gap-6 mt-5">
+        <a [routerLink]="Router.PROFILE.STAFF.URL" mat-raised-button class="text-md bg-header text-main">
+          Huỷ
+        </a>
+
+        <button type="submit" mat-raised-button class="
+            text-md
+            bg-main
+            text-white
+            transition
+            duaration-300
+          ">
+          Lưu thay đổi
+        </button>
+      </div>
+    </form>
+  </section>
+</div>

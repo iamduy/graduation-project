@@ -1,0 +1,100 @@
+<div class="mx-auto">
+  <div class="p-4">
+    <main class="grid md:grid-cols-12 md:gap-4">
+      <section class="bg-white md:col-span-5 col-span-6 px-8 py-10 shadow-md">
+        <div class="flex">
+          <div class="ml-2">
+            <div class="font-bold text-md">
+              {{ user?.last_name + " " + user?.first_name }}
+            </div>
+            <p class="text-[#AFA9A9]">
+              {{ user?.user_type == 0 ? "Sinh viên" : "Quản trị viên" }}
+            </p>
+          </div>
+        </div>
+        <div class="mt-2">
+          <div class="py-2 grid gap-2 grid-cols-3">
+            <span class="font-light text-lam">Email</span>
+            <span class="font-normal col-span-2">
+              {{ user?.email }}
+            </span>
+          </div>
+          <div class="py-2 grid gap-2 grid-cols-3">
+            <span class="font-light text-lam">Số điện thoại</span>
+            <span class="font-normal col-span-2"> {{ user?.phone }} </span>
+          </div>
+          <div class="py-2 grid gap-2 grid-cols-3">
+            <span class="font-light text-lam">Ngày vào</span>
+            <span class="font-normal col-span-2"> {{ createAt }} </span>
+          </div>
+        </div>
+      </section>
+      <section class="bg-white md:col-span-7 col-span-6 mt-4 md:mt-0 px-8 py-10 shadow-md">
+        <div class="font-semibold text-md">THÔNG TIN CÁ NHÂN</div>
+        <div class="mt-2">
+          <div class="py-2 grid gap-2 grid-cols-2">
+            <span class="font-light text-lam">Họ và tên</span>
+            <span class="font-normal">
+              {{ user?.last_name + " " + user?.first_name }}
+            </span>
+          </div>
+          <div class="py-2 grid gap-2 grid-cols-2">
+            <span class="font-light text-lam">Mã sinh viên</span>
+            <span class="font-normal">
+              {{ user?.student_info?.student_code }}
+            </span>
+          </div>
+          <div class="py-2 grid gap-2 grid-cols-2">
+            <span class="font-light text-lam">Giới tính</span>
+            <span class="font-normal">
+              {{ user?.gender == 1 ? "Nam" : "Nữ" }}
+            </span>
+          </div>
+          <div class="py-2 grid gap-2 grid-cols-2">
+            <span class="font-light text-lam">Ngày sinh</span>
+            <span class="font-normal"> {{ birth }} </span>
+          </div>
+          <div class="py-2 grid gap-2 grid-cols-2">
+            <span class="font-light text-lam">Địa chỉ</span>
+            <span class="font-normal"> {{ user?.address }} </span>
+          </div>
+        </div>
+
+        <div class="mt-2">
+          <div class="py-2 grid gap-2 grid-cols-2">
+            <span class="font-light text-lam">CCCD</span>
+            <span class="font-normal">
+              {{ user?.student_info?.CCCD }}
+            </span>
+          </div>
+          <div class="py-2 grid gap-2 grid-cols-2">
+            <span class="font-light text-lam">Ngày cấp</span>
+            <span class="font-normal"> {{ dateRange }} </span>
+          </div>
+          <div class="py-2 grid gap-2 grid-cols-2">
+            <span class="font-light text-lam">Nơi cấp</span>
+            <span class="font-normal">
+              {{ user?.student_info?.issued_by }}
+            </span>
+          </div>
+        </div>
+
+        <div class="mt-2 flex">
+          <button
+            [routerLink]="Router.PROFILE.STUDENT.CHILD[0].URL"
+            class="bg-main text-white mr-3 rounded-sm px-2 shadow-sm"
+          >
+            Thay đổi mật khẩu
+          </button>
+          <button
+            (click)="logout()"
+            class="bg-header text-secondary rounded-sm px-2 shadow-sm"
+          >
+            Đăng xuất
+          </button>
+        </div>
+      </section>
+    </main>
+  </div>
+  <app-loading-page *ngIf="isLoading"></app-loading-page>
+</div>

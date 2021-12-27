@@ -1,0 +1,38 @@
+<div class="py-2 pl-3 bg-white border-t-4 border-b-4">
+  <button (click)="openDialog()"
+    class="bg-transparent hover:bg-[#e07b9a] text-[#e07b9a] font-medium hover:text-white px-4 border border-[#e07b9a] hover:border-[#e07b9a] rounded">
+    <span>Cập nhật</span>
+  </button>
+</div>
+<div class="px-4 bg-white">
+  <h2 class="text-gray-600 pt-2">Thông tin tòa nhà</h2>
+  <table class="table-auto w-full ">
+    <thead>
+      <tr class="border border-gray-200">
+        <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Mã</td>
+        <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-semibold">{{building?.id}}</td>
+      </tr>
+      <tr class="border border-gray-200">
+        <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Tên</td>
+        <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-semibold">{{building?.name}}</td>
+      </tr>
+      <tr class="border border-gray-200">
+        <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Diện tích</td>
+        <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-semibold">{{building?.total_area}}</td>
+      </tr>
+      <tr class="border border-gray-200">
+        <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Số tầng</td>
+        <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-semibold">{{building?.floors?.length}}</td>
+      </tr>
+      <tr class="border border-gray-200">
+        <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Thuộc dự án</td>
+        <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-semibold">{{building?.project_id}}</td>
+      </tr>
+      <tr class="border border-gray-200">
+        <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Ghi chú</td>
+        <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-semibold">{{building?.note}}</td>
+      </tr>
+
+    </thead>
+  </table>
+</div>

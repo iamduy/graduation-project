@@ -1,0 +1,117 @@
+<div class="mx-auto">
+  <div class="p-4">
+    <div
+      *ngIf="!errMess"
+      class="border border-gray-400 rounded-sm px-6 py-3 bg-white"
+    >
+      <div class="flex items-start">
+        <div>
+          <span class="font-semibold mb-2 text-gray-700"
+            >{{[data?.user?.last_name,data?.user?.first_name].join(' ')}}</span
+          ><br />
+          <span class="text-gray-500 text-xs"
+            >Tạo ngày {{data?.userCreated_at}}</span
+          >
+        </div>
+      </div>
+      <div class="mt-4">
+        <p class="font-normal text-base text-secondary">
+          Chi tiết hợp đồng gồm:
+        </p>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-12 pt-4 pb-8">
+        <div class="w-full border-t border-[#bdbdbd]">
+          <div
+            class="w-full flex items-center px-3 py-3 border-b border-[#bdbdbd]"
+          >
+            <label class="w-1/3 text-gray-500">Mã sinh viên</label>
+            <span class="w-2/3">
+              <span class="bg-gray-200 text-[#00836b] p-1 rounded-md"
+                >{{data?.user?.student_info?.student_code}}</span
+              >
+            </span>
+          </div>
+          <div
+            class="w-full flex items-center px-3 py-3 border-b border-[#bdbdbd]"
+          >
+            <label class="w-1/3 text-gray-500">Từ ngày</label>
+            <span class="w-2/3 text-red-600">{{data?.start_day}}</span>
+          </div>
+          <div
+            class="w-full flex items-center px-3 py-3 border-b border-[#bdbdbd]"
+          >
+            <label class="w-1/3 text-gray-500">Đến ngày</label>
+            <span class="w-2/3 text-red-600">{{data?.end_day}}</span>
+          </div>
+
+          <div
+            class="w-full flex items-center px-3 py-3 border-b border-[#bdbdbd]"
+          >
+            <label class="w-1/3 text-gray-500">Tên phòng</label>
+            <span class="w-2/3">{{data?.room?.name}}</span>
+          </div>
+        </div>
+
+        <!-- cột phải -->
+        <div class="w-full border-t border-[#bdbdbd]">
+          <div
+            class="w-full flex items-center px-3 py-3 border-b border-[#bdbdbd]"
+          >
+            <label class="w-1/3 text-gray-500">Loại phòng</label>
+            <span class="w-2/3">{{data?.room?.room_type?.name}}</span>
+          </div>
+
+          <div
+            class="w-full flex items-center px-3 py-3 border-b border-[#bdbdbd]"
+          >
+            <label class="w-1/3 text-gray-500">Tên giường</label>
+            <span class="w-2/3">{{data?.bed?.name}}</span>
+          </div>
+          <div
+            class="w-full flex items-center px-3 py-3 border-b border-[#bdbdbd]"
+          >
+            <label class="w-1/3 text-gray-500">Giá</label>
+            <span class="w-2/3">{{data?.price}}</span>
+          </div>
+          <div
+            class="w-full flex items-center px-3 py-3 border-b border-[#bdbdbd]"
+          >
+            <label class="w-1/3 text-gray-500">Tiền cọc</label>
+            <span class="w-2/3">{{data?.deposit}}</span>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="data?.project_service?.length !== 0" class="overflow-auto">
+        <p class="text-sm">- Dịch vụ đăng ký</p>
+        <table class="w-full border border-[#bdbdbd] rounded-lg mb-12">
+          <thead class="w-full px-3 border-b-2 border-[#bdbdbd] text-center">
+            <tr>
+              <th class="w-16 font-medium text-[#00836b] pt-4">STT</th>
+              <th class="w-56 font-medium text-[#00836b] pt-4">Dịch vụ</th>
+              <th class="w-56 font-medium text-[#00836b] pt-4">Đơn giá</th>
+              <th class="w-56 font-medium text-[#00836b] pt-4">Đơn vị</th>
+              <th class="w-56 font-medium text-[#00836b] pt-4">
+                Hình thức thu
+              </th>
+            </tr>
+          </thead>
+          <tbody class="w-full border-[#bdbdbd] text-center divide-y">
+            <tr *ngFor="let service of data?.project_service ; let i = index">
+              <td class="w-56 p-2">{{i + 1}}</td>
+              <td class="w-56 p-2">{{service?.name}}</td>
+              <td class="w-56 p-2">{{service?.unit_price}}</td>
+              <td class="w-56 p-2">{{service?.unit}}</td>
+              <td class="w-56 p-2">
+                {{ service?.permanent === 0 ? "Thu theo tháng": "Thu theo hợp
+                đồng" }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <app-no-data *ngIf="errMess"></app-no-data>
+  </div>
+</div>
+
+<app-loading-page *ngIf="isLoading"></app-loading-page>

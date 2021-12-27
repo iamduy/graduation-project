@@ -1,0 +1,122 @@
+<div class="mx-auto ml-3 relative">
+  <div class="px-4">
+    <div class="flex flex-col md:flex-row justify-between">
+      <form class="flex flex-col md:flex-row my-3" [formGroup]="searchForm" (ngSubmit)="onSearch()">
+        <div class="px-2 mb-1">
+          <input type="text" class="w-full input" placeholder="Tên sinh viên" formControlName="name" />
+        </div>
+        <div class="px-2 mb-1">
+          <input type="text" class="w-full input" placeholder="Số điện thoại" formControlName="phone" />
+        </div>
+        <div class="px-2 mb-1">
+          <select class="w-full input" formControlName="project_id">
+            <option value="">Dự án</option>
+            <option *ngFor="let p of projects" [value]="p?.value">
+              {{ p?.label }}
+            </option>
+          </select>
+        </div>
+        <div class="px-2  md:w-auto w-full">
+          <button class="
+            w-full
+            md:w-auto
+            px-2
+            bg-main
+            rounded-md
+            text-white
+            hover:border-main hover:border hover:bg-white hover:text-main
+          ">
+            Tìm kiếm
+          </button>
+        </div>
+      </form>
+
+      <div class="flex items-center py-2">
+        <app-paginate [current_button]="paging.page.value" [last_button]="lastPage" [total_item]="totalItems"
+          [total_button]="5" (eventChangePage)="changePage($event)">
+        </app-paginate>
+      </div>
+    </div>
+
+    <div class="overflow-auto shadow">
+      <table class="
+          text-left
+          w-full
+          wrapper-table
+          table-auto
+          border border-[#bdbdbd]
+          rounded-lg
+        ">
+        <thead class="
+            flex
+            w-full
+            border-b-2
+            uppercase
+            font-medium
+            text-[#00836b]
+            border-[#bdbdbd]
+          ">
+          <tr class="flex w-full">
+            <th class="p-2 w-16 text-center">ID</th>
+            <th class="p-2 w-40">Dự án</th>
+            <th class="p-2 w-40">Toà nhà</th>
+            <th class="p-2 w-40">Tầng</th>
+            <th class="p-2 w-40">Phòng</th>
+            <th class="p-2 w-40">Giường</th>
+            <th class="p-2 w-40">Ngày vào</th>
+            <th class="p-2 w-40">Ngày hết hạn</th>
+            <th class="p-2 w-32 text-center">Đơn giá</th>
+            <th class="p-2 w-32 text-center">Tiền cọc</th>
+            <th class="p-2 w-40">Sinh viên</th>
+            <th class="p-2 w-40">Điện thoại</th>
+          </tr>
+        </thead>
+        <tbody class="
+            flex flex-col
+            overflow-auto
+            w-full
+            text-gray-600 text-sm
+            font-light
+            bg-white
+            divide-y
+          ">
+          <tr *ngFor="let d of data">
+            <td class="p-2 w-16 text-center">{{ d?.id }}</td>
+            <td class="p-2 w-40">
+              {{ d?.room?.floor?.building?.project?.name }}
+            </td>
+            <td class="p-2 w-40">
+              {{ d?.room?.floor?.building?.name }}
+            </td>
+            <td class="p-2 w-40">
+              {{ d?.room?.floor?.name }}
+            </td>
+            <td class="p-2 w-40">
+              {{ d?.room?.name }}
+            </td>
+            <td class="p-2 w-40">
+              {{ d?.name }}
+            </td>
+            <td class="p-2 w-40">
+              {{ d?.start_day }}
+            </td>
+            <td class="p-2 w-40">
+              {{ d?.end_day }}
+            </td>
+            <td class="p-2 w-32 text-center">{{ d?.price }} VND</td>
+            <td class="p-2 w-32 text-center">{{ d?.deposit }} VND</td>
+
+            <td class="p-2 w-40">
+              {{ d?.nameStudent }}
+            </td>
+            <td class="p-2 w-40">
+              {{ d?.contract?.user?.phone }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-no-data *ngIf="data?.length === 0"></app-no-data>
+  </div>
+</div>
+<app-loading-page *ngIf="isLoading"></app-loading-page>

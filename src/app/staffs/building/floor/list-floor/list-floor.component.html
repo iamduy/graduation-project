@@ -1,0 +1,72 @@
+<div class="h-full">
+    <div class="py-2 pl-3 bg-white border-t-4 border-b-4">
+        <button (click)="openDialog()"
+            class="bg-transparent hover:bg-[#e07b9a] text-[#e07b9a] font-medium hover:text-white px-2 border border-[#e07b9a] hover:border-[#e07b9a] rounded">
+            + Thêm tầng</button>
+    </div>
+
+    <!-- modal thêm tầng -->
+
+
+    <div *ngIf="floors?.length > 0 ; else noData" class="mx-2 mt-2">
+        <table mat-table [dataSource]="floors" class="mat-elevation-z8 w-full">
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef class="w-1/5  text-gray-500 font-medium text-sm bg-gray-100"> ID
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef class="w-1/3 text-gray-500 font-medium text-sm bg-gray-100"> Tên
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="total_area">
+                <th mat-header-cell *matHeaderCellDef class="w-1/3 text-gray-500 font-medium text-sm bg-gray-100"> Diện
+                    tích
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.total_area}} (m²)</td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="symbol">
+                <th mat-header-cell *matHeaderCellDef class="text-gray-500 font-medium text-sm bg-gray-100"> Tùy chọn
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="demo-button-container flex items-center">
+                        <button (click)="openDialogEdit(element)"
+                            class=" p-1 mr-2 bg-green-300 hover:bg-gray-200 text-white font-medium rounded inline-flex items-center hover:text-green-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="20"
+                                height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                                <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
+                                <line x1="16" y1="5" x2="19" y2="8" />
+                            </svg>
+                        </button>
+                        <button [disabled]="false" (click)="deleteFloor(element)"
+                            class=" bg-[#ec948c] p-1 text-white hover:bg-gray-200 hover:text-[#ec948c] font-medium rounded inline-flex items-center ">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash"
+                                width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <line x1="4" y1="7" x2="20" y2="7" />
+                                <line x1="10" y1="11" x2="10" y2="17" />
+                                <line x1="14" y1="11" x2="14" y2="17" />
+                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                            </svg>
+                        </button>
+                    </div>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+    <ng-template #noData>
+        <app-no-data></app-no-data>
+    </ng-template>
+</div>

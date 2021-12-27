@@ -1,0 +1,31 @@
+.custom-bread-crumb {
+  margin-top: 20vh;
+  background: none !important;
+  font-size: large;
+}
+
+/* Custom */
+#dormitory {
+  display: flex;
+  flex: 1 1 auto;
+}
+.app-sidebar {
+  width: 205px;
+}
+
+.main-screen {
+  width: calc(100% - 205px);
+}
+
+@media (max-device-width: 1023px) and (max-width: 1023px) {
+  .main-screen {
+    width: 100%;
+  }
+  .app-sidebar {
+    width: 0px;
+  }
+}
+
+.mt-50 {
+  margin-top: 50px;
+}

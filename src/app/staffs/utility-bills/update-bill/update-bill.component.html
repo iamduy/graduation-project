@@ -1,0 +1,101 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="bg-white border-b mb-2 pb-1 flex justify-between">
+    <span class="text-secondary text-lg font-semibold uppercase"
+      >Chốt chỉ số điện nước {{ data?.created_at }}</span
+    >
+
+    <span class="text-secondary" mat-dialog-close>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-x"
+      >
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </span>
+  </div>
+  <mat-dialog-content class="mat-typography mt-3">
+    <div
+      *ngIf="dataParent?.status === 1"
+      class="bg-error my-3 text-white p-3 rounded-sm shadow-sm"
+    >
+      Đã ghi điện nước tháng kế tiếp hoặc đã phát sinh chứng từ thu!. Không được
+      sửa!
+    </div>
+
+    <div class="py-2 flex items-center text-lg font-semibold">
+      Phòng : <span class="text-main font-medium">{{ data?.room.name }}</span>
+    </div>
+
+    <div class="py-2 grid grid-cols-2 gap-4">
+      <div>
+        <label class="block text-gray-700 text-sm font-semibold mb-2">
+          Chỉ số cuối tháng trước(Điện)
+        </label>
+        <input
+          class="w-full input"
+          disabled
+          [value]="servicePrev?.index_electric"
+        />
+      </div>
+      <div>
+        <label class="block text-gray-700 text-sm font-semibold mb-2">
+          Chỉ số cuối tháng này(Điện)
+        </label>
+        <input class="w-full input" formControlName="index_electric" />
+        <span
+          class="validate"
+          *ngIf="errMess"
+          >{{errMess?.index_electric?.[0]}}</span
+        >
+      </div>
+      <div>
+        <label class="block text-gray-700 text-sm font-semibold mb-2">
+          Chỉ số cuối tháng trước(Nước)
+        </label>
+        <input
+          class="w-full input"
+          disabled
+          [value]="servicePrev?.index_water"
+        />
+      </div>
+      <div>
+        <label class="block text-gray-700 text-sm font-semibold mb-2">
+          Chỉ số cuối tháng này(Nước)
+        </label>
+        <input class="w-full input" formControlName="index_water" />
+        <span
+          class="validate"
+          *ngIf="errMess"
+          >{{errMess?.index_water?.[0]}}</span
+        >
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="border-t border-gray-600 mt-10">
+    <button mat-dialog-close mat-raised-button class="bg-header text-main">
+      Huỷ
+    </button>
+    <button
+      [disabled]="dataParent?.status === 1"
+      type="submit"
+      mat-raised-button
+      class="{{
+        dataParent?.status === 1
+          ? 'bg-[#c7c3c3] text-[#838181]'
+          : 'bg-main text-white'
+      }} "
+    >
+      Lưu
+    </button>
+  </mat-dialog-actions>
+</form>
+<app-loading-page *ngIf="isLoading"></app-loading-page>

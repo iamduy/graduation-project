@@ -1,0 +1,500 @@
+<p class="
+    uppercase
+    md:text-xl
+    text-sm
+    font-semibold
+    text-center
+    border-b border-gray-300
+    pb-4
+  ">
+  Dự án: {{ data.project.name }}
+</p>
+
+<mat-tab-group mat-align-tabs="center">
+  <!-- project-info -->
+  <mat-tab label="Thông tin dự án">
+    <div class="md:px-4 px-0 py-4 bg-white overflow-auto">
+      <table class="table-auto w-full">
+        <thead>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Tên</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              {{ data.project.name }}
+            </td>
+          </tr>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">
+              Số điện thoại
+            </td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              {{ data.project.hotline }}
+            </td>
+          </tr>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Địa chỉ</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              {{ data.project.address }}
+            </td>
+          </tr>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Chu kỳ thu (tháng)</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              {{ data.project.cycle_collect }}
+              Tháng
+            </td>
+          </tr>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">
+              Thời gian gia hạn
+            </td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              {{ data.project.extension_time }}
+              Ngày
+            </td>
+          </tr>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Tổng tòa nhà</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              {{ data.project.buildings.length }}
+              Tòa
+            </td>
+          </tr>
+          <tr class="border border-gray-200">
+            <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Mô tả</td>
+            <td class="
+                bg-white
+                w-2/3
+                text-left
+                px-2
+                py-1
+                text-gray-700
+                font-semibold
+              ">
+              {{ data.project.description }}
+            </td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </mat-tab>
+
+  <!-- project-service -->
+  <mat-tab label="Dịch vụ">
+    <div class="py-2 pl-3 bg-white border-t-4 border-b-4">
+      <button (click)="addProjectService()" class="
+          bg-transparent
+          hover:bg-[#e07b9a]
+          text-[#e07b9a]
+          font-medium
+          hover:text-white
+          px-2
+          border border-[#e07b9a]
+          hover:border-[#e07b9a]
+          rounded
+        ">
+        <span>+ Thêm dịch vụ</span>
+      </button>
+    </div>
+    <div *ngIf="projectServices[0]?.id; else noDataProjectSerives" class="bg-white">
+      <table class="table-auto w-full">
+        <thead>
+          <tr>
+            <th class="
+                border border-b-2
+                text-gray-500
+                font-medium
+                text-sm
+                h-10
+                bg-gray-100
+              ">
+              Tên
+            </th>
+            <th class="
+                border border-b-2
+                text-gray-500
+                font-medium
+                text-sm
+                h-10
+                bg-gray-100
+              ">
+              Đơn giá
+            </th>
+            <th class="
+                border border-b-2
+                text-gray-500
+                font-medium
+                text-sm
+                h-10
+                bg-gray-100
+              ">
+              Đơn vị
+            </th>
+            <th class="
+                border border-b-2
+                text-gray-500
+                font-medium
+                text-sm
+                h-10
+                bg-gray-100
+              ">
+              Hành động
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let projectService of projectServices">
+            <td class="border px-3 pt-2 text-center">
+              {{ projectService.name }}
+            </td>
+            <td class="border px-3 pt-2 text-center">
+              {{ projectService.unit_price | number }} VND
+            </td>
+            <td class="border px-3 pt-2 text-center">
+              {{ projectService.unit }}
+            </td>
+            <td class="border px-3 pt-2">
+              <div class="flex justify-center">
+                <button (click)="editProjectService(projectService)" class="
+                    p-1
+                    mx-2
+                    bg-success
+                    text-white
+                    font-medium
+                    rounded
+                    inline-flex
+                    items-center
+                  ">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="20"
+                    height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                    <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
+                    <line x1="16" y1="5" x2="19" y2="8" />
+                  </svg>
+                </button>
+                <button (click)="removeProjectService(projectService)" class="
+                    p-1
+                    mx-2
+                    bg-error
+                    text-white
+                    font-medium
+                    rounded
+                    inline-flex
+                    items-center
+                  ">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="20"
+                    height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <line x1="4" y1="7" x2="20" y2="7" />
+                    <line x1="10" y1="11" x2="10" y2="17" />
+                    <line x1="14" y1="11" x2="14" y2="17" />
+                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="h-48">
+      <ng-template #noDataProjectSerives>
+        <app-no-data></app-no-data>
+      </ng-template>
+    </div>
+  </mat-tab>
+
+  <!-- room-type -->
+  <mat-tab label="Loại phòng">
+    <div class="py-2 pl-3 bg-white border-t-4 border-b-4">
+      <button (click)="addRoomType()" class="
+          bg-transparent
+          hover:bg-[#e07b9a]
+          text-[#e07b9a]
+          font-medium
+          hover:text-white
+          px-2
+          border border-[#e07b9a]
+          hover:border-[#e07b9a]
+          rounded
+        ">
+        + Thêm loại phòng
+      </button>
+    </div>
+    <div *ngIf="roomTypes[0]?.id; else noDataRoomTypes" class="overflow-auto w-full">
+      <table mat-table [dataSource]="roomTypes" class=" w-full">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef class="text-gray-500 font-medium text-sm bg-gray-100 min-w-[40px]">
+            ID
+          </th>
+          <td mat-cell *matCellDef="let roomType">{{ roomType.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef class="text-gray-500 font-medium text-sm bg-gray-100 min-w-[100px]">
+            Tên
+          </th>
+          <td mat-cell *matCellDef="let roomType">{{ roomType.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef class="text-gray-500 font-medium text-sm bg-gray-100 min-w-[50px]">
+            Giá
+          </th>
+          <td mat-cell *matCellDef="let roomType">{{ roomType.price | number }} VNĐ</td>
+        </ng-container>
+
+        <ng-container matColumnDef="price_deposit">
+          <th mat-header-cell *matHeaderCellDef class="text-gray-500 font-medium text-sm bg-gray-100 min-w-[50px]">
+            Giá cọc
+          </th>
+          <td mat-cell *matCellDef="let roomType">
+            {{ roomType.price_deposit | number }} VNĐ
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="number_bed">
+          <th mat-header-cell *matHeaderCellDef class="text-gray-500 font-medium text-sm bg-gray-100 min-w-[70px] px-2">
+            Số giường tối đa
+          </th>
+          <td mat-cell *matCellDef="let roomType">
+            {{ roomType.number_bed }} giường
+          </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="symbol">
+          <th mat-header-cell *matHeaderCellDef class="text-gray-500 font-medium text-sm bg-gray-100 min-w-[80px]">
+            Tùy chọn
+          </th>
+          <td mat-cell *matCellDef="let roomType">
+            <div class="demo-button-container md:flex md:items-center">
+              <button (click)="editRoomtype(roomType)" class="
+                  p-1
+                  mr-2
+                  bg-green-300
+                  hover:bg-gray-200
+                  text-white
+                  font-medium
+                  rounded
+                  inline-flex
+                  items-center
+                  hover:text-green-600
+                ">
+                <span><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="20"
+                    height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                    <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
+                    <line x1="16" y1="5" x2="19" y2="8" />
+                  </svg></span>
+              </button>
+              <button (click)="removeRoomType(roomType)" class="
+                  bg-[#ec948c]
+                  p-1
+                  text-white
+                  hover:bg-gray-200 hover:text-[#ec948c]
+                  font-medium
+                  rounded
+                  inline-flex
+                  items-center
+                ">
+                <span><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="20"
+                    height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <line x1="4" y1="7" x2="20" y2="7" />
+                    <line x1="10" y1="11" x2="10" y2="17" />
+                    <line x1="14" y1="11" x2="14" y2="17" />
+                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                  </svg></span>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsRoomType"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsRoomType"></tr>
+      </table>
+    </div>
+    <div class="h-48">
+      <ng-template #noDataRoomTypes>
+        <app-no-data></app-no-data>
+      </ng-template>
+    </div>
+  </mat-tab>
+
+  <!-- building -->
+  <mat-tab label="Tòa nhà">
+    <div class="py-2 pl-3 bg-white border-t-4 border-b-4">
+      <button (click)="addBuilding()" class="
+          bg-transparent
+          hover:bg-[#e07b9a]
+          text-[#e07b9a]
+          font-medium
+          hover:text-white
+          px-2
+          border border-[#e07b9a]
+          hover:border-[#e07b9a]
+          rounded
+        ">
+        + Thêm tòa nhà
+      </button>
+    </div>
+    <div *ngIf="buildings[0]?.id; else noDataBuildings" class="overflow-auto">
+      <table mat-table [dataSource]="buildings" class="mat-elevation-z8 w-full">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef class="text-gray-500 font-medium text-sm bg-gray-100 min-w-[40px] text-center">
+            ID
+          </th>
+          <td mat-cell *matCellDef="let building">{{ building.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef class="text-gray-500 font-medium text-sm bg-gray-100 min-w-[100px] text-center px-3">
+            Tên
+          </th>
+          <td mat-cell *matCellDef="let building">{{ building.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="project">
+          <th mat-header-cell *matHeaderCellDef class="ml-3 text-gray-500 font-medium text-sm bg-gray-100 min-w-[100px] text-center">
+            Dự án
+          </th>
+          <td mat-cell *matCellDef="let building">
+            {{data.project.name}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_area">
+          <th mat-header-cell *matHeaderCellDef class="text-gray-500 font-medium text-sm bg-gray-100 min-w-[70px] text-center">
+            Diện tích (m2)
+          </th>
+          <td mat-cell *matCellDef="let building">{{ building.total_area }}</td>
+        </ng-container>
+        <ng-container matColumnDef="floors">
+          <th mat-header-cell *matHeaderCellDef class="text-gray-500 font-medium text-sm bg-gray-100 min-w-[50px] text-center">
+            Số tầng
+          </th>
+          <td mat-cell *matCellDef="let building">{{ building.floors.length }}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef class="text-gray-500 font-medium text-sm bg-gray-100 text-center">
+            Tùy chọn
+          </th>
+          <td mat-cell *matCellDef="let building">
+            <div class="demo-button-container flex items-center">
+              <button (click)="editBuilding(building)" class="
+                  p-1
+                  mr-2
+                  bg-green-300
+                  hover:bg-gray-200
+                  text-white
+                  font-medium
+                  rounded
+                  inline-flex
+                  items-center
+                  hover:text-green-600
+                ">
+                <span><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="20"
+                    height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                    <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
+                    <line x1="16" y1="5" x2="19" y2="8" />
+                  </svg></span>
+              </button>
+              <button (click)="removeBuilding(building)" class="
+                  bg-[#ec948c]
+                  p-1
+                  text-white
+                  hover:bg-gray-200 hover:text-[#ec948c]
+                  font-medium
+                  rounded
+                  inline-flex
+                  items-center
+                ">
+                <span><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="20"
+                    height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <line x1="4" y1="7" x2="20" y2="7" />
+                    <line x1="10" y1="11" x2="10" y2="17" />
+                    <line x1="14" y1="11" x2="14" y2="17" />
+                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                  </svg></span>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsBuilding"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsBuilding"></tr>
+      </table>
+    </div>
+    <div class="h-48">
+      <ng-template #noDataBuildings>
+        <app-no-data></app-no-data>
+      </ng-template>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+<app-loading-page *ngIf="isLoading === true"></app-loading-page>

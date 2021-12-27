@@ -1,0 +1,68 @@
+<form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+  <div class="bg-white border-b mb-2 pb-1 flex justify-between">
+    <span class="text-secondary text-lg font-semibold uppercase"
+      >Cập nhật loại thông báo</span
+    >
+
+    <span class="text-secondary" mat-dialog-close>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-x"
+      >
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </span>
+  </div>
+  <mat-dialog-content class="mat-typography mt-4">
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-semibold mb-2">
+        Loại thông báo
+      </label>
+      <input class="w-full input" formControlName="name" />
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="border-t border-gray-600">
+    <button
+      mat-dialog-close
+      class="
+        px-4
+        mr-4
+        bg-header
+        text-main
+        font-medium
+        rounded
+        inline-flex
+        items-center
+      "
+    >
+      Huỷ
+    </button>
+    <button
+      type="submit"
+      class="
+        px-4
+        mr-4
+        bg-main
+        hover:bg-gray-200
+        text-white
+        font-medium
+        rounded
+        inline-flex
+        items-center
+        hover:text-green-600
+      "
+    >
+      Lưu
+    </button>
+  </mat-dialog-actions>
+</form>
+<app-loading-page *ngIf="isLoading"></app-loading-page>

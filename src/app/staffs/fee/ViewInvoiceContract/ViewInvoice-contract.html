@@ -1,0 +1,336 @@
+<div class="bg-white border-b mb-2 pb-1 flex justify-between">
+  <span class="py-3 font-medium">THÔNG TIN HÓA ĐƠN</span>
+
+  <span class="text-secondary" mat-dialog-close>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="feather feather-x"
+    >
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </span>
+</div>
+<mat-dialog-content>
+  <p class="font-medium">
+    Sinh viên :
+    <span class="text-main"
+      >{{[studentInfo?.last_name, studentInfo?.first_name].join(' ')}}</span
+    >
+  </p>
+  <section class="md:grid md:grid-cols-2 gap-6">
+    <table class="table-auto w-full">
+      <thead>
+        <tr class="border border-gray-200">
+          <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Dự án</td>
+          <td
+            class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium"
+          >
+            <input
+              disabled
+              class="input w-full"
+              [value]="InvoiceDetail?.room_info?.project?.name"
+            />
+          </td>
+        </tr>
+        <tr class="border border-gray-200">
+          <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Toà nhà</td>
+          <td
+            class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium"
+          >
+            <input
+              disabled
+              class="input w-full"
+              [value]="InvoiceDetail?.room_info?.building?.name"
+            />
+          </td>
+        </tr>
+        <tr class="border border-gray-200">
+          <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Tầng</td>
+          <td
+            class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium"
+          >
+            <input
+              disabled
+              class="input w-full"
+              [value]="InvoiceDetail?.room_info?.floor?.name"
+            />
+          </td>
+        </tr>
+        <tr class="border border-gray-200">
+          <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Phòng</td>
+          <td
+            class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium"
+          >
+            <input
+              disabled
+              class="input w-full"
+              [value]="InvoiceDetail?.room_info?.room?.name"
+            />
+          </td>
+        </tr>
+      </thead>
+    </table>
+    <table class="table-auto w-full">
+      <thead>
+        <tr class="border border-gray-200">
+          <td class="w-1/3 text-right py-1 px-2 bg-gray-100">
+            Ngày thanh toán
+          </td>
+          <td
+            class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium"
+          >
+            <input
+              disabled
+              class="input w-full"
+              [value]="Invoice?.status === 0 ? '' : Invoice?.date_payment"
+            />
+          </td>
+        </tr>
+        <tr class="border border-gray-200">
+          <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Trạng thái</td>
+          <td
+            class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium"
+          >
+            <div class="relative">
+              <input
+                disabled
+                class="input w-full relative {{Invoice?.status === 0 ? 'text-error' : 'text-success'}}"
+                [value]="Invoice?.status === 0 ? 'Chưa thanh toán' : 'Đã thanh toán'"
+              />
+
+              <span
+                *ngIf="Invoice?.status === 0"
+                (click)="handlePayment(Invoice?.id)"
+                class="
+                  absolute
+                  right-2
+                  top-2
+                  cursor-pointer
+                  underline
+                  text-secondary
+                  hover:text-gray-400
+                "
+                >Thanh toán</span
+              >
+            </div>
+          </td>
+        </tr>
+        <tr class="border border-gray-200">
+          <td class="w-1/3 text-right py-1 px-2 bg-gray-100">
+            Phương thức thanh toán
+          </td>
+          <td
+            class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium"
+          >
+            <input
+              disabled
+              class="input w-full"
+              [value]="Invoice?.payment_type"
+            />
+          </td>
+        </tr>
+        <tr class="border border-gray-200">
+          <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Tổng tiền</td>
+          <td
+            class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium"
+          >
+            <input
+              disabled
+              class="input w-full"
+              [value]="totalMoney + ' VND'"
+            />
+          </td>
+        </tr>
+      </thead>
+    </table>
+  </section>
+
+  <div class="overflow-auto">
+    <table
+      class="table-auto w-full mt-2 col-span-2"
+      *ngIf="ProjectService != null"
+    >
+      <thead>
+        <tr class="bg-gray-200">
+          <th
+            class="
+              border border-gray-400
+              p-2
+              font-semibold
+              text-xs text-gray-600
+            "
+          >
+            STT
+          </th>
+          <th
+            class="
+              border border-gray-400
+              p-2
+              font-semibold
+              text-xs text-gray-600 text-center
+            "
+          >
+            DỊCH VỤ
+          </th>
+          <th
+            class="
+              border border-gray-400
+              p-2
+              font-semibold
+              text-xs text-gray-600 text-center
+            "
+          >
+            ĐƠN GIÁ
+          </th>
+          <th
+            class="
+              border border-gray-400
+              p-2
+              font-semibold
+              text-xs text-gray-600 text-center
+            "
+          >
+            ĐƠN VỊ
+          </th>
+
+          <th
+            class="
+              border border-gray-400
+              p-2
+              font-semibold
+              text-xs text-gray-600 text-center
+            "
+          >
+            THÀNH TIỀN
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let service of ProjectService ; let i = index">
+          <td class="border border-gray-400 p-2 bg-white text-center">
+            {{i + 1}}
+          </td>
+          <td class="border border-gray-400 p-2 bg-white text-center">
+            {{service?.name}}
+          </td>
+          <td class="border border-gray-400 p-2 bg-white text-center">
+            {{service?.unit_price}} VND
+          </td>
+          <td class="border border-gray-400 p-2 bg-white text-center">
+            {{service?.unit}}
+          </td>
+          <td class="border border-gray-400 p-2 bg-white text-center">
+            {{service?.total_money}} VND
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="overflow-auto">
+    <table class="table-auto w-full my-2 col-span-2">
+      <thead>
+        <tr class="bg-gray-200">
+          <th
+            class="
+              border border-gray-400
+              p-2
+              font-semibold
+              text-xs text-gray-600 text-center
+            "
+          >
+            DỊCH VỤ
+          </th>
+          <th
+            class="
+              border border-gray-400
+              p-2
+              font-semibold
+              text-xs text-gray-600 text-center
+            "
+          >
+            NGÀY THU
+          </th>
+          <th
+            class="
+              border border-gray-400
+              p-2
+              font-semibold
+              text-xs text-gray-600 text-center
+            "
+          >
+            ĐƠN VỊ
+          </th>
+          <th
+            class="
+              border border-gray-400
+              p-2
+              font-semibold
+              text-xs text-gray-600 text-center
+            "
+          >
+            ĐƠN GIÁ
+          </th>
+
+          <th
+            class="
+              border border-gray-400
+              p-2
+              font-semibold
+              text-xs text-gray-600 text-center
+            "
+          >
+            THÀNH TIỀN
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="border border-gray-400 p-2 bg-white text-center">
+            {{roomFeeInfo?.name}}
+          </td>
+          <td class="border border-gray-400 p-2 bg-white text-center">
+            {{roomFeeInfo?.date_collect}}
+          </td>
+          <td class="border border-gray-400 p-2 bg-white text-center">
+            {{roomFeeInfo?.unit}}
+          </td>
+          <td class="border border-gray-400 p-2 bg-white text-center">
+            {{roomFeeInfo?.unit_price}} VND
+          </td>
+
+          <td class="border border-gray-400 p-2 bg-white text-center">
+            {{roomFeeInfo?.total_money}} VND
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="flex justify-end mt-2">
+    <button
+      mat-dialog-close
+      class="
+        px-4
+        bg-header
+        text-main
+        font-medium
+        rounded
+        inline-flex
+        items-center
+      "
+    >
+      Đóng
+    </button>
+  </div>
+</mat-dialog-actions>
+<app-loading-page *ngIf="isLoading"></app-loading-page>

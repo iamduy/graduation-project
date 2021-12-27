@@ -1,0 +1,46 @@
+<div class="flex flex-col md:flex-row">
+    <div class="w-full md:w-3/12 mb-2 border-2">
+        <div class="border-b px-2 py-3">
+            Danh sách chức vụ
+        </div>
+        <div class="p-2">
+            <a *ngFor="let role of roles; index as i" (click)="changeRole(role?.id)"
+                class="block px-2 py-2 {{currentRoleId == role.id? 'bg-green-500 text-white hover:text-black' : ''}}  cursor-pointer hover:bg-green-100">
+                {{i+1 + '. ' + role.name}}</a>
+        </div>
+    </div>
+
+    <div class="w-full md:w-9/12 md:mx-3 pb-2 border">
+        <mat-tab-group>
+            <mat-tab *ngFor="let module of prefixData; index as i" label="{{ module.name | uppercase}}">
+                <div class="py-6 px-3">
+                    <h3 class="pl-3">Danh sách chức năng </h3>
+                    <div class="flex flex-wrap">
+                        <div *ngFor="let table of module.tables" class="mx-3 mb-3">
+                            <div>
+                                <mat-checkbox class="uppercase font-bold"
+                                    (change)="checkAllOfTable(table.permissions, $event)">
+                                    {{table.name}}:
+                                </mat-checkbox>
+                            </div>
+                            <div *ngFor="let per of table.permissions">
+                                <mat-checkbox [value]="per.id" [checked]="checked(per.id)"
+                                    (change)="changeChecked($event)">
+                                    {{per.name}}
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+
+        <div class="flex justify-end px-2 md:px-0">
+            <button type="button" (click)="savePosition()"
+                class="px-2 w-full md:w-32 md:mr-2 bg-main rounded-md text-white hover:border-main hover:border hover:bg-white hover:text-main">
+                Lưu
+            </button>
+        </div>
+    </div>
+</div>

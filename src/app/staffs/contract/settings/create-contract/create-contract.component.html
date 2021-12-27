@@ -1,0 +1,472 @@
+<main *ngIf="ContractInfo">
+  <div class="flex items-center bg-white rounded-lg px-2 justify-between">
+    <p class="pl-2 pt-2 font-bold text-base">Tạo hợp đồng</p>
+    <button mat-dialog-close class="font-light text-2xl text-secondary">
+      x
+    </button>
+  </div>
+  <form [formGroup]="contractForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content class="content">
+      <div class="bg-[#f0f8ff] p-4 rounded-sm">
+        <main>
+          <div
+            class="
+              flex
+              justify-start
+              bg-header
+              text-secondary
+              font-medium
+              rounded-sm
+              w-full
+              leading-10
+              p-2
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-bookmark mt-2"
+              width="25"
+              height="25"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M9 4h6a2 2 0 0 1 2 2v14l-5 -3l-5 3v-14a2 2 0 0 1 2 -2" />
+            </svg>
+            <span>THÔNG TIN HỢP ĐỒNG</span>
+          </div>
+
+          <span class="note"
+            >Lưu ý : Chu kì tối thiểu của hợp đồng là
+            {{ ContractInfo?.room?.floor?.building?.project?.cycle_collect }}
+            tháng !</span
+          >
+          <div
+            class="
+              xl:grid xl:grid-cols-2 xl:gap-4
+              lg:grid lg:grid-cols-2 lg:gap-4
+            "
+          >
+            <div class="mt-1 mb-5">
+              <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                >Dự án<span class="text-red-400"></span
+              ></label>
+              <input
+                type="text"
+                disabled
+                class="
+                  border
+                  rounded-lg
+                  p-3
+                  text-sm
+                  w-full
+                  focus:outline-none
+                  input
+                "
+                [value]="ContractInfo?.room?.floor?.building?.project?.name"
+              />
+            </div>
+          </div>
+
+          <div
+            class="
+              xl:grid xl:grid-cols-2 xl:gap-4
+              lg:grid lg:grid-cols-2 lg:gap-4
+            "
+          >
+            <div class="mt-1 mb-5">
+              <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                >Ngày vào<span class="text-red-400">(*)</span></label
+              >
+              <input
+                type="date"
+                class="
+                  border
+                  rounded-lg
+                  p-3
+                  text-sm
+                  w-full
+                  focus:outline-none
+                  input
+                "
+                formControlName="start_day"
+              />
+              <span class="validate" *ngIf="submitted && errors?.start_day"
+                >*{{ errors?.start_day.join(" ") }}</span
+              >
+            </div>
+            <div class="mt-1 mb-5">
+              <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                >Ngày kết thúc<span class="text-red-400">(*)</span></label
+              >
+              <input
+                type="date"
+                class="
+                  border
+                  rounded-lg
+                  p-3
+                  text-sm
+                  w-full
+                  focus:outline-none
+                  input
+                "
+                formControlName="end_day"
+              />
+              <span class="validate" *ngIf="submitted && errors?.end_day"
+                >*{{ errors?.end_day.join(" ") }}</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="
+              xl:grid xl:grid-cols-2 xl:gap-4
+              lg:grid lg:grid-cols-2 lg:gap-4
+            "
+          >
+            <div class="mt-1 mb-5">
+              <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                >Tiền cọc<span class="text-red-400">(*)</span></label
+              >
+              <input
+                type="text"
+                class="
+                  border
+                  rounded-lg
+                  p-3
+                  text-sm
+                  w-full
+                  focus:outline-none
+                  input
+                "
+                placeholder="Tiền cọc"
+                formControlName="deposit"
+              />
+              <span class="validate" *ngIf="submitted && errors?.deposit"
+                >*{{ errors?.deposit.join(" ") }}</span
+              >
+            </div>
+
+            <div class="mt-1 mb-5">
+              <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                >Trạng thái cọc<span class="text-red-400">(*)</span></label
+              >
+              <select
+                class="
+                  border
+                  rounded-lg
+                  p-3
+                  text-sm
+                  w-full
+                  focus:outline-none
+                  input
+                "
+                formControlName="deposit_state"
+              >
+                <option [value]="0">Chưa thu</option>
+                <option [value]="1">Đã thu</option>
+              </select>
+            </div>
+          </div>
+
+          <div
+            class="
+              xl:grid xl:grid-cols-2 xl:gap-4
+              lg:grid lg:grid-cols-2 lg:gap-4
+            "
+          >
+            <div class="mt-1 mb-5">
+              <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                >Đơn giá<span class="text-red-400">(*)</span></label
+              >
+              <input
+                type="text"
+                class="
+                  border
+                  rounded-lg
+                  p-3
+                  text-sm
+                  w-full
+                  focus:outline-none
+                  input
+                "
+                placeholder="Đơn giá"
+                formControlName="price"
+              />
+              <span class="validate" *ngIf="submitted && errors?.price"
+                >*{{ errors?.price.join(" ") }}</span
+              >
+            </div>
+
+            <div class="mt-1 mb-5 relative">
+              <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                >Sinh viên <span class="text-red-400">(*)</span></label
+              >
+              <input
+                type="text"
+                disabled
+                class="
+                  relative
+                  border
+                  rounded-lg
+                  p-3
+                  text-sm
+                  w-full
+                  focus:outline-none
+                  input
+                "
+                [value]="userInfo?.name ? userInfo?.name : ''"
+                placeholder="Khách hàng"
+              />
+              <input
+                type="hidden"
+                [value]="userInfo?.id ? userInfo?.id : ''"
+                formControlName="user_id"
+              />
+              <span
+                (click)="getUserById()"
+                class="z-10 h-full absolute w-8 right-0 pt-2 cursor-pointer"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon icon-tabler icon-tabler-search"
+                  width="25"
+                  height="25"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="#000000"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <circle cx="10" cy="10" r="7" />
+                  <line x1="21" y1="21" x2="15" y2="15" />
+                </svg>
+              </span>
+              <span class="validate" *ngIf="submitted && errors?.user_id"
+                >*{{ errors?.user_id.join(" ") }}</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="
+              xl:grid xl:grid-cols-2 xl:gap-4
+              lg:grid lg:grid-cols-2 lg:gap-4
+            "
+          >
+            <div class="mt-1 mb-5">
+              <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                >Phòng <span class="text-red-400">(*)</span></label
+              >
+              <input
+                disabled
+                type="text"
+                class="
+                  border
+                  rounded-lg
+                  p-3
+                  text-sm
+                  w-full
+                  focus:outline-none
+                  input
+                "
+                placeholder="Phòng"
+                [value]="this.ContractInfo.room.name"
+              />
+            </div>
+            <div class="mt-1 mb-5">
+              <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                >Giường <span class="text-red-400">(*)</span></label
+              >
+              <input
+                disabled
+                type="text"
+                class="
+                  border
+                  rounded-lg
+                  p-3
+                  text-sm
+                  w-full
+                  focus:outline-none
+                  input
+                "
+                [value]="dataParentBed.name ?? ''"
+              />
+            </div>
+          </div>
+
+          <div
+            class="
+              xl:grid xl:grid-cols-2 xl:gap-4
+              lg:grid lg:grid-cols-2 lg:gap-4
+            "
+          >
+            <div class="mt-1 mb-5">
+              <label class="font-semibold text-sm text-gray-600 pb-1 block"
+                >Ghi chú <span class="text-red-400">(*)</span></label
+              >
+              <textarea
+                rows="3"
+                cols="1"
+                placeholder="Ghi chú"
+                class="border rounded-lg p-3 text-sm w-full focus:outline-none"
+                formControlName="note"
+              >
+              </textarea>
+              <span class="validate" *ngIf="submitted && errors?.note"
+                >*{{ errors?.note.join(" ") ?? "" }}</span
+              >
+            </div>
+          </div>
+        </main>
+
+        <section *ngIf="TABLE_SERVICE?.length > 0">
+          <div
+            class="
+              flex
+              justify-start
+              bg-header
+              text-secondary
+              font-medium
+              rounded-sm
+              w-full
+              leading-10
+              p-2
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-bookmark mt-2"
+              width="25"
+              height="25"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M9 4h6a2 2 0 0 1 2 2v14l-5 -3l-5 3v-14a2 2 0 0 1 2 -2" />
+            </svg>
+            <span>ĐĂNG KÍ DỊCH VỤ</span>
+          </div>
+          <table
+            class="
+              min-w-full
+              divide-y divide-gray-200
+              my-2
+              overflow-auto
+              border-b border-gray-200
+              sm:rounded-lg
+            "
+          >
+            <thead class="bg-gray-50">
+              <tr>
+                <th
+                  scope="col"
+                  class="
+                    px-6
+                    py-3
+                    text-left text-xs
+                    font-medium
+                    text-gray-500
+                    uppercase
+                    tracking-wider
+                  "
+                >
+                  #
+                </th>
+                <th
+                  scope="col"
+                  class="
+                    px-6
+                    py-3
+                    text-left text-xs
+                    font-medium
+                    text-gray-500
+                    uppercase
+                    tracking-wider
+                  "
+                >
+                  Loại phí
+                </th>
+                <th
+                  scope="col"
+                  class="
+                    px-6
+                    py-3
+                    text-left text-xs
+                    font-medium
+                    text-gray-500
+                    uppercase
+                    tracking-wider
+                  "
+                >
+                  Đơn giá
+                </th>
+                <th
+                  scope="col"
+                  class="
+                    px-6
+                    py-3
+                    text-left text-xs
+                    font-medium
+                    text-gray-500
+                    uppercase
+                    tracking-wider
+                  "
+                >
+                  Đơn vị
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200 text-secondary">
+              <tr *ngFor="let v of TABLE_SERVICE">
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <input
+                    type="checkbox"
+                    [value]="v.id"
+                    (change)="onCheckBox(v.id, $event)"
+                    formArrayName="project_service_id"
+                  />
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm">{{ v.name }}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm">
+                    <input
+                      type="text"
+                      disabled
+                      [value]="v.unit_price"
+                      class="rounded-sm input border"
+                    />
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm">{{ v.unit }}</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="border-t border-gray-400">
+      <button mat-button mat-dialog-close class="bg-header text-main">
+        Huỷ
+      </button>
+      <button type="submit" class="bg-main rounded-md text-white px-4 mx-2">
+        Lưu
+      </button>
+    </mat-dialog-actions>
+  </form>
+</main>
+<app-loading-page *ngIf="isLoading === true"></app-loading-page>

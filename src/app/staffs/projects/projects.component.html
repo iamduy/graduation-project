@@ -1,0 +1,131 @@
+<div class="mx-auto pl-6">
+  <div class="px-2">
+    <div class="my-4">
+      <a>
+        <button class="bg-main text-white px-2 rounded-md" (click)="addProjectDialog()">
+          Tạo mới
+        </button>
+      </a>
+    </div>
+
+    <div *ngIf="projects[0]?.id; else noData" class="overflow-auto">
+      <table class="
+          text-left
+          w-4/5
+          mx-auto
+          wrapper-table
+          table-auto
+          border border-[#bdbdbd]
+          rounded-lg
+        ">
+        <thead class="w-full px-3 border-b-2 border-[#bdbdbd] text-center">
+          <tr class="flex w-full">
+            <th class="pt-4 px-2 w-16 text-center font-medium text-main">
+              STT
+            </th>
+            <th class="pt-4 px-2 w-32 text-center font-medium text-main">
+              Chi tiết
+            </th>
+            <th class="pt-4 px-2 w-56 text-center font-medium text-main">
+              Tên
+            </th>
+            <th class="pt-4 px-2 w-56 text-center font-medium text-main">
+              Số điện thoại
+            </th>
+            <th class="pt-4 px-2 w-32 font-medium text-main">Chu kỳ thu</th>
+
+            <th class="pt-4 px-2 w-48 font-medium text-main">Tùy chọn</th>
+          </tr>
+        </thead>
+        <tbody class="
+            flex flex-col
+            overflow-auto
+            w-full
+            text-gray-600 text-sm
+            font-normal
+            bg-white
+            divide-y
+          ">
+          <tr class="border-b border-[#bdbdbd]" *ngFor="let project of projects">
+            <td class="py-1 px-2 w-16 text-center">{{ project.id }}</td>
+            <td class="py-1 px-8 w-32">
+              <div class="flex justify-center">
+                <button (click)="projectDetail(project)">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clipboard-list" width="32"
+                    height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                    <rect x="9" y="3" width="6" height="4" rx="2" />
+                    <line x1="9" y1="12" x2="9.01" y2="12" />
+                    <line x1="13" y1="12" x2="15" y2="12" />
+                    <line x1="9" y1="16" x2="9.01" y2="16" />
+                    <line x1="13" y1="16" x2="15" y2="16" />
+                  </svg>
+                </button>
+              </div>
+            </td>
+            <td class="py-1 px-8 w-56 text-center">{{ project.name }}</td>
+            <td class="py-1 px-8 w-56 text-center">
+              <span>{{ project.hotline }}</span>
+            </td>
+            <td class="py-1 px-8 w-32 text-center">
+              <span>{{ project.cycle_collect }}</span>
+            </td>
+
+            <td class="py-1 px-8 w-48 mx-auto">
+              <div class="flex justify-center ">
+                <div>
+                  <button (click)="editProjectDialog(project)" class="
+                    p-1
+                    bg-success
+                    text-white
+                    font-medium
+                    rounded
+                    items-center
+                    mx-1
+                  ">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="20"
+                      height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                      <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
+                      <line x1="16" y1="5" x2="19" y2="8" />
+                    </svg>
+                  </button>
+                </div>
+                <div>
+                  <button (click)="removeProject(project)" class="
+                    p-1
+                    bg-error
+                    text-white
+                    font-medium
+                    rounded
+                    items-center
+                    mx-1
+                  ">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="20"
+                      height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <line x1="4" y1="7" x2="20" y2="7" />
+                      <line x1="10" y1="11" x2="10" y2="17" />
+                      <line x1="14" y1="11" x2="14" y2="17" />
+                      <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                      <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noData>
+      <app-no-data></app-no-data>
+    </ng-template>
+  </div>
+</div>
+<app-loading-page *ngIf="isLoading"></app-loading-page>

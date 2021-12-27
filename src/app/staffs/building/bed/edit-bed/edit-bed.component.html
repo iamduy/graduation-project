@@ -1,0 +1,19 @@
+<form [formGroup]="editFrom" (submit)="onSubmit()">
+    <h2 class="my-0">Cập nhật tên giường</h2>
+    <div class="px-8 py-2">
+        <div class="flex items-center border-b border-t px-2 py-4 text-[#5e5d5d]">
+            <label class="w-1/4">Tên giường</label>
+            <div class="example-full-width w-2/3" appearance="fill">
+                <input formControlName="name" type="text"
+                    class="input w-full h-8 rounded-md border border-gray-400 bg-gray-100 px-3 ">
+                <span class="validate error-message " *ngIf="( f.name.dirty ||submitted) && errors?.name">
+                    * ({{errors.name[0]}})
+                </span>
+            </div>
+        </div>
+        <button type="submit"
+            class="px-2 mr-1 mt-2 bg-green-300 hover:bg-gray-200 text-white font-medium rounded inline-flex items-center hover:text-green-600 float-right">
+            Cập nhật
+        </button>
+    </div>
+</form>

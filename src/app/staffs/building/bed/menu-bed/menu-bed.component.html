@@ -1,0 +1,26 @@
+<div class="flex items-center bg-white rounded-lg px-2 border-b border-gray-300">
+    <i class="fas fa-door-open"></i>
+    <p class="pl-2 pt-2 font-medium text-base">
+        PHÒNG 1001
+    </p>
+</div>
+
+
+<mat-tab-group mat-align-tabs="start" class="">
+    <mat-tab label="Thông tin">
+        <app-info></app-info>
+    </mat-tab>
+    <mat-tab label="Danh sách giường">
+        <app-list-bed></app-list-bed>
+    </mat-tab>
+    <mat-tab label="Khách thuê">
+        <app-guest-rent></app-guest-rent>
+    </mat-tab>
+    <mat-tab label="Lịch sử thu phí">
+        <app-receipts-history></app-receipts-history>
+    </mat-tab>
+
+    <mat-tab label="Tài sản cố định">
+        <app-asset></app-asset>
+    </mat-tab>
+</mat-tab-group>

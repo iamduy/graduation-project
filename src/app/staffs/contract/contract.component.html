@@ -1,0 +1,546 @@
+<div class="grid mb-4 mx-auto pl-6">
+  <div class="grid grid-cols-12 col-span-12 gap-6 xxl:col-span-9">
+    <div class="col-span-12">
+      <div
+        class="grid gap-2 grid-cols-1 lg:grid-cols-1 {{
+          isLoading ? 'fixed w-[1200px]' : null
+        }}"
+      >
+        <div class="px-4 pb-10">
+          <!-- <button> -->
+          <div
+            class="border rounded-md border-green-400 mb-1 bg-white"
+            x-data="{ Open : false  }"
+          >
+            <button
+              x-on:click="Open = !Open"
+              class="
+                w-full
+                text-gray-600
+                inline-flex
+                items-center
+                justify-between
+                text-lg
+                font-medium
+                transition-colors
+                duration-150
+                px-2
+              "
+            >
+              <span class="inline-flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  x-show="!Open"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-chevron-up"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"
+                  />
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  x-show="Open"
+                  class="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  style="display: none"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+                <span class="ml-2">Bộ lọc</span>
+              </span>
+            </button>
+            <div
+              class="overflow-auto"
+              x-show.transition="Open"
+              style="display: none"
+            >
+              <div
+                class="text-sm font-medium text-gray-700 py-3 px-2"
+                aria-label="submenu"
+              >
+                <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+                  <div class="sm:inline-flex sm:items-center mb-2">
+                    <div class="mx-2 mb-1">Trạng thái:</div>
+                    <div class="mr-2 mb-1">
+                      <mat-radio-button
+                        color="warn"
+                        (change)="changeExists('all')"
+                      ></mat-radio-button>
+                      <span class="bg-blue-400 text-white p-1 px-2 rounded-md"
+                        >Tất cả</span
+                      >
+                    </div>
+                    <div class="mr-2 mb-1">
+                      <mat-radio-button
+                        color="warn"
+                        (change)="changeExists('not_exist')"
+                      ></mat-radio-button>
+                      <span class="bg-secondary text-white p-1 px-2 rounded-md"
+                        >Còn trống</span
+                      >
+                    </div>
+                    <div class="mr-2 mb-1">
+                      <mat-radio-button
+                        color="primary"
+                        (change)="changeExists('exist')"
+                      ></mat-radio-button>
+                      <span class="bg-main text-white p-1 px-2 rounded-md"
+                        >Đã thuê</span
+                      >
+                    </div>
+                  </div>
+                  <div class="sm:flex sm:flex-col">
+                    <div class="sm:flex sm:items-center">
+                      <div class="mb-1 px-1">
+                        <input
+                          type="text"
+                          class="input w-full sm:w-[200px]"
+                          placeholder="Nhập họ"
+                          formControlName="last_name"
+                        />
+                      </div>
+                      <div class="mb-1 px-1">
+                        <input
+                          type="text"
+                          class="input w-full sm:w-[200px]"
+                          placeholder="Nhập tên"
+                          formControlName="first_name"
+                        />
+                      </div>
+                      <div class="mb-1 px-1">
+                        <input
+                          type="text"
+                          class="w-full sm:w-[200px] input"
+                          placeholder="E-mail"
+                          formControlName="email"
+                        />
+                      </div>
+                      <div class="mb-1 px-1">
+                        <input
+                          type="text"
+                          class="input w-full sm:w-[200px]"
+                          placeholder="Sđt sinh viên"
+                          formControlName="phone"
+                        />
+                      </div>
+                      <div class="mb-1 px-1">
+                        <input
+                          type="text"
+                          class="input w-full sm:w-[200px]"
+                          placeholder="Địa chỉ thường trú"
+                          formControlName="address"
+                        />
+                      </div>
+                      <div class="mb-1 px-1">
+                        <input
+                          type="date"
+                          class="input w-full sm:w-[200px]"
+                          formControlName="start_day"
+                        />
+                      </div>
+                    </div>
+                    <div class="sm:flex sm:items-center">
+                      <div class="mb-1 px-1">
+                        <input
+                          type="date"
+                          class="input w-full sm:w-[200px]"
+                          formControlName="end_day"
+                        />
+                      </div>
+                      <div class="mb-1 px-1">
+                        <select
+                          class="input w-full sm:w-[200px]"
+                          formControlName="deposit_state"
+                        >
+                          <option value="" disabled selected>
+                            Trạng thái cọc
+                          </option>
+                          <option value="">None</option>
+                          <option value="0">Chưa thu</option>
+                          <option value="1">Đã thu</option>
+                        </select>
+                      </div>
+                      <div class="mb-1 px-1">
+                        <select
+                          (change)="getBuildings($event)"
+                          class="input w-full sm:w-[200px]"
+                          formControlName="project_id"
+                        >
+                          <option value="" disabled selected>Dự án</option>
+                          <option
+                            [disabled]="
+                              projects?.length == 0 || projects == undefined
+                            "
+                            value=""
+                          >
+                            {{
+                              projects?.length == 0 || projects == undefined
+                                ? "No Data"
+                                : "None"
+                            }}
+                          </option>
+                          <option *ngFor="let p of projects" [value]="p.id">
+                            {{ p.name }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="mb-1 px-1">
+                        <select
+                          (change)="handleChangeBuilding($event)"
+                          class="input w-full sm:w-[200px]"
+                          formControlName="building_id"
+                        >
+                          <option value="" disabled selected>Toà nhà</option>
+                          <option
+                            [disabled]="
+                              buildings?.length == 0 || buildings == undefined
+                            "
+                            value=""
+                          >
+                            {{
+                              buildings?.length == 0 || buildings == undefined
+                                ? "No Data"
+                                : "None"
+                            }}
+                          </option>
+                          <option *ngFor="let b of buildings" [value]="b.id">
+                            {{ b.name }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="mb-1 px-1">
+                        <select
+                          (change)="getRooms($event)"
+                          class="input w-full sm:w-[200px]"
+                          formControlName="floor_id"
+                        >
+                          <option value="" disabled selected>Tầng</option>
+                          <option
+                            [disabled]="
+                              floors?.length == 0 || floors == undefined
+                            "
+                            value=""
+                          >
+                            {{
+                              floors?.length == 0 || floors == undefined
+                                ? "No Data"
+                                : "None"
+                            }}
+                          </option>
+                          <option *ngFor="let f of floors" [value]="f?.id">
+                            {{ f?.name }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="mb-1 px-1">
+                        <select
+                          class="input w-full sm:w-[200px]"
+                          formControlName="room_id"
+                        >
+                          <option value="" disabled selected>Phòng</option>
+                          <option
+                            [disabled]="
+                              rooms?.length == 0 || rooms == undefined
+                            "
+                            value=""
+                          >
+                            {{
+                              rooms?.length == 0 || rooms == undefined
+                                ? "No Data"
+                                : "None"
+                            }}
+                          </option>
+                          <option *ngFor="let r of rooms" [value]="r?.id">
+                            {{ r?.name }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex justify-start my-2">
+                    <input
+                      type="submit"
+                      value="Tìm kiếm"
+                      class="
+                        shadow
+                        px-2
+                        leading-7
+                        w-24
+                        bg-main
+                        rounded-md
+                        text-white
+                        cursor-pointer
+                      "
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- </button> -->
+          <main *ngIf="totalItems > 0">
+            <div class="md:flex md:justify-between py-1">
+              <div class="flex items-center">
+                <button
+                  (click)="exportToExcel()"
+                  type="submit"
+                  class="
+                    px-1
+                    border border-main
+                    text-main
+                    bg-white
+                    hover:bg-main hover:text-white
+                    font-medium
+                    inline-flex
+                    items-center
+                    rounded-md
+                  "
+                >
+                  <span>Xuất excel</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="ml-2 icon icon-tabler icon-tabler-file-export"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                    <path
+                      d="M11.5 21h-4.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v5m-5 6h7m-3 -3l3 3l-3 3"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div class="flex flex-row-reverse mt-3 md:mt-0">
+                <!-- firstpage -->
+                <app-paginate
+                  [current_button]="paging.page.value"
+                  [last_button]="lastPage"
+                  [total_item]="totalItems"
+                  [total_button]="5"
+                  (eventChangePage)="changePage($event)"
+                >
+                </app-paginate>
+              </div>
+            </div>
+            <div class="overflow-auto _shadow">
+              <table
+                class="
+                  text-left
+                  w-full
+                  wrapper-table
+                  table-auto
+                  border border-[#bdbdbd]
+                  rounded-lg
+                "
+              >
+                <thead
+                  class="
+                    flex
+                    w-full
+                    border-b-2
+                    uppercase
+                    font-medium
+                    text-[#00836b]
+                    border-[#bdbdbd]
+                  "
+                >
+                  <tr class="flex w-full">
+                    <th class="p-2 w-12">ID</th>
+                    <th class="p-2 w-32">Hoạt động</th>
+                    <th class="p-2 w-32">Trạng thái</th>
+                    <th class="p-2 w-48">Dự án</th>
+                    <th class="p-2 w-48">Toà nhà</th>
+                    <th class="p-2 w-48">Tầng</th>
+                    <th class="p-2 w-48">Phòng</th>
+                    <th class="p-2 w-48">Giường</th>
+                    <th class="p-2 w-48">Loại phòng</th>
+                    <th class="p-2 w-40">Đơn giá(VND)</th>
+                    <th class="p-2 w-40">Giá cọc(VND)</th>
+                    <th class="p-2 w-48">Tên KH</th>
+                    <th class="p-2 w-48">Giới tính</th>
+                    <th class="p-2 w-48">SĐT KH</th>
+                    <th class="p-2 w-48">Ngày vào</th>
+                    <th class="p-2 w-48">Ngày hết hạn</th>
+                  </tr>
+                </thead>
+
+                <tbody
+                  class="
+                    flex flex-col
+                    overflow-auto
+                    w-full
+                    text-gray-600 text-sm
+                    font-normal
+                    bg-white
+                    divide-y
+                  "
+                >
+                  <tr *ngFor="let c of data">
+                    <td class="p-2 w-12">{{ c.id }}</td>
+                    <td class="py-1 px-8 w-32">
+                      <button [matMenuTriggerFor]="menu">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-settings"
+                          width="28"
+                          height="28"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="#9e9e9e"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path
+                            d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"
+                          />
+                          <circle cx="12" cy="12" r="3" />
+                        </svg>
+                      </button>
+                      <mat-menu #menu="matMenu" xPosition="after">
+                        <div class="wrapper-button" *ngIf="c.contract !== null">
+                          <button
+                            (click)="openContract(c?.contract?.id)"
+                            mat-menu-item
+                            class="text-secondary"
+                          >
+                            Thông tin hợp đồng
+                          </button>
+                          <button
+                            (click)="changedBed(c?.contract?.id, c?.name)"
+                            mat-menu-item
+                            class="text-secondary"
+                          >
+                            Chuyển giường
+                          </button>
+                          <button
+                            (click)="printContract()"
+                            mat-menu-item
+                            class="text-secondary"
+                          >
+                            In HĐ
+                          </button>
+
+                          <button
+                            (click)="
+                              removeContract(
+                                c?.contract?.id,
+                                c?.contract?.student?.first_name,
+                                c?.contract?.student?.last_name
+                              )
+                            "
+                            mat-menu-item
+                            class="text-secondary"
+                          >
+                            Thanh lý HĐ
+                          </button>
+                        </div>
+
+                        <button
+                          (click)="createContract(c.id, c.name)"
+                          mat-menu-item
+                          class="text-secondary"
+                          *ngIf="c.contract == null"
+                        >
+                          Tạo hợp đồng lưu trú
+                        </button>
+                      </mat-menu>
+                    </td>
+                    <td class="py-1 px-3 w-32">
+                      <div
+                        *ngIf="c.contract == null"
+                        class="
+                          bg-gray-500
+                          text-white
+                          rounded-sm
+                          py-1
+                          w-20
+                          text-center
+                        "
+                      >
+                        Còn trống
+                      </div>
+                      <div
+                        *ngIf="c.contract !== null"
+                        class="
+                          bg-main
+                          text-white
+                          rounded-sm
+                          px-2
+                          py-1
+                          w-20
+                          text-center
+                        "
+                      >
+                        Đã thuê
+                      </div>
+                    </td>
+                    <td class="p-2 w-48">
+                      {{ c?.room?.floor?.building?.project?.name }}
+                    </td>
+                    <td class="p-2 w-48">
+                      {{ c?.room?.floor?.building?.name }}
+                    </td>
+                    <td class="p-2 w-48">{{ c?.room?.floor?.name }}</td>
+                    <td class="p-2 w-48">
+                      {{ c?.room?.name }}
+                    </td>
+                    <td class="p-2 w-48">
+                      {{ c?.name }}
+                    </td>
+                    <td class="p-2 w-48">
+                      {{ c?.room?.room_type?.name }}
+                    </td>
+                    <td class="p-2 w-40">{{ c?.price }}</td>
+                    <td class="p-2 w-40">{{ c?.price_deposit }}</td>
+                    <td class="p-2 w-48">
+                      {{ c?.nameStudent }}
+                    </td>
+                    <td class="p-2 w-48">
+                      {{ c?.contract?.student?.gender }}
+                    </td>
+                    <td class="p-2 w-48">
+                      {{ c?.contract?.student?.phone }}
+                    </td>
+                    <td class="p-2 w-48">
+                      {{ c?.contract?.stat_day }}
+                    </td>
+                    <td class="p-2 w-48">
+                      {{ c?.contract?.end_day }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </main>
+
+          <!-- no data -->
+          <app-no-data *ngIf="totalItems == 0"></app-no-data>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-loading-page *ngIf="isLoading"></app-loading-page>

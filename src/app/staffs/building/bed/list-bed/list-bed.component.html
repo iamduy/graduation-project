@@ -1,0 +1,41 @@
+<div class="h-screen">
+    <div class="py-2 pl-3 bg-white border-t-4">
+        <button (click)="openDialog()"
+            class="bg-transparent hover:bg-[#e07b9a] text-[#e07b9a] font-medium hover:text-white px-4 border border-[#e07b9a] hover:border-[#e07b9a] rounded">
+            <span>Thêm giường</span>
+        </button>
+    </div>
+    <div class="grid grid-cols-4 gap-4 px-3">
+        <div *ngFor="let bed of beds" class="border border-gray-400  rounded-md">
+            <h3 class="border-b border-gray-400 bg-gray-300 px-4"><b><i class="ace-icon fa fa-bed mr-2"></i>Giường
+                    {{bed.name}}</b>
+            </h3>
+            <div class="px-3 mx-2 py-3 border rounded-md bg-gray-100 font-medium">Mã sinh viên:<span
+                    class="font-normal">ph09982</span> </div>
+            <button class="mx-2 p-2  text-sm font-bold text-[#e07b9a] hover:underline  ">Xóa</button>
+        </div>
+
+
+        <!-- <div class="border border-gray-400  rounded-md">
+            <h3 class="border-b border-gray-400 bg-gray-300 px-4"><b><i class="ace-icon fa fa-bed mr-2"></i>Giường 1</b>
+            </h3>
+            <div class="px-3 mx-2 py-3 border rounded-md bg-gray-100 font-medium">Mã sinh viên:<span
+                    class="font-normal">ph09982</span> </div>
+            <button class="mx-2 p-2  text-sm font-bold text-[#e07b9a] hover:underline  ">Xóa</button>
+        </div>
+        <div class="border border-gray-400  rounded-md">
+            <h3 class="border-b border-gray-400 bg-gray-300 px-4"><b><i class="ace-icon fa fa-bed mr-2"></i>Giường 1</b>
+            </h3>
+            <div class="px-3 mx-2 py-3 border rounded-md bg-gray-100 font-medium">Mã sinh viên:<span
+                    class="font-normal">ph09982</span> </div>
+            <button class="mx-2 p-2  text-sm font-bold text-[#e07b9a] hover:underline  ">Xóa</button>
+        </div>
+        <div class="border border-gray-400  rounded-md">
+            <h3 class="border-b border-gray-400 bg-gray-300 px-4"><b><i class="ace-icon fa fa-bed mr-2"></i>Giường 1</b>
+            </h3>
+            <div class="px-3 mx-2 py-3 border rounded-md bg-gray-100 font-medium">Mã sinh viên:<span
+                    class="font-normal">ph09982</span> </div>
+            <button class="mx-2 p-2  text-sm font-bold text-[#e07b9a] hover:underline  ">Xóa</button>
+        </div> -->
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<div mat-dialog-title class="bg-white border-b mb-2">
+    <p class="pl-2 pt-2 font-medium text-lg">
+        CHI TIẾT TÀI KHOẢN NHÂN VIÊN
+    </p>
+</div>
+
+<div class="mt-4">
+    <div class="w-full">
+        <table class="w-full">
+            <thead>
+                <tr class="border border-gray-200">
+                    <td class="w-1/3 text-right py-1 px-2 bg-gray-100">ID</td>
+                    <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium">
+                        {{data.staff.id}}
+                    </td>
+                </tr>
+                <tr class="border border-gray-200">
+                    <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Email</td>
+                    <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium">
+                        {{data.staff.email}}
+                    </td>
+                </tr>
+                <tr class="border border-gray-200">
+                    <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Họ tên</td>
+                    <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium">
+                        {{data.staff.last_name}} {{data.staff.first_name}}
+                    </td>
+                </tr>
+                <tr class="border border-gray-200">
+                    <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Giới tính</td>
+                    <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium">
+                        <span *ngIf="data.staff.gender == 0">
+                            Nữ
+                        </span>
+                        <span *ngIf="data.staff.gender == 1">
+                            Nam
+                        </span>
+                    </td>
+                </tr>
+                <tr class="border border-gray-200">
+                    <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Ngày sinh</td>
+                    <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium">
+                        {{data.staff.birth | date: ' h:mm a - dd/MM/yyyy' }}
+                    </td>
+                </tr>
+                <tr class="border border-gray-200">
+                    <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Quê quán</td>
+                    <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium">
+                        {{data.staff.birth_place}}
+                    </td>
+                </tr>
+                <tr class="border border-gray-200">
+                    <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Địa chỉ cư trú</td>
+                    <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium">
+                        {{data.staff.address}}
+                    </td>
+                </tr>
+                <tr class="border border-gray-200">
+                    <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Số điện thoại</td>
+                    <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium">
+                        {{data.staff.phone}}
+                    </td>
+                </tr>
+
+                <tr class="border border-gray-200">
+                    <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Chức vụ</td>
+                    <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium">
+                        <span *ngFor="let role of data.roles">
+                            <span *ngIf="role.id == data.staff.role_id">{{role.name}}</span>
+                        </span>
+                    </td>
+                </tr>
+
+                <tr class="border border-gray-200">
+                    <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Trạng thái</td>
+                    <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-medium">
+                        <span *ngIf="data.staff.status == 0" class="bg-red-500 px-2 py-1 text-white">
+                            Đang bị vô hiệu hóa
+                        </span>
+                        <span *ngIf="data.staff.status == 1" class="bg-green-500 px-2 py-1 text-white">
+                            Đang hoạt động
+                        </span>
+                    </td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,194 @@
+<div class="flex items-center bg-white rounded-lg px-2">
+  <div class="text-secondary">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="icon icon-tabler icon-tabler-building-community"
+      width="35"
+      height="35"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path
+        d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8"
+      />
+      <line x1="13" y1="7" x2="13" y2="7.01" />
+      <line x1="17" y1="7" x2="17" y2="7.01" />
+      <line x1="17" y1="11" x2="17" y2="11.01" />
+      <line x1="17" y1="15" x2="17" y2="15.01" />
+    </svg>
+  </div>
+  <p class="pl-2 pt-4 font-medium text-lg">TẠO MỚI DỰ ÁN</p>
+</div>
+<!-- form -->
+<form [formGroup]="formAdd" (submit)="onSubmit()">
+  <div class="bg-white">
+    <div class="px-8 py-4">
+      <div
+        class="
+          sm:flex sm:items-center
+          border-b border-t
+          px-2
+          py-4
+          text-[#5e5d5d]
+        "
+      >
+        <label class="w-1/4">Tên dự án</label>
+        <div class="example-full-width w-full md:w-2/3" appearance="fill">
+          <input
+            class="
+              input
+              w-full
+              h-8
+              rounded-md
+              border border-gray-400
+              bg-gray-100
+              px-3
+            "
+            type="text"
+            formControlName="name"
+          />
+          <span
+            class="validate block"
+            *ngIf="(f.name.dirty || submitted) && errors?.name"
+          >
+            * ({{ errors.name[0] }})
+          </span>
+        </div>
+      </div>
+      <div class="sm:flex sm:items-center border-b px-2 py-4 text-[#5e5d5d]">
+        <label class="w-1/4">Số điện thoại</label>
+        <div class="example-full-width w-full md:w-2/3" appearance="fill">
+          <input
+            class="
+              input
+              w-full
+              h-8
+              rounded-md
+              border border-gray-400
+              bg-gray-100
+              px-3
+            "
+            type="text"
+            formControlName="hotline"
+          />
+          <span
+            class="validate block"
+            *ngIf="(f.hotline.dirty || submitted) && errors?.hotline"
+          >
+            * ({{ errors.hotline[0] }})
+          </span>
+        </div>
+      </div>
+      <div class="sm:flex sm:items-center border-b px-2 py-4 text-[#5e5d5d]">
+        <label class="w-1/4">Địa chỉ</label>
+        <div class="example-full-width w-full md:w-2/3" appearance="fill">
+          <input
+            class="
+              input
+              w-full
+              h-8
+              rounded-md
+              border border-gray-400
+              bg-gray-100
+              px-3
+            "
+            type="text"
+            formControlName="address"
+          />
+          <span
+            class="validate block"
+            *ngIf="(f.address.dirty || submitted) && errors?.address"
+          >
+            * ({{ errors.address[0] }})
+          </span>
+        </div>
+      </div>
+
+      <div class="sm:flex sm:items-center border-b px-2 py-4 text-[#5e5d5d]">
+        <label class="w-1/4">Chu kỳ thu (Tháng)</label>
+        <div class="example-full-width w-full md:w-2/3" appearance="fill">
+          <input
+            class="
+              input
+              w-full
+              h-8
+              rounded-md
+              border border-gray-400
+              bg-gray-100
+              px-3
+            "
+            type="text"
+            formControlName="cycle_collect"
+          />
+          <span
+            class="validate block"
+            *ngIf="
+              (f.cycle_collect.dirty || submitted) && errors?.cycle_collect
+            "
+          >
+            * ({{ errors.cycle_collect[0] }})
+          </span>
+        </div>
+      </div>
+      <div
+        class="
+          sm:flex sm:items-center
+          border-b border-t
+          px-2
+          py-4
+          text-[#5e5d5d]
+        "
+      >
+        <label class="w-1/4">Mô tả</label>
+        <div class="example-full-width w-full md:w-2/3" appearance="fill">
+          <textarea
+            formControlName="note"
+            rows="4"
+            class="
+              w-full
+              rounded-md
+              border border-gray-300
+              bg-gray-100
+              focus:outline-none
+              p-1
+            "
+            type="text"
+            formControlName="description"
+          ></textarea>
+          <span
+            class="validate block"
+            *ngIf="(f.description.dirty || submitted) && errors?.description"
+          >
+            * ({{ errors.description[0] }})
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pl-10 pb-4">
+      <button
+        type="submit"
+        class="
+          px-4
+          mr-4
+          bg-main
+          hover:bg-gray-200
+          text-white
+          font-medium
+          rounded
+          inline-flex
+          items-center
+          hover:text-green-600
+        "
+      >
+        Tạo
+      </button>
+    </div>
+  </div>
+</form>
+<app-loading-page *ngIf="isLoading === true"></app-loading-page>

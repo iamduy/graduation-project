@@ -1,0 +1,229 @@
+<div class="bg-white mt-4">
+  <div class="md:flex md:justify-between">
+    <p class="pl-2 font-medium text-sm md:text-lg">THÊM DỊCH VỤ DỰ ÁN</p>
+    <button
+      (click)="addNewForm()"
+      class="
+        bg-transparent
+        text-[#e07b9a]
+        font-medium
+        px-4
+        border border-[#e07b9a]
+        rounded-md
+        flex
+        justify-evenly
+        items-center
+        h-7
+        hover:bg-[#e07b9a] hover:text-white
+      "
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="icon icon-tabler icon-tabler-plus"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <line x1="12" y1="5" x2="12" y2="19" />
+        <line x1="5" y1="12" x2="19" y2="12" />
+      </svg>
+      <span>Form</span>
+    </button>
+  </div>
+  <section>
+    <form [formGroup]="ProjectServiceForm">
+      <mat-stepper formArrayName="itemSlices" class="px-0">
+        <mat-step
+          *ngFor="
+            let ItemSlice of ProjectServiceForm.controls.itemSlices['controls'];
+            let i = index
+          "
+          [formGroupName]="i"
+        >
+          <div class="md:flex md:justify-between">
+            <div class="note">
+              <span class="font-semibold text-secondary">Lưu ý</span>
+              <div>
+                <span class="text-main">Thu theo tháng</span> toà nhà sẽ thu
+                tiền định kì mỗi tháng 1 lần
+              </div>
+              <div>
+                <span class="text-pink">Thu theo hợp đồng</span> toà nhà sẽ thu
+                tiền vào mỗi lần kí kết hợp đồng
+              </div>
+            </div>
+            <p>
+              Page : <span class="text-blue-400">{{ i + 1 }}</span>
+            </p>
+          </div>
+
+          <div class="py-4">
+            <div class="sm:flex sm:items-center border-b px-2 py-4 text-[#5e5d5d]">
+              <label class="w-1/4">Lựa chọn</label>
+                <select
+                  class="
+                    input
+                    w-full
+                    h-auto
+                    rounded-md
+                    border border-gray-400
+                    bg-gray-100
+                    px-3
+                  "
+                  formControlName="permanent"
+                >
+                   
+                  <option [value]="0">Thu theo tháng</option>
+                  <option [value]="1">Thu theo hợp đồng</option>
+                </select>
+            </div>
+            <div class="sm:flex sm:items-center border-b px-2 py-4 text-[#5e5d5d]">
+              <label class="w-1/4">Dự án</label>
+              <div class="example-full-width w-full" appearance="fill">
+                <input
+                  disabled
+                  type="text"
+                  class="
+                    input
+                    w-full
+                    h-auto
+                    rounded-md
+                    border border-gray-400
+                    bg-gray-100
+                    px-3
+                    cursor-not-allowed
+                  "
+                  [value]="data.project_name"
+                />
+              </div>
+            </div>
+            <div class="sm:flex sm:items-center border-b px-2 py-4 text-[#5e5d5d]">
+              <label class="w-1/4">Dịch vụ</label>
+              <div class="example-full-width w-full" appearance="fill">
+                <input
+                  formControlName="name"
+                  type="text"
+                  class="
+                    input
+                    w-full
+                    h-auto
+                    rounded-md
+                    border border-gray-400
+                    bg-gray-100
+                    px-3
+                  "
+                />
+              </div>
+            </div>
+            <div class="sm:flex sm:items-center border-b px-2 py-4 text-[#5e5d5d]">
+              <label class="w-1/4">Đơn giá</label>
+              <div class="example-full-width w-full" appearance="fill">
+                <input
+                  formControlName="unit_price"
+                  type="text"
+                  class="
+                    input
+                    w-full
+                    h-auto
+                    rounded-md
+                    border border-gray-400
+                    bg-gray-100
+                    px-3
+                  "
+                />
+              </div>
+            </div>
+            <div class="sm:flex sm:items-center border-b px-2 py-4 text-[#5e5d5d]">
+              <label class="w-1/4">Đơn vị</label>
+              <div class="example-full-width w-full" appearance="fill">
+                <select
+                  class="
+                    input
+                    w-full
+                    h-auto
+                    rounded-md
+                    border border-gray-400
+                    bg-gray-100
+                    px-3
+                  "
+                  formControlName="unit"
+                >
+                   
+                  <option [value]="units?.electric?.unit">
+                    {{ units?.electric?.unit }}
+                  </option>
+                  <option [value]="units?.water?.unit">
+                    {{ units?.water?.unit }}
+                  </option>
+                  <option [value]="units?.other?.unit">
+                    {{ units?.other?.unit }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="flex px-2 sm:justify-between ">
+            <div class="flex justify-start mr-3">
+              <button
+                matStepperPrevious
+                class="
+                  px-4
+                  mr-2
+                  bg-header
+                  text-main
+                  rounded-md
+                  hover:text-secondary
+                "
+              >
+                Prev
+              </button>
+              <button
+                matStepperNext
+                class="
+                  px-4
+                  
+                  bg-header
+                  text-main
+                  rounded-md
+                  hover:text-secondary
+                "
+              >
+                Next
+              </button>
+            </div>
+
+            <div class="flex justify-end">
+              <button
+                *ngIf="i > 0"
+                (click)="deleteSlice(i)"
+                class="
+                  px-4
+                  mr-2
+                  bg-header
+                  text-main
+                  rounded-md
+                  hover:text-secondary
+                "
+              >
+                Xoá slice
+              </button>
+              <button
+                (click)="onSubmit()"
+                class="px-4 bg-main text-white rounded-md"
+              >
+                Lưu
+              </button>
+            </div>
+          </div>
+        </mat-step>
+      </mat-stepper>
+    </form>
+  </section>
+</div>
+<app-loading-page *ngIf="isLoading"></app-loading-page>

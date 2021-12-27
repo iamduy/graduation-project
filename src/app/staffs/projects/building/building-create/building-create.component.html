@@ -1,0 +1,101 @@
+<form [formGroup]="buildingAddForm" (ngSubmit)="onSubmit()">
+  <div class="bg-white mt-4">
+    <p class="pl-2 pt-4 font-medium text-sm sm:text-lg">THÊM TÒA NHÀ</p>
+    <div class="px-8 py-4">
+      <div class="sm:flex sm:items-center border-b px-2 py-4 text-[#5e5d5d]">
+        <label class="w-1/4">Tên</label>
+        <div class="example-full-width w-full" appearance="fill">
+          <input
+            formControlName="name"
+            type="text"
+            class="
+              input
+              w-full
+              h-8
+              rounded-md
+              border border-gray-400
+              bg-gray-100
+              px-3
+            "
+          />
+          <span
+            class="validate block"
+            *ngIf="(F.name.dirty || submitted) && errors?.name"
+          >
+            * ({{ errors.name[0] }})
+          </span>
+        </div>
+      </div>
+      <div class="sm:flex sm:items-center border-b px-2 py-4 text-[#5e5d5d]">
+        <label class="w-1/4">Tổng diện tích(m2)</label>
+        <div class="example-full-width w-full" appearance="fill">
+          <input
+            formControlName="total_area"
+            type="number"
+            class="
+              input
+              w-full
+              h-8
+              rounded-md
+              border border-gray-400
+              bg-gray-100
+              px-3
+            "
+          />
+          <span
+            class="validate block"
+            *ngIf="(F.total_area.dirty || submitted) && errors?.total_area"
+          >
+            * ({{ errors.total_area[0] }})
+          </span>
+        </div>
+      </div>
+      <div class="sm:flex sm:items-center border-b px-2 py-4 text-[#5e5d5d]">
+        <label class="w-1/4">Ghi chú</label>
+        <div class="example-full-width w-full" appearance="fill">
+          <input
+            formControlName="note"
+            type="text"
+            class="
+              input
+              w-full
+              h-8
+              rounded-md
+              border border-gray-400
+              bg-gray-100
+              px-3
+            "
+          />
+          <span
+            class="validate block"
+            *ngIf="(F.note.dirty || submitted) && errors?.note"
+          >
+            * ({{ errors.note[0] }})
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pr-10 pt-4 float-right">
+      <div class="demo-button-container flex items-center float-right">
+        <button
+          class="
+            px-2
+            mr-2
+            bg-green-300
+            hover:bg-gray-200
+            text-white
+            font-medium
+            rounded
+            inline-flex
+            items-center
+            hover:text-green-600
+          "
+        >
+          <span>Thêm</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+<app-loading-page *ngIf="isLoading === true"></app-loading-page>

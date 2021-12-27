@@ -1,0 +1,60 @@
+<form [formGroup]="roomTypeAddForm" (ngSubmit)="onSubmit()">
+    <div class="bg-white mt-4">
+        <p class="pl-2 pt-4 font-medium text-sm sm:text-lg">
+            THÊM LOẠI PHÒNG
+        </p>
+        <div class="px-8 py-4">
+
+            <div class="sm:flex sm:items-center  border-b  px-2 py-4 text-[#5e5d5d]">
+                <label class="w-1/4">Tên</label>
+                <div class="example-full-width w-full" appearance="fill">
+                    <input formControlName="name" type="text"
+                        class="input  w-full h-8 rounded-md border border-gray-400 bg-gray-100 px-3 ">
+                    <span class="validate block" *ngIf="( F.name.dirty ||submitted) && errors?.name">
+                        * ({{errors.name[0]}})
+                    </span>
+                </div>
+            </div>
+            <div class="sm:flex sm:items-center  border-b  px-2 py-4 text-[#5e5d5d]">
+                <label class="w-1/4">Giá</label>
+                <div class="example-full-width w-full" appearance="fill">
+                    <input formControlName="price" type="number"
+                        class="input  w-full h-8 rounded-md border border-gray-400 bg-gray-100 px-3 ">
+                    <span class="validate block" *ngIf="( F.price.dirty ||submitted) && errors?.price">
+                        * ({{errors.price[0]}})
+                    </span>
+                </div>
+            </div>
+            <div class="sm:flex sm:items-center  border-b  px-2 py-4 text-[#5e5d5d]">
+                <label class="w-1/4">Giá cọc</label>
+                <div class="example-full-width w-full" appearance="fill">
+                    <input formControlName="price_deposit" type="number"
+                        class="input  w-full h-8 rounded-md border border-gray-400 bg-gray-100 px-3 ">
+                    <span class="validate block" *ngIf="( F.price_deposit.dirty ||submitted) && errors?.price_deposit">
+                        * ({{errors.price_deposit[0]}})
+                    </span>
+                </div>
+            </div>
+            <div class="sm:flex sm:items-center  border-b border-t px-2 py-4 text-[#5e5d5d]">
+                <label class="w-1/4">Số giường</label>
+                <div class="example-full-width w-full" appearance="fill">
+                    <input type="number" formControlName="number_bed"
+                        class="input  w-full h-8 rounded-md border border-gray-400 bg-gray-100 px-3 ">
+                    <span class="validate block" *ngIf="( F.number_bed.dirty ||submitted) && errors?.number_bed">
+                        * ({{errors.number_bed[0]}})
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="pr-10 pt-4 float-right">
+            <div class="demo-button-container flex items-center float-right">
+                <button
+                    class=" px-2 mr-2 bg-green-300 hover:bg-gray-200 text-white font-medium  rounded inline-flex items-center hover:text-green-600">
+                    <span>Thêm</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+<app-loading-page *ngIf="isLoading === true"></app-loading-page>

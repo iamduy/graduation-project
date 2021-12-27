@@ -1,0 +1,80 @@
+<div class="flex items-center bg-white rounded-lg px-2">
+  <div class="text-secondary">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-community" width="35"
+      height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+      stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8" />
+      <line x1="13" y1="7" x2="13" y2="7.01" />
+      <line x1="17" y1="7" x2="17" y2="7.01" />
+      <line x1="17" y1="11" x2="17" y2="11.01" />
+      <line x1="17" y1="15" x2="17" y2="15.01" />
+    </svg>
+  </div>
+  <p class="pl-2 pt-4 font-medium text-lg">THÊM PHÒNG MỚI</p>
+</div>
+<!-- form -->
+<form [formGroup]="roomAddForm" (ngSubmit)="onSubmit()">
+  <div class="bg-white mt-4">
+    <!-- left -->
+    <div class="px-8 py-4">
+      <div class="flex items-center border-b border-t px-2 py-4 text-[#5e5d5d]">
+        <label class="w-1/4">Tên phòng</label>
+        <div class="example-full-width w-2/3" appearance="fill">
+          <input formControlName="name" type="text" class="
+              input
+              w-full
+              h-8
+              rounded-md
+              border border-gray-400
+              bg-gray-100
+              px-3
+            " placeholder="" />
+          <span class="validate error-message" *ngIf="(f.name.dirty || submitted) && errors?.name">
+            * ({{ errors.name[0] }})
+          </span>
+        </div>
+      </div>
+      <div class="flex items-center border-b border-t px-2 py-4 text-[#5e5d5d]">
+        <label class="w-1/4">Loại phòng</label>
+        <div class="example-full-width w-2/3" appearance="fill">
+          <select formControlName="room_type_id" class="
+              input
+              w-full
+              h-8
+              rounded-md
+              border border-gray-400
+              bg-gray-100
+              px-3
+            " placeholder="......">
+            <option *ngFor="let roomType of roomTypes" [value]="roomType?.id">
+              {{ roomType?.name }}
+            </option>
+          </select>
+          <span class="validate error-message" *ngIf="(f.room_type_id.dirty || submitted) && errors?.room_type_id">
+            * ({{ errors.room_type_id[0] }})
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pr-10 pt-4 float-right">
+      <div class="demo-button-container flex items-center float-right">
+        <button type="submit" class="
+            px-2
+            mr-2
+            bg-green-300
+            hover:bg-gray-200
+            text-white
+            font-medium
+            rounded
+            inline-flex
+            items-center
+            hover:text-green-600
+          ">
+          <span>Lưu</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

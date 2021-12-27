@@ -1,0 +1,85 @@
+<div mat-dialog-title class="bg-white">
+    <p class="pl-2 pt-2 font-medium text-lg">
+        CẬP NHẬT BẢO TRÌ SỬA CHỮA
+    </p>
+</div>
+<mat-dialog-content class="mat-typography">
+    <div class="md:flex">
+        <form [formGroup]="formStatus" class="md:w-1/2 w-full ml-2 md:mt-0 mt-4 mr-2" (submit)="onUpdateStatus()">
+            <h2>Trạng thái:
+                <span *ngIf="maintain.status == 0" class="bg-red-500 rounded-sm p-1 text-white">Chờ thực
+                    hiện</span>
+                <span *ngIf="maintain.status == 1" class="bg-green-500 rounded-sm p-1 text-white">Đang thực
+                    hiện</span>
+                <span *ngIf="maintain.status == 2" class="bg-blue-500 rounded-sm p-1 text-white">Đã Thực
+                    hiện</span>
+            </h2>
+            <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                <label class="w-1/4">Trạng thái</label>
+                <div class="w-full">
+                    <select formControlName="status" class="input w-full">
+                        <option [value]="0">Chờ thực hiện</option>
+                        <option [value]="1">Đang thực hiện</option>
+                        <option [value]="2">Đã thực hiện</option>
+                    </select>
+                    <span class="validate block"
+                        *ngIf="(FormStatus.status.dirty || submittedStatus===true) && statusErrors?.status">
+                        (*{{statusErrors?.status[0]}})
+                    </span>
+                </div>
+            </div>
+            <div align="end" class="border-t border-gray-300 mt-2">
+                <button type="submit"
+                    class="mt-2 px-4 mr-4 bg-main hover:bg-gray-200 text-white font-medium  rounded inline-flex items-center hover:text-green-600">Cập
+                    nhật trạng thái</button>
+            </div>
+        </form>
+        <form class="md:w-1/2 w-full mr-2 md:mt-0 mt-4" [formGroup]="mainTainCreateForm" (ngSubmit)="onSubmit()">
+            <div class="">
+                <!-- left -->
+                <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                    <label class="w-1/4">Tên (*)</label>
+                    <div class="w-full">
+                        <input formControlName="name" type="text"
+                            class="input w-full h-8 rounded-md border border-gray-400 bg-gray-100 px-3">
+                        <span class="validate block" *ngIf="(f.name.dirty || submitted===true) && errors?.name">
+                            (*{{errors?.name[0]}})
+                        </span>
+                    </div>
+                </div>
+
+                <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                    <label class="w-1/4">Người thực hiện</label>
+                    <div class="w-full">
+                        <select formControlName="user_undertake_id" class="input w-full">
+                            <option *ngFor="let user_undertake_id of prefixData.users" [value]="user_undertake_id.id">
+                                {{user_undertake_id.last_name}} {{user_undertake_id.first_name}}</option>
+                        </select>
+                        <span class="validate block"
+                            *ngIf="(f.user_undertake_id.dirty || submitted===true) && errors?.user_undertake_id">
+                            (*{{errors?.user_undertake_id[0]}})
+                        </span>
+                    </div>
+                </div>
+
+                <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                    <label class="w-1/4">Ghi chú</label>
+                    <div class="w-full">
+                        <textarea formControlName="note" cols="30" rows="3"
+                            class="w-full input rounded-md border border-gray-400 bg-gray-100 px-3 py-2"></textarea>
+                        <span class="validate block" *ngIf="(f.note.dirty || submitted===true) && errors?.note">
+                            (*{{errors?.note[0]}})
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div align="end" class="border-t border-gray-600 mt-2">
+                <button type="submit"
+                    class="mt-2 px-4 mr-4 bg-main hover:bg-gray-200 text-white font-medium  rounded inline-flex items-center hover:text-green-600">Lưu</button>
+            </div>
+        </form>
+
+        
+    </div>
+
+</mat-dialog-content>

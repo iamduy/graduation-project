@@ -1,0 +1,125 @@
+<div class="mx-auto ml-3 relative">
+  <div class="px-4">
+    <div class="flex justify-between flex-col">
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="sm:flex my-3">
+        <div class="px-2 mb-1">
+          <input
+            type="text"
+            class="
+              border
+              rounded-lg
+              px-3
+              py-2
+              text-sm
+              w-full
+              focus:outline-none
+              input
+            "
+            placeholder="Tên "
+            formControlName="name"
+          />
+        </div>
+        <div class="px-2">
+        <button
+          class="
+            px-2
+            bg-main
+            rounded-md
+            text-white
+            hover:border-main hover:border hover:bg-white hover:text-main
+          "
+        >
+          Tìm kiếm
+        </button>
+      </div>
+      </form>
+
+      <div class="flex flex-row-reverse">
+        <app-paginate
+          [current_button]="paging.page.value"
+          [last_button]="lastPage"
+          [total_item]="totalItems"
+          [total_button]="5"
+          (eventChangePage)="changePage($event)"
+        >
+        </app-paginate>
+      </div>
+    </div>
+
+    <div class="overflow-auto shadow mt-3">
+      <table
+        class="
+          text-left
+          w-full
+          wrapper-table
+          table-auto
+          border border-[#bdbdbd]
+          rounded-lg
+        "
+      >
+        <thead
+          class="
+            flex
+            w-full
+            border-b-2
+            uppercase
+            font-medium
+            text-[#00836b]
+            border-[#bdbdbd]
+          "
+        >
+          <tr class="flex w-full">
+            <th class="p-2 w-16 text-center text-xs">ID</th>
+            <th class="p-2 w-40 text-xs">Tên</th>
+            <th class="p-2 w-40 text-xs">Loại</th>
+            <th class="p-2 w-56 text-xs">Ghi chú</th>
+            <th class="p-2 w-56 text-xs">Người tạo</th>
+            <th class="p-2 w-56 text-xs">Người bảo trì</th>
+          </tr>
+        </thead>
+        <tbody
+          class="
+            flex flex-col
+            overflow-auto
+            w-full
+            text-gray-600 text-sm
+            font-light
+            bg-white
+            divide-y
+          "
+        >
+          <tr *ngFor="let d of data">
+            <td class="p-2 w-16 text-center">{{ d?.id }}</td>
+            <td class="p-2 w-40">
+              {{ d?.name }}
+            </td>
+            <td class="p-2 w-40">
+              {{ d?.type }}
+            </td>
+            <td class="p-2 w-56">
+              {{ d?.note }}
+            </td>
+            <td class="p-2 w-56">
+              {{
+                [d?.user_create?.last_name, d?.user_create?.first_name].join(
+                  " "
+                )
+              }}
+            </td>
+            <td class="p-2 w-56">
+              {{
+                [
+                  d?.user_undertake?.last_name,
+                  d?.user_undertake?.first_name
+                ].join(" ")
+              }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-no-data *ngIf="data?.length === 0"></app-no-data>
+  </div>
+</div>
+
+<app-loading-page *ngIf="isLoading"></app-loading-page>

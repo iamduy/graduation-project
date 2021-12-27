@@ -1,0 +1,97 @@
+<div mat-dialog-title class="bg-white">
+    <p class="pl-2 pt-2 font-medium text-lg">
+        TẠO MỚI BẢO TRÌ SỬA CHỮA
+    </p>
+</div>
+<mat-dialog-content class="mat-typography">
+
+    <form [formGroup]="mainTainCreateForm" (ngSubmit)="onSubmit()">
+        <div class="">
+            <!-- left -->
+            <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                <label class="w-1/4">Tên (*)</label>
+                <div class="w-full">
+                    <input formControlName="name" type="text"
+                        class="input w-full h-8 rounded-md border border-gray-400 bg-gray-100 px-3">
+                    <span class="validate block" *ngIf="(f.name.dirty || submitted===true) && errors?.name">
+                        (*{{errors?.name[0]}})
+                    </span>
+                </div>
+            </div>
+
+            <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                <label class="w-1/4">Loại</label>
+                <div class="w-full">
+                    <select formControlName="type" class="input w-full">
+                        <option *ngFor="let type of prefixData.type" [value]="type">
+                            {{type==="SCPS" ? 'Sự cố phát sinh' :'Kế Hoạch định kỳ'}}
+                        </option>
+                    </select>
+                    <span class="validate block" *ngIf="(f.type.dirty || submitted===true) && errors?.type">
+                        (*{{errors?.type[0]}})
+                    </span>
+                </div>
+            </div>
+            <div *ngIf="f.type.value==='KHDK'" class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                <label class="w-1/4">Chu kỳ gửi</label>
+                <div class="w-full">
+                    <select formControlName="periodic" class="input w-full">
+                        <option *ngFor="let periodic of prefixData.periodic" [value]="periodic">{{periodic}}</option>
+                    </select>
+                    <span class="validate block" *ngIf="(f.periodic.dirty || submitted===true) && errors?.periodic">
+                        (*{{errors?.periodic[0]}})
+                    </span>
+                </div>
+            </div>
+            <!-- right -->
+            <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                <label class="w-1/4">Bắt đầu - kết thúc</label>
+                <div class="w-full mb-1 md:w-full  input h-8 rounded-md border border-gray-400 bg-gray-100 flex items-center relative ">
+                    <mat-date-range-input [rangePicker]="picker"
+                    class="w-full">
+                        <input matStartDate formControlName="date_start" placeholder="Bắt đầu -">
+                        <input matEndDate formControlName="date_end" placeholder="Kết thúc">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+
+                    <span class="validate block" *ngIf="(f.date_start.dirty || submitted===true) && errors?.date_start">
+                        (*{{errors?.date_start[0]}})
+                    </span>
+                    <span class="validate block" *ngIf="(f.date_end.dirty || submitted===true) && errors?.date_end">
+                        (*{{errors?.date_end[0]}})
+                    </span>
+                </div>
+            </div>
+
+            <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                <label class="w-1/4">Người thực hiện</label>
+                <div class="w-full">
+                    <select formControlName="user_undertake_id" class="input w-full">
+                        <option *ngFor="let user_undertake_id of prefixData.users" [value]="user_undertake_id.id">
+                            {{user_undertake_id.last_name}} {{user_undertake_id.first_name}}</option>
+                    </select>
+                    <span class="validate block"
+                        *ngIf="(f.user_undertake_id.dirty || submitted===true) && errors?.user_undertake_id">
+                        (*{{errors?.user_undertake_id[0]}})
+                    </span>
+                </div>
+            </div>
+
+            <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                <label class="w-1/4">Ghi chú</label>
+                <div class="w-full">
+                    <textarea formControlName="note" cols="30" rows="3"
+                        class="w-full input rounded-md border border-gray-400 bg-gray-100 px-3 py-2"></textarea>
+                    <span class="validate block" *ngIf="(f.note.dirty || submitted===true) && errors?.note">
+                        (*{{errors?.note[0]}})
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div align="end" class="border-t border-gray-600 mt-2">
+            <button type="submit"
+                class="mt-2 px-4 mr-4 bg-main hover:bg-gray-200 text-white font-medium  rounded inline-flex items-center hover:text-green-600">Lưu</button>
+        </div>
+    </form>
+</mat-dialog-content>

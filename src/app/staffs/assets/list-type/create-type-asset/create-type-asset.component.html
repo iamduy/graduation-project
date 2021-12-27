@@ -1,0 +1,32 @@
+<div mat-dialog-title class="bg-white border-b mb-2">
+    <p class="pl-2 pt-2 font-medium text-lg">
+        THÊM MỚI LOẠI TÀI SẢN
+    </p>
+</div>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="formAdd" class="overflow-auto max-h-full h-4/5" (submit)="onSubmit()">
+
+        <div class="w-full col-span-2 text-center">
+
+            <table class="table-auto w-full ">
+                <thead>
+                    <tr class="border border-gray-200">
+                        <td class="w-1/3 text-right py-1 px-2 bg-gray-100">Tên </td>
+                        <td class="bg-white w-2/3 text-left px-2 py-1 text-gray-700 font-semibold">
+                            <input formControlName="name" type="text" class="input w-full h-8 rounded-md input px-3">
+                            <span class="validate block" *ngIf="( f.name.dirty ||submitted) && errors?.name">
+                                * ({{errors.name[0]}})
+                            </span>
+                        </td>
+                    </tr>
+
+                </thead>
+            </table>
+        </div>
+        <div align="end" class="border-t border-gray-600 mt-10 bottom-0">
+            <button type="submit"
+                class="px-4 mr-4 bg-main hover:bg-gray-200 text-white font-medium  rounded inline-flex items-center hover:text-green-600">Lưu</button>
+        </div>
+    </form>
+
+</mat-dialog-content>

@@ -1,0 +1,23 @@
+<div class="
+text-center wrapper flex flex-col 
+" *ngIf="hasModule; else noModule">
+    <ng-container  class="">
+        <div class="text-xl uppercase font-semibold text-red-400">Chào mừng bạn !!</div>
+        <div class="text-lg font-semibold text-gray-400 mb-24">
+        Bạn đã được cấp quyền tương tác với dữ liệu hệ thống.
+        </div>
+        
+    </ng-container>
+    
+</div>
+<div class="text-center wrapper flex flex-col ">
+<ng-template #noModule>
+    <svg class="checkmark2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" stroke="#ff2825">
+        <circle class="checkmark_circle2" cx="26" cy="26" r="25" fill2="none" />
+        <path class="checkmark_check2" fill="none" d="M14.1 14.1l23.8 23.8 m0,-23.8 l-23.8,23.8" />
+    </svg>
+    <div class="text-lg font-semibold text-gray-400">
+    Bạn chưa được cấp quyền tương tác với dữ liệu hệ thống.
+    </div>
+</ng-template>
+</div>

@@ -1,0 +1,126 @@
+<div class="mx-auto ml-3 relative">
+  <div class="px-4">
+    <div class="flex flex-col md:flex-row justify-between">
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="flex flex-col sm:flex-row my-3">
+        <div class="px-2">
+          <label>Dự án</label>
+          <select formControlName="project_id" class="w-full input">
+            <option value="">Chọn tất cả</option>
+            <option *ngFor="let p of projects" [value]="p?.value">
+              {{ p?.label }}
+            </option>
+          </select>
+        </div>
+        <div class="px-2 pt-[22px] w-full sm:w-auto">
+          <button
+            class="
+              w-full sm:w-auto
+              px-2
+              bg-main
+              rounded-md
+              text-white
+              hover:border-main hover:border hover:bg-white hover:text-main
+            "
+          >
+            Tìm kiếm
+          </button>
+        </div>
+      </form>
+
+      <div class="flex items-center">
+        <app-paginate
+          [current_button]="paging.page.value"
+          [last_button]="lastPage"
+          [total_item]="totalItems"
+          [total_button]="3"
+          (eventChangePage)="changePage($event)"
+        >
+        </app-paginate>
+      </div>
+    </div>
+
+    <div class="overflow-auto shadow">
+      <table
+        class="
+          text-left
+          w-full
+          wrapper-table
+          table-auto
+          border border-[#bdbdbd]
+          rounded-lg
+        "
+      >
+        <thead
+          class="
+            flex
+            w-full
+            border-b-2
+            uppercase
+            font-medium
+            text-[#00836b]
+            border-[#bdbdbd]
+          "
+        >
+          <tr class="flex w-full">
+            <th class="p-2 w-16 text-center text-xs">ID</th>
+            <th class="p-2 w-40 text-xs">Dịch vụ</th>
+            <th class="p-2 w-40 text-xs">Đơn vị</th>
+            <th class="p-2 w-40 text-xs">Đơn giá</th>
+            <th class="p-2 w-40 text-xs">Dự án</th>
+            <th class="p-2 w-40 text-xs">Phòng</th>
+            <th class="p-2 w-40 text-xs">Chỉ số</th>
+            <th class="p-2 w-40 text-xs">Trạng thái</th>
+            <th class="p-2 w-40 text-xs">Tổng tiền</th>
+          </tr>
+        </thead>
+        <tbody
+          class="
+            flex flex-col
+            overflow-auto
+            w-full
+            text-gray-600 text-sm
+            font-light
+            bg-white
+            divide-y
+          "
+        >
+          <tr *ngFor="let d of data">
+            <td class="p-2 w-16 text-center">{{ d?.id }}</td>
+            <td class="p-2 w-40">
+              {{ d?.name }}
+            </td>
+            <td class="p-2 w-40">
+              {{ d?.unit }}
+            </td>
+            <td class="p-2 w-40">
+              <span class="text-error">
+                {{ d?.unit_price }}
+              </span>
+              VND
+            </td>
+            <td class="p-2 w-40">
+              {{ d?.project?.name }}
+            </td>
+            <td class="p-2 w-40">
+              {{ d?.room?.name }}
+            </td>
+            <td class="p-2 w-40">
+              {{ d?.index }}
+            </td>
+            <td class="p-2 w-40">
+              <span
+                class="{{ d?.index === 0 ? 'text-error' : 'text-success' }}"
+              >
+                {{ d?.status }}
+              </span>
+            </td>
+            <td class="p-2 w-40">{{ d?.total_money }} VND</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-no-data *ngIf="data?.length === 0"></app-no-data>
+  </div>
+</div>
+
+<app-loading-page *ngIf="isLoading"></app-loading-page>

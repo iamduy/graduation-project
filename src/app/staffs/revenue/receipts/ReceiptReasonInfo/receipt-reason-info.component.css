@@ -1,0 +1,7 @@
+
+.mat-dialog-content {
+  max-height: 80vh !important;
+}
+.mat-dialog-container {
+  padding: 0 24px !important;
+}

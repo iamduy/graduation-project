@@ -1,0 +1,21 @@
+<div mat-dialog-title class="bg-white border-b mb-2">
+    <p class="pl-2 pt-2 font-medium text-lg">
+        DANH SÁCH QUYỀN CỦA CHỨC VỤ
+    </p>
+</div>
+
+<div class="mt-4 overflow-auto h-[300px] md:h-[500px]">
+    <div *ngFor="let module of data?.permissions; index as i" class="border-b-2 border-gray-400 mb-2 ">
+        <div class="mb-2 ml-2 text-lg font-bold">Module: {{module?.name}}</div>
+        <div class="flex flex-wrap">
+            <div *ngFor="let table of module?.tables; index as j" class="">
+                <div class="flex flex-col flex-wrap px-2">
+                    <div class="font-bold">Table {{j+1}}: {{table.name}}</div>
+                    <ol>
+                        <li *ngFor="let per of table?.permissions; index as h">{{h+1}}. {{per?.name}}</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

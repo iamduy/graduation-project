@@ -1,0 +1,871 @@
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary" class="example-toolbar">
+    <mat-toolbar-row class="relative">
+      <button [ngClass]="{ hidden: !mobileQuery.matches }" mat-icon-button>
+        <span (click)="sidenav.toggle()">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            class="w-6 h-6 text-main">
+            <path _ngcontent-dub-c105="" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h7"></path>
+          </svg>
+        </span>
+      </button>
+
+      <div class="flex py-3 px-2 items-center">
+        <span class="text-xl text-green-500 font-semibold mb-0 mr-2">QUẢN LÝ</span>
+        <span class="font-semibold tracking-widest text-xs text-black uppercase">
+          Ký túc xá</span>
+      </div>
+      <div class="absolute inset-y-0 right-4 pt-1">
+        <a class="profile" [routerLink]="
+            isStaff ? Router.PROFILE.STAFF.URL : Router.PROFILE.STUDENT.URL
+          ">
+          <div class="
+              bg-white
+              text-secondary
+              rounded-md
+              px-3
+              flex
+              justify-between
+              items-center
+            ">
+            <div>
+              <div class="text-sm font-bold">{{ username }}</div>
+              <div class="text-sm">
+                {{ isStaff ? "Quản trị viên" : "Sinh viên" }}
+              </div>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 icon icon-tabler icon-tabler-chevron-right" width="20"
+              height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <polyline points="9 6 15 12 9 18" />
+            </svg>
+          </div>
+        </a>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container">
+    <mat-sidenav #sidenav [opened]="!mobileQuery.matches" [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches" fixedTopGap="" class="nav-list-custom">
+      <mat-nav-list style="width: 220px">
+        <div class="flex flex-col text-white">
+          <ul class="leading-10" *ngIf="isStaff">
+            <!-- biểu đồ -->
+            <li *appShowModule="'Biểu đồ thống kê'" class="relative">
+              <a [routerLink]="Router.CHART.URL">
+                <button (click)="mobileQuery.matches && sidenav.toggle()" class="
+                    inline-flex
+                    items-center
+                    w-full
+                    text-sm
+                    font-semibold
+                    text-white
+                    px-2
+                    focus:bg-white focus:text-main
+                  ">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-bar h-6 w-6"
+                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <rect x="3" y="12" width="6" height="8" rx="1" />
+                    <rect x="9" y="8" width="6" height="12" rx="1" />
+                    <rect x="15" y="4" width="6" height="16" rx="1" />
+                    <line x1="4" y1="20" x2="18" y2="20" />
+                  </svg>
+                  <span class="ml-4">Biểu đồ thống kê</span>
+                </button>
+              </a>
+            </li>
+
+            <!-- dự án -->
+            <li class="relative" *appShowModule="'Quản lí Dự án'">
+              <a [routerLink]="Router.PROJECTS">
+                <button (click)="activeMenu('/quan-tri-vien/quan-ly-du-an')"
+                  (click)="mobileQuery.matches && sidenav.toggle()" class="
+                    inline-flex
+                    items-center
+                    w-full
+                    text-sm
+                    {{ currentUrl == Router.PROJECTS ? 'actived-item-sideBar' : '' }}
+                    font-semibold
+                    text-white
+                    px-2
+                    focus:bg-white focus:text-main
+                  ">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-skyscraper"
+                    width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <line x1="3" y1="21" x2="21" y2="21" />
+                    <path d="M5 21v-14l8 -4v18" />
+                    <path d="M19 21v-10l-6 -4" />
+                    <line x1="9" y1="9" x2="9" y2="9.01" />
+                    <line x1="9" y1="12" x2="9" y2="12.01" />
+                    <line x1="9" y1="15" x2="9" y2="15.01" />
+                    <line x1="9" y1="18" x2="9" y2="18.01" />
+                  </svg>
+
+                  <span class="ml-4">Quản lý dự án</span>
+                </button>
+              </a>
+            </li>
+
+            <!-- tòa nhà -->
+            <li class="relative" *appShowModule="'Quản lí tòa nhà'">
+              <a [routerLink]="Router.BUILDING.URL">
+                <button (click)="activeMenu(Router.BUILDING.URL)"
+                  [class.actived-item-sideBar]="currentUrl == Router.BUILDING.URL"
+                  (click)="mobileQuery.matches && sidenav.toggle()" class="
+                    inline-flex
+                    items-center
+                    w-full
+                    text-sm
+                    font-semibold
+                    text-white
+                    px-2
+                    focus:bg-white focus:text-main
+                  ">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box h-6 w-6"
+                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3" />
+                    <line x1="12" y1="12" x2="20" y2="7.5" />
+                    <line x1="12" y1="12" x2="12" y2="21" />
+                    <line x1="12" y1="12" x2="4" y2="7.5" />
+                  </svg>
+
+                  <span class="ml-4">Quản lý toà nhà</span>
+                </button>
+              </a>
+            </li>
+
+            <!-- cho thuê -->
+            <li class="relative" *appShowModule="'Quản lí cho thuê'" x-data="{ Open : false }">
+              <button class="
+              {{ currentUrl == checkArrayUrl([Router.RENTAL_MANAGEMENT.CONTRACT.URL, Router.RENTAL_MANAGEMENT.HISTORY.URL, Router.RENTAL_MANAGEMENT.FEE.URL, Router.RENTAL_MANAGEMENT.UTILITY_BILLS.URL]) ? 'actived-item-sideBar' : '' }}
+              
+                  text-white
+                  inline-flex
+                  items-center
+                  justify-between
+                  w-full
+                  text-base
+                  font-semibold
+                  transition-colors
+                  duration-150
+                  p-2
+                  focus:bg-white focus:text-main
+                " x-on:click="Open = !Open">
+                <span class="inline-flex items-center text-sm font-semibold">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home h-6 w-6"
+                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <polyline points="5 12 3 12 12 3 21 12 19 12" />
+                    <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                  </svg>
+                  <span class="ml-4">Quản lý cho thuê</span>
+                </span>
+                <svg xmlns="http://www.w3.org/2000/svg" x-show="!Open" class="ml-1 w-4 h-4" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor" style="display: none">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+
+                <svg xmlns="http://www.w3.org/2000/svg" x-show="Open" class="ml-1 w-4 h-4" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor" style="display: none">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              <div x-show.transition="Open" style="display: none">
+                <ul (click)="mobileQuery.matches && sidenav.toggle()" class="
+                    overflow-hidden
+                    text-sm
+                    font-medium
+                    shadow-inner
+                    bg-white
+                    text-secondary
+                  " aria-label="submenu">
+                  <li *appShowTable="'Hợp đồng'" class="border border-b"
+                    (click)="activeMenu(Router.RENTAL_MANAGEMENT.CONTRACT.URL)">
+                    <a [routerLink]="Router.RENTAL_MANAGEMENT.CONTRACT.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Hợp đồng</span>
+                      </button>
+                    </a>
+                  </li>
+
+                  <li *appShowTable="'Lịch sử thanh lý HĐ'" class="border border-b"
+                    (click)="activeMenu(Router.RENTAL_MANAGEMENT.HISTORY.URL)">
+                    <a [routerLink]="Router.RENTAL_MANAGEMENT.HISTORY.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Lịch sử thanh lý HĐ</span>
+                      </button>
+                    </a>
+                  </li>
+
+                  <li *appShowTable="'Chốt điện nước'" class="border border-b"
+                    (click)="activeMenu(Router.RENTAL_MANAGEMENT.UTILITY_BILLS.URL)">
+                    <a [routerLink]="Router.RENTAL_MANAGEMENT.UTILITY_BILLS.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Chốt điện nước</span>
+                      </button>
+                    </a>
+                  </li>
+                  <li *appShowTable="'Thu phí'" class="border border-b"
+                    (click)="activeMenu(Router.RENTAL_MANAGEMENT.FEE.URL)">
+                    <a [routerLink]="Router.RENTAL_MANAGEMENT.FEE.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Thu phí</span>
+                      </button>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <!-- Quản lý sinh viên -->
+            <li class="relative" *appShowModule="'Quản lí khách thuê'" x-data="{ Open : false  }">
+              <button class="
+              {{ currentUrl == checkArrayUrl([Router.MANAGE_STUDENT.LIST.URL, Router.MANAGE_STUDENT.INTERACT.URL, Router.MANAGE_STUDENT.TYPE_ANNOUNCE.URL,Router.MANAGE_STUDENT.NOTICE.URL]) ? 'actived-item-sideBar' : '' }}
+                  text-white
+                  inline-flex
+                  items-center
+                  justify-between
+                  w-full
+                  text-base
+                  font-semibold
+                  transition-colors
+                  duration-150
+                  p-2
+                  focus:bg-white focus:text-main
+                " x-on:click="Open = !Open">
+                <span class="inline-flex items-center text-sm font-semibold">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="24"
+                    height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path>
+                  </svg>
+                  <span class="ml-4">Quản lý sinh viên</span>
+                </span>
+                <svg xmlns="http://www.w3.org/2000/svg" x-show="!Open" class="ml-1 w-4 h-4" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor" style="display: none">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" x-show="Open" class="ml-1 w-4 h-4" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor" style="display: none">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div x-show.transition="Open" style="display: none">
+                <ul (click)="mobileQuery.matches && sidenav.toggle()" class="
+                    overflow-hidden
+                    text-sm
+                    font-medium
+                    shadow-inner
+                    bg-white
+                    text-secondary
+                  " aria-label="submenu">
+                  <li *appShowTable="'Khách thuê'" class="border border-b"
+                    (click)="activeMenu(Router.MANAGE_STUDENT.LIST.URL)">
+                    <a [routerLink]="Router.MANAGE_STUDENT.LIST.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Sinh viên thuê</span>
+                      </button>
+                    </a>
+                  </li>
+                  <li *appShowTable="' Tương tác khách thuê'" class="border border-b"
+                    (click)="activeMenu(Router.MANAGE_STUDENT.INTERACT.URL)">
+                    <a [routerLink]="Router.MANAGE_STUDENT.INTERACT.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Tương tác từ sinh viên</span>
+                      </button>
+                    </a>
+                  </li>
+                  <li class="border border-b" (click)="activeMenu(Router.MANAGE_STUDENT.TYPE_ANNOUNCE.URL)">
+                    <a [routerLink]="Router.MANAGE_STUDENT.TYPE_ANNOUNCE.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Loại thông báo</span>
+                      </button>
+                    </a>
+                  </li>
+                  <li *appShowTable="'Thông báo'" class="border border-b"
+                    (click)="activeMenu(Router.MANAGE_STUDENT.NOTICE.URL)">
+                    <a [routerLink]="Router.MANAGE_STUDENT.NOTICE.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Thông báo & điều khoản</span>
+                      </button>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <!-- quản lý danh muc -->
+            <li class="relative" *appShowModule="'Quản lí công việc'" x-data="{ Open : false }">
+              <button class="
+              {{ currentUrl == checkArrayUrl([ Router.OPERATIONAL.MAINTENANCE.URL,Router.OPERATIONAL.TASK.URL]) ? 'actived-item-sideBar' : '' }}
+                  text-white
+                  inline-flex
+                  items-center
+                  justify-between
+                  w-full
+                  text-base
+                  font-semibold
+                  transition-colors
+                  duration-150
+                  p-2
+                  focus:bg-white focus:text-main
+                " x-on:click="Open = !Open">
+                <span class="inline-flex items-center text-sm font-semibold">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-tool" width="24"
+                    height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" />
+                  </svg>
+                  <span class="ml-3">Quản lý danh mục</span>
+                </span>
+                <svg xmlns="http://www.w3.org/2000/svg" x-show="!Open" class="ml-1 w-4 h-4" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor" style="display: none">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" x-show="Open" class="ml-1 w-4 h-4" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor" style="display: none">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              <div x-show.transition="Open" style="display: none">
+                <ul (click)="mobileQuery.matches && sidenav.toggle()" class="
+                    overflow-hidden
+                    text-sm
+                    font-medium
+                    shadow-inner
+                    bg-white
+                    text-secondary
+                  " aria-label="submenu">
+                  <li *appShowTable="'Bảo chì sửa chữa'" class="border border-b"
+                    (click)="activeMenu(Router.OPERATIONAL.MAINTENANCE.URL)">
+                    <a [routerLink]="Router.OPERATIONAL.MAINTENANCE.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Bảo trì sửa chữa</span>
+                      </button>
+                    </a>
+                  </li>
+                  <li *appShowTable="'Công việc thực hiện'" class="border border-b"
+                    (click)="activeMenu(Router.OPERATIONAL.TASK.URL)">
+                    <a [routerLink]="Router.OPERATIONAL.TASK.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Công việc thực hiện</span>
+                      </button>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <!-- Quản lý tài sản -->
+            <li class="relative" *appShowModule="'Danh mục tài sản'" x-data="{ Open : false  }">
+              <button class="
+              {{ currentUrl == checkArrayUrl([Router.ASSETS.ASSET.URL, '/quan-tri-vien/'+Router.ASSETS.PRODUCER.URL, '/quan-tri-vien/'+Router.ASSETS.TYPE_ASSET.URL, '/quan-tri-vien/'+Router.ASSETS.UNIT_ASSET.URL, Router.ASSETS.ASSET.URL]) ? 'actived-item-sideBar' : '' }}
+                  text-white
+                  inline-flex
+                  items-center
+                  justify-between
+                  w-full
+                  text-base
+                  font-semibold
+                  transition-colors
+                  duration-150
+                  p-2
+                  focus:bg-white focus:text-main
+                " x-on:click="Open = !Open">
+                <span class="inline-flex items-center text-sm font-semibold">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-tool" width="24"
+                    height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" />
+                  </svg>
+                  <span class="ml-3">Quản lý tài sản</span>
+                </span>
+                <svg xmlns="http://www.w3.org/2000/svg" x-show="!Open" class="ml-1 w-4 h-4" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor" style="display: none">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" x-show="Open" class="ml-1 w-4 h-4" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor" style="display: none">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div x-show.transition="Open" style="display: none">
+                <ul (click)="mobileQuery.matches && sidenav.toggle()" class="
+                    overflow-hidden
+                    text-sm
+                    font-medium
+                    shadow-inner
+                    bg-white
+                    text-secondary
+                  " aria-label="submenu">
+                  <li class="border border-b" (click)="activeMenu(Router.ASSETS.ASSET.URL)">
+                    <a [routerLink]="Router.ASSETS.ASSET.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Tài sản</span>
+                      </button>
+                    </a>
+                  </li>
+                  <li *appShowTable="'Nhà sản xuất'" class="border border-b"
+                    (click)="activeMenu('/quan-tri-vien/'+Router.ASSETS.PRODUCER.URL)">
+                    <a [routerLink]="Router.ASSETS.PRODUCER.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Nhà sản xuất</span>
+                      </button>
+                    </a>
+                  </li>
+                  <li *appShowTable="'Loại tài sản'" class="border border-b"
+                    (click)="activeMenu('/quan-tri-vien/'+Router.ASSETS.TYPE_ASSET.URL)">
+                    <a [routerLink]="Router.ASSETS.TYPE_ASSET.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Loại tài sản</span>
+                      </button>
+                    </a>
+                  </li>
+                  <li *appShowTable="'Đơn vi'" class="border border-b"
+                    (click)="activeMenu('/quan-tri-vien/'+Router.ASSETS.UNIT_ASSET.URL)">
+                    <a [routerLink]="Router.ASSETS.UNIT_ASSET.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Đơn vị</span>
+                      </button>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <!-- quản lý thu-->
+            <li class="relative" *appShowModule="'Quản lí thu'" x-data="{ Open : false  }">
+              <button class="
+              {{ currentUrl == checkArrayUrl(['/quan-tri-vien/'+Router.REVENUE.RECEIPTS.URL, '/quan-tri-vien/'+Router.REVENUE.LIST_RECEIPTS.URL, '/quan-tri-vien/'+Router.REVENUE.RECEIPTS_REASON.URL]) ? 'actived-item-sideBar' : '' }}
+                  text-white
+                  inline-flex
+                  items-center
+                  justify-between
+                  w-full
+                  text-base
+                  font-semibold
+                  transition-colors
+                  duration-150
+                  p-2
+                  focus:bg-white focus:text-main
+                " x-on:click="Open = !Open">
+                <span class="inline-flex items-center text-sm font-semibold">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-report-money" width="24"
+                    height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                    <rect x="9" y="3" width="6" height="4" rx="2" />
+                    <path d="M14 11h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                    <path d="M12 17v1m0 -8v1" />
+                  </svg>
+                  <span class="ml-4">Quản lý thu</span>
+                </span>
+                <svg xmlns="http://www.w3.org/2000/svg" x-show="!Open" class="ml-1 w-4 h-4" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor" style="display: none">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" x-show="Open" class="ml-1 w-4 h-4" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor" style="display: none">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div x-show.transition="Open" style="display: none">
+                <ul (click)="mobileQuery.matches && sidenav.toggle()" class="
+                    overflow-hidden
+                    text-sm
+                    font-medium
+                    shadow-inner
+                    bg-white
+                    text-secondary
+                  " aria-label="submenu">
+                  <li *appShowTable="'Lập phiếu thu'" class="border border-b"
+                    (click)="activeMenu('/quan-tri-vien/'+Router.REVENUE.RECEIPTS.URL)">
+                    <a [routerLink]="Router.REVENUE.RECEIPTS.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Lập phiếu thu</span>
+                      </button>
+                    </a>
+                  </li>
+                  <li *appShowTable="'Danh sách phiếu thu'" class="border border-b"
+                    (click)="activeMenu('/quan-tri-vien/'+Router.REVENUE.LIST_RECEIPTS.URL)">
+                    <a [routerLink]="Router.REVENUE.LIST_RECEIPTS.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Ds phiếu thu</span>
+                      </button>
+                    </a>
+                  </li>
+                  <li *appShowTable="'Lý do thu'" class="border border-b"
+                    (click)="activeMenu('/quan-tri-vien/'+Router.REVENUE.RECEIPTS_REASON.URL)">
+                    <a [routerLink]="Router.REVENUE.RECEIPTS_REASON.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Lý do thu</span>
+                      </button>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <!-- báo cáo -->
+            <li *appShowModule="'Báo cáo'" class="relative" (click)="activeMenu(Router.REPORT.LIST_REPORT.URL)">
+              <a [routerLink]="Router.REPORT.LIST_REPORT.URL">
+                <button (click)="mobileQuery.matches && sidenav.toggle()" class="
+                {{ currentUrl == Router.REPORT.LIST_REPORT.URL ? 'actived-item-sideBar' : '' }}
+                    inline-flex
+                    items-center
+                    w-full
+                    text-sm
+                    font-semibold
+                    text-white
+                    px-2
+                    focus:bg-white focus:text-main
+                  ">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-area-line h-6 w-6"
+                    width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <polyline points="4 19 8 13 12 15 16 10 20 14 20 19 4 19" />
+                    <polyline points="4 12 7 8 11 10 16 4 20 8" />
+                  </svg>
+                  <span class="ml-4">Báo cáo</span>
+                </button>
+              </a>
+            </li>
+
+            <!-- cài đặt người dùng -->
+            <li class="relative" *appShowModule="'Cài đặt người dùng'" x-data="{ Open : false  }">
+              <button class="
+              {{ currentUrl == checkArrayUrl(['/quan-tri-vien/'+Router.SETTING_USER.USER.URL,'/quan-tri-vien/'+Router.SETTING_USER.TYPE_USER.URL,'/quan-tri-vien/'+Router.SETTING_USER.DELEGATION.URL]) ? 'actived-item-sideBar' : '' }}
+                  text-white
+                  inline-flex
+                  items-center
+                  justify-between
+                  w-full
+                  text-base
+                  font-semibold
+                  transition-colors
+                  duration-150
+                  p-2
+                  focus:bg-white focus:text-main
+                " x-on:click="Open = !Open">
+                <span class="inline-flex items-center text-sm font-semibold">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="24"
+                    height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path
+                      d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  <span class="ml-4">Cài đặt người dùng</span>
+                </span>
+                <svg xmlns="http://www.w3.org/2000/svg" x-show="!Open" class="ml-1 w-4 h-4" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor" style="display: none">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" x-show="Open" class="ml-1 w-4 h-4" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor" style="display: none">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div x-show.transition="Open" style="display: none">
+                <ul (click)="mobileQuery.matches && sidenav.toggle()" class="
+                    overflow-hidden
+                    text-sm
+                    font-medium
+                    shadow-inner
+                    bg-white
+                    text-secondary
+                  " aria-label="submenu">
+                  <li *appShowTable="'Người dùng'" class="border border-b"
+                    (click)="activeMenu('/quan-tri-vien/'+Router.SETTING_USER.USER.URL)">
+                    <a [routerLink]="Router.SETTING_USER.USER.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Nhân viên</span>
+                      </button>
+                    </a>
+                  </li>
+                  <li *appShowTable="'Chức vụ'" class="border border-b"
+                    (click)="activeMenu('/quan-tri-vien/'+Router.SETTING_USER.TYPE_USER.URL)">
+                    <a [routerLink]="Router.SETTING_USER.TYPE_USER.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Chức vụ</span>
+                      </button>
+                    </a>
+                  </li>
+                  <li *appShowTable="'Phân quyền'" class="border border-b"
+                    (click)="activeMenu('/quan-tri-vien/'+Router.SETTING_USER.DELEGATION.URL)">
+                    <a [routerLink]="Router.SETTING_USER.DELEGATION.URL">
+                      <button class="
+                          flex
+                          items-center
+                          p-2
+                          focus:text-main focus:bg-header
+                          w-full
+                          hover:bg-header
+                        ">
+                        <span class="ml-2 text-sm font-semibold">Phân quyền</span>
+                      </button>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+
+          <!-- phần của sinh viên -->
+          <ul class="leading-10" *ngIf="!isStaff">
+            <li class="relative" (click)="activeMenu('/quan-tri-vien/'+Router.CONTRACT_STUDENT.URL)">
+              <a [routerLink]="Router.CONTRACT_STUDENT.URL">
+                <button class="
+                {{ currentUrl == '/quan-tri-vien/'+Router.CONTRACT_STUDENT.URL ? 'actived-item-sideBar' : '' }}
+                    inline-flex
+                    items-center
+                    w-full
+                    text-sm
+                    font-semibold
+                    text-white
+                    px-2
+                    focus:bg-white focus:text-main
+                  ">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-report-money" width="24"
+                    height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                    <rect x="9" y="3" width="6" height="4" rx="2" />
+                    <path d="M14 11h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                    <path d="M12 17v1m0 -8v1" />
+                  </svg>
+
+                  <span class="ml-2">Hợp đồng</span>
+                </button>
+              </a>
+            </li>
+            <!-- hóa đơn thu -->
+            <li class="relative" (click)="activeMenu('/quan-tri-vien/'+Router.INVOICE_STUDENT.URL)">
+              <a [routerLink]="Router.INVOICE_STUDENT.URL">
+                <button class="
+                {{ currentUrl == '/quan-tri-vien/'+Router.INVOICE_STUDENT.URL ? 'actived-item-sideBar' : '' }}
+                    inline-flex
+                    items-center
+                    w-full
+                    text-sm
+                    font-semibold
+                    text-white
+                    px-2
+                    focus:bg-white focus:text-main
+                  ">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-invoice" width="24"
+                    height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                    <line x1="9" y1="7" x2="10" y2="7" />
+                    <line x1="9" y1="13" x2="15" y2="13" />
+                    <line x1="13" y1="17" x2="15" y2="17" />
+                  </svg>
+
+                  <span class="ml-2">Hóa đơn</span>
+                </button>
+              </a>
+            </li>
+            <!-- thông báo -->
+            <li class="relative" (click)="activeMenu('/quan-tri-vien/'+Router.NOTICE_STUDENT.URL)">
+              <a [routerLink]="Router.NOTICE_STUDENT.URL">
+                <button class="
+                {{ currentUrl == '/quan-tri-vien/'+Router.NOTICE_STUDENT.URL ? 'actived-item-sideBar' : '' }}
+                    inline-flex
+                    items-center
+                    w-full
+                    text-sm
+                    font-semibold
+                    text-white
+                    px-2
+                    focus:bg-white focus:text-main
+                  ">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell-ringing" width="24"
+                    height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
+                    <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
+                    <path d="M21 6.727a11.05 11.05 0 0 0 -2.794 -3.727" />
+                    <path d="M3 6.727a11.05 11.05 0 0 1 2.792 -3.727" />
+                  </svg>
+
+                  <span class="ml-2">Thông báo điều khoản</span>
+                </button>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class=""></div>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="h-full" [style.marginTop.px]="mobileQuery.matches ? 50 : 0">
+      <div class="h-full">
+        <div class="bg-white border-b border-gray-300 w-full mb-2 uppercase">
+          <app-ng-dynamic-breadcrumb fontColor="#666666" symbol=" >">
+          </app-ng-dynamic-breadcrumb>
+        </div>
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

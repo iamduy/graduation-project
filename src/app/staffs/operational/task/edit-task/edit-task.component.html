@@ -1,0 +1,120 @@
+<div mat-dialog-title class="bg-white">
+    <p class="pl-2 pt-2 font-medium text-lg">
+        CẬP NHẬT CÔNG VIỆC
+    </p>
+</div>
+<mat-dialog-content class="mat-typography">
+    <div class="md:flex">
+        <form class="md:w-3/5 w-full mr-2" [formGroup]="taskEditForm" (ngSubmit)="onSubmit()">
+            <div class="">
+                <!-- left -->
+                <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                    <label class="w-1/4">Tên (*)</label>
+                    <div class="w-full">
+                        <input formControlName="title" type="text"
+                            class="input w-full h-8 rounded-md border border-gray-400 bg-gray-100 px-3">
+                        <span class="validate block" *ngIf="(f.title.dirty || submitted===true) && errors?.title">
+                            (*{{errors?.title[0]}})
+                        </span>
+                    </div>
+                </div>
+
+                <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                    <label class="w-1/4">Người thực hiện</label>
+                    <div class="w-full">
+                        <select formControlName="user_undertake_id" class="input w-full">
+                            <option *ngFor="let user of data.prefixData.staffs" [value]="user.id">
+                                {{user.last_name}} {{user.first_name}}</option>
+                        </select>
+                        <span class="validate block"
+                            *ngIf="(f.user_undertake_id.dirty || submitted===true) && errors?.user_undertake_id">
+                            (*{{errors?.user_undertake_id[0]}})
+                        </span>
+                    </div>
+                </div>
+
+                <!-- độ ưu tiên -->
+                <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                    <label class="w-1/4">Mức độ ưu tiên</label>
+                    <div class="w-full">
+                        <select formControlName="priority" class="input w-full">
+                            <option *ngFor="let priority of prefixData.priority_list" [value]="priority.priority_id">
+                                {{priority.priority_name}}
+                            </option>
+                        </select>
+                        <span class="validate block" *ngIf="(f.priority.dirty || submitted===true) && errors?.priority">
+                            (*{{errors?.priority[0]}})
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Date -->
+                <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                    <label class="w-1/4">Bắt đầu - kết thúc</label>
+                    <div class="w-full">
+                        <mat-date-range-input [rangePicker]="picker"
+                            class="input h-8 rounded-md border border-gray-400 bg-gray-100 px-3">
+                            <input matStartDate formControlName="date_start">
+                            <input matEndDate formControlName="date_end">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+
+                        <span class="validate block"
+                            *ngIf="(f.date_start.dirty || submitted===true) && errors?.date_start">
+                            (*{{errors?.date_start[0]}})
+                        </span>
+                        <span class="validate block" *ngIf="(f.date_end.dirty || submitted===true) && errors?.date_end">
+                            (*{{errors?.date_end[0]}})
+                        </span>
+                    </div>
+                </div>
+
+                <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                    <label class="w-1/4">Ghi chú</label>
+                    <div class="w-full">
+                        <textarea formControlName="desc" cols="30" rows="3"
+                            class="w-full input rounded-md border border-gray-400 bg-gray-100 px-3 py-2"></textarea>
+                        <span class="validate block" *ngIf="(f.desc.dirty || submitted===true) && errors?.desc">
+                            (*{{errors?.desc[0]}})
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div align="end" class="border-t border-gray-600 mt-2">
+                <button type="submit"
+                    class="mt-2 px-4 mr-4 bg-main hover:bg-gray-200 text-white font-medium  rounded inline-flex items-center hover:text-green-600">Lưu</button>
+            </div>
+        </form>
+
+        <form [formGroup]="formStatus" class="md:w-1/2 w-full ml-2 md:mt-0 mt-4" (submit)="onUpdateStatus()">
+            <h2>Trạng thái:
+                <span *ngIf="task.status == 1" class="bg-gray-500 rounded-sm p-1 text-white">Chờ xử lý</span>
+                <span *ngIf="task.status == 2" class="bg-green-500 rounded-sm p-1 text-white">Đang xử lý</span>
+                <span *ngIf="task.status == 3" class="bg-blue-500 rounded-sm p-1 text-white">Đã xử lý</span>
+                <span *ngIf="task.status == 4" class="bg-red-500 rounded-sm p-1 text-white">Đã quá hạn</span>
+            </h2>
+            <div class="sm:flex sm:items-center  border-t  px-2 py-4 text-[#5e5d5d]">
+                <label class="w-1/4">Trạng thái</label>
+                <div class="w-full">
+                    <select formControlName="status" class="input w-full">
+                        <option [value]="1">Chờ xử lý</option>
+                        <option [value]="2">Đang xử lý</option>
+                        <option [value]="3">Đã xử lý</option>
+                        <option [value]="4">Đã quá hạn</option>
+                    </select>
+                    <span class="validate block"
+                        *ngIf="(FormStatus.status.dirty || submittedStatus===true) && statusErrors?.status">
+                        (*{{statusErrors?.status[0]}})
+                    </span>
+                </div>
+            </div>
+            <div align="end" class="border-t border-gray-600 mt-2">
+                <button type="submit"
+                    class="mt-2 px-4 mr-4 bg-main hover:bg-gray-200 text-white font-medium  rounded inline-flex items-center hover:text-green-600">Cập
+                    nhật trạng thái</button>
+            </div>
+        </form>
+    </div>
+
+</mat-dialog-content>
